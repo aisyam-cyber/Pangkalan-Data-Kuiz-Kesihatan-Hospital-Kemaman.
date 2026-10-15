@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistem Kuiz Interaktif Hospital Kemaman</title>
-  <!-- Meta Open Graph -->
   <meta property="og:title" content="Sistem Kuiz Interaktif Hospital Kemaman" />
   <meta property="og:description" content="Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat" />
   <meta property="og:type" content="website" />
   
-  <!-- Font Google & Icon FontAwesome -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -55,14 +53,12 @@
     .btn-outline { background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); }
     .btn-outline:hover { background: var(--light-blue); }
 
-    /* Home View */
     .quiz-info-box { background: var(--light-blue); border-left: 4px solid var(--primary-blue); padding: 1rem; border-radius: 6px; margin: 1.5rem 0; }
     .social-share { display: flex; gap: 10px; margin-top: 1rem; }
     .btn-social { flex: 1; padding: 10px; border-radius: 6px; border: none; color: white; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; }
     .bg-fb { background-color: #1877F2; }
     .bg-wa { background-color: #25D366; }
 
-    /* Interactive Quiz View */
     .progress-bar-container { background: #E2E8F0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 1.5rem; }
     .progress-bar { background: var(--gold-premium); height: 100%; width: 0%; transition: width 0.3s ease; }
     .question-header { display: flex; justify-content: space-between; font-weight: 600; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
@@ -74,19 +70,16 @@
     .option-card.selected { border-color: var(--gold-premium); background: var(--light-blue); font-weight: 700; color: var(--primary-blue); }
     .option-badge { background: var(--primary-blue); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
 
-    /* Result View */
     .score-circle { width: 140px; height: 140px; border-radius: 50%; border: 8px solid var(--gold-premium); display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 1.5rem auto; background: var(--light-blue); }
     .score-number { font-size: 2.2rem; font-weight: 700; color: var(--primary-blue); }
-    .review-item { border-bottom: 1px solid #E2E8F0; padding: 12px 0; }
+    .review-item { border-bottom: 1px solid #E2E8F0; padding: 12px 0; margin-bottom: 8px; }
     .review-item.correct { border-left: 4px solid var(--correct-green); padding-left: 10px; }
     .review-item.wrong { border-left: 4px solid var(--wrong-red); padding-left: 10px; }
 
-    /* Admin View */
     .form-group { margin-bottom: 1rem; text-align: left; }
     .form-group label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.9rem; }
     .form-control { width: 100%; padding: 10px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 0.95rem; }
 
-    /* Loading Spinner */
     .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--gold-premium); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
@@ -97,7 +90,7 @@
 <body>
 
   <header>
-    <h1><i class="fa-solid =>-hospital"></i> HOSPITAL KEMAMAN</h1>
+    <h1><i class="fa-solid fa-hospital"></i> HOSPITAL KEMAMAN</h1>
     <p>SISTEM KUIZ INTERAKTIF MEDIA SOSIAL</p>
   </header>
 
@@ -107,7 +100,6 @@
   </div>
 
   <main>
-    <!-- 1. VIEW HALAMAN UTAMA KUIZ AWAM -->
     <div id="view-home" class="card">
       <div style="text-align:center;">
         <i class="fa-solid fa-award" style="font-size:3rem; color:var(--gold-premium); margin-bottom:10px;"></i>
@@ -130,7 +122,6 @@
       </div>
     </div>
 
-    <!-- 2. VIEW PAPARAN SOALAN INTERAKTIF -->
     <div id="view-quiz" class="card hidden">
       <div class="question-header">
         <span id="question-number-label">SOALAN 1 DARIPADA 15</span>
@@ -142,18 +133,15 @@
 
       <div id="question-text" class="question-title">Soalan sedang dimuatkan...</div>
 
-      <div class="options-grid" id="options-container">
-        <!-- Pilihan A, B, C, D akan dijanakan secara dinamik -->
-      </div>
+      <div class="options-grid" id="options-container"></div>
 
       <div style="display:flex; gap:10px; margin-top:1.5rem;">
-        <button id="btn-prev" class="btn btn-outline hidden" onclick="prevQuestion()"><i class="fa-solid fa-arrow-left"></i> Seterusnya</button>
+        <button id="btn-prev" class="btn btn-outline hidden" onclick="prevQuestion()"><i class="fa-solid fa-arrow-left"></i> Sebelum</button>
         <button id="btn-next" class="btn" onclick="nextQuestion()">Seterusnya <i class="fa-solid fa-arrow-right"></i></button>
         <button id="btn-submit" class="btn btn-gold hidden" onclick="confirmSubmit()"><i class="fa-solid fa-paper-plane"></i> Hantar Jawapan</button>
       </div>
     </div>
 
-    <!-- 3. VIEW HALAMAN KEPUTUSAN -->
     <div id="view-result" class="card hidden" style="text-align: center;">
       <i class="fa-solid fa-trophy" style="font-size:3.5rem; color:var(--gold-premium);"></i>
       <h2 style="color:var(--primary-blue); margin-top:10px;">Keputusan Kuiz Anda</h2>
@@ -183,9 +171,7 @@
       </div>
     </div>
 
-    <!-- 4. VIEW PORTAL PENTADBIR (ADMIN) -->
     <div id="view-admin" class="card hidden">
-      <!-- Admin Login -->
       <div id="admin-login-box">
         <h2 style="color:var(--primary-blue); text-align:center; margin-bottom:1.5rem;"><i class="fa-solid fa-lock"></i> Log Masuk Pentadbir</h2>
         <div class="form-group">
@@ -199,7 +185,6 @@
         <button class="btn btn-gold" onclick="adminLogin()"><i class="fa-solid fa-right-to-bracket"></i> LOG MASUK</button>
       </div>
 
-      <!-- Admin Dashboard -->
       <div id="admin-dashboard-box" class="hidden">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
           <h3>Papan Pemuka Pentadbir</h3>
@@ -243,7 +228,6 @@
       </div>
     </div>
 
-    <!-- Loading Overlay -->
     <div id="loading-spinner" class="hidden" style="text-align:center;">
       <div class="spinner"></div>
       <p id="loading-text">Sedang memproses...</p>
@@ -255,10 +239,9 @@
   </footer>
 
   <script>
-    // ** KONFIGURASI PENTING: TAMBAHKAN URL DEPLOYMENT GOOGLE APPS SCRIPT DI SINI **
-    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbxiohkDT4i2pghPe_W3O1HFWeq2HOxQ9A0QQn_spZICVG82UWyw9SL5v79Lr-rwms5X/exec";
+    // masukkan URL Web App Google Apps Script anda di bawah ini:
+    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbxO7pOrk_EBoiFEpGe2s57QDYZnwb3iEWiYlshoHs_uAF8k0C4m_u7FeHkJcP27Zjnl/exec";
 
-    // Application State
     let currentQuiz = null;
     let quizQuestions = [];
     let currentQuestionIdx = 0;
@@ -297,10 +280,9 @@
       }
     }
 
-    // Call Backend API
     async function apiPost(action, payload = {}) {
       if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("MASUKKAN_URL")) {
-        alert("Ralat Konfigurasi: Sila masukkan URL Web App Google Apps Script pada pembolehubah GAS_ENDPOINT dalam index.html.");
+        alert("Ralat Konfigurasi: Sila masukkan URL Web App Google Apps Script pada GAS_ENDPOINT dalam index.html.");
         return { status: "ERROR", message: "URL GAS belum dikonfigurasi." };
       }
 
@@ -321,7 +303,6 @@
       }
     }
 
-    // Load Main Published Quiz
     async function loadPublishedQuiz() {
       const res = await apiPost("GET_PUBLISHED_QUIZ", {});
       if (res.status === "SUCCESS") {
@@ -337,7 +318,6 @@
       }
     }
 
-    // Start Interactive Quiz
     async function startQuiz() {
       if (!currentQuiz || quizQuestions.length === 0) {
         alert("Kuiz belum sedia untuk dimainkan.");
@@ -356,7 +336,6 @@
       }
     }
 
-    // Render Question Card
     function renderQuestion() {
       const q = quizQuestions[currentQuestionIdx];
       const total = quizQuestions.length;
@@ -391,7 +370,6 @@
         optionsContainer.appendChild(optCard);
       });
 
-      // Navigation buttons control
       document.getElementById("btn-prev").classList.toggle("hidden", currentQuestionIdx === 0);
       
       if (currentQuestionIdx === total - 1) {
@@ -422,7 +400,6 @@
       }
     }
 
-    // Confirm & Submit
     async function confirmSubmit() {
       if (Object.keys(userAnswers).length < quizQuestions.length) {
         if (!confirm("Anda belum menjawab semua soalan. Adakah anda pasti mahu menghantar jawapan?")) {
@@ -451,7 +428,6 @@
       }
     }
 
-    // Toggle Review Explanations
     async function toggleReview() {
       const revContainer = document.getElementById("review-container");
       if (!revContainer.classList.contains("hidden")) {
@@ -479,7 +455,6 @@
       }
     }
 
-    // Social Sharing Helpers
     function shareFacebook() {
       const url = encodeURIComponent(window.location.href);
       window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
@@ -502,7 +477,6 @@
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
 
-    // Admin Auth & Module
     async function adminLogin() {
       const u = document.getElementById("admin-user").value;
       const p = document.getElementById("admin-pass").value;
@@ -543,7 +517,7 @@
 
         listRes.list.forEach(q => {
           const row = document.createElement("div");
-          row.style.cssText = "padding:10px; border-bottom:1px solid #ddd; display:flex; justify-size:space-between; align-items:center;";
+          row.style.cssText = "padding:10px; border-bottom:1px solid #ddd; display:flex; justify-content:space-between; align-items:center;";
           row.innerHTML = `
             <div>
               <strong>${q.tajuk}</strong> (${q.status})
