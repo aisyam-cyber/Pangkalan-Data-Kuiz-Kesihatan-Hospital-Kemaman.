@@ -246,7 +246,6 @@
     
     .participant-details-card { background: #FFFFFF; padding: 16px; border-radius: 14px; font-size: 0.92rem; text-align: left; margin-bottom: 1.2rem; border-left: 5px solid var(--gold-premium); }
 
-    /* Ranking / Leaderboard Style */
     .leaderboard-box { background: linear-gradient(180deg, #FFFDF0 0%, #FFFFFF 100%); border: 2px solid var(--gold-premium); border-radius: 18px; padding: 1.5rem; margin: 1.5rem 0; text-align: left; }
     .leaderboard-title { color: var(--primary-blue); font-weight: 800; font-size: 1.15rem; border-bottom: 2px solid var(--gold-premium); padding-bottom: 8px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
     .ranking-list { list-style: none; padding: 0; }
@@ -295,7 +294,7 @@
       <h2 class="main-title-text">KUIZ PERTANDINGAN DENGGI & HYGIENE</h2>
       <p style="color:var(--text-muted); font-style:italic; margin-top:6px; font-weight: 500;">“Satu soalan, 10 saat! Siapa paling pantas &amp; tepat?”</p>
 
-      <!-- CARTA PEMENANG DI HADAPAN / SEBELUM MULA -->
+      <!-- CARTA PEMENANG HADAPAN -->
       <div class="leaderboard-box">
         <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING PEMENANG TERKINI</div>
         <ul class="ranking-list" id="home-ranking-list-container">
@@ -372,7 +371,6 @@
         Salah/Gagal Masa: <strong id="result-wrong" style="color:var(--wrong-red);">0</strong>
       </p>
 
-      <!-- CARTA RANKING SELEPAS KUIZ -->
       <div class="leaderboard-box">
         <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING LIVE GOOGLE SHEETS</div>
         <ul class="ranking-list" id="result-ranking-list-container"></ul>
@@ -404,8 +402,8 @@
   </footer>
 
   <script>
-    // ** MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI **
-    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbyroPQJ62rcI8kTNinSz7NZR4qyW8Kl2yTyW8ygi-j0jzuOSs2O6lYw7aSF3vvzAF4B6g/exec";
+    // ** TAMBAHKAN URL WEB APP ANDA SELEPAS DEPLOY APPS SCRIPT DI BUKTIKAN **
+    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbx2yiOcS0t3g9-DlzWB-OpyMMjD_OUD-cy3fKxg-rY0NF6VMreWokAHCrSsspPR-rMc9w/exec";
 
     const quizData = [
       { nombor: 1, soalan: "Apakah vektor utama yang menyebarkan virus Demam Denggi?", pilihanA: "Nyamuk Anopheles", pilihanB: "Nyamuk Aedes", pilihanC: "Nyamuk Culex", pilihanD: "Lalat Rumah", jawapanBetul: "B", penerangan: "Nyamuk Aedes aegypti dan Aedes albopictus adalah pembawa utama virus Denggi." },
