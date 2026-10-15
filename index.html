@@ -31,16 +31,46 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
     body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
 
+    /* Header Moden dengan DUA LOGO */
     header {
       background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
       color: var(--white);
-      padding: 1.5rem;
-      text-align: center;
+      padding: 1.2rem 1.5rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       border-bottom: 4px solid var(--gold-premium);
     }
-    header h1 { font-size: 1.5rem; font-weight: 700; color: var(--gold-premium); text-transform: uppercase; letter-spacing: 1px; }
-    header p { font-size: 0.9rem; color: var(--light-blue); font-style: italic; margin-top: 4px; }
+    .header-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+    .header-logo {
+      height: 65px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.2));
+    }
+    .header-title-box {
+      text-align: center;
+      flex: 1;
+    }
+    header h1 { 
+      font-size: 1.4rem; 
+      font-weight: 700; 
+      color: var(--gold-premium); 
+      text-transform: uppercase; 
+      letter-spacing: 1px; 
+      line-height: 1.2;
+    }
+    header p { 
+      font-size: 0.85rem; 
+      color: var(--light-blue); 
+      font-style: italic; 
+      margin-top: 4px; 
+    }
 
     main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 1.5rem; }
     .card { background: var(--white); width: 100%; max-width: 750px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); padding: 2rem; margin: auto; }
@@ -96,13 +126,30 @@
 
     footer { text-align: center; padding: 1rem; font-size: 0.8rem; color: var(--text-muted); background: #fff; border-top: 1px solid #E2E8F0; }
     .hidden { display: none !important; }
+
+    /* Media query khas telefon pintar */
+    @media (max-width: 480px) {
+      .header-logo { height: 45px; }
+      header h1 { font-size: 1rem; }
+      header p { font-size: 0.75rem; }
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <h1><i class="fa-solid fa-hospital"></i> HOSPITAL KEMAMAN</h1>
-    <p>SISTEM KUIZ INTERAKTIF MEDIA SOSIAL</p>
+    <div class="header-container">
+      <!-- Logo 1: Kiri -->
+      <img src="https://i.postimg.cc/vBvm5cHY/603cadc0-cb8b-4795-a308-575f9ff64620-removebg-preview-(3).png" alt="Logo Rasmi Hospital Kemaman" class="header-logo">
+      
+      <div class="header-title-box">
+        <h1>HOSPITAL KEMAMAN</h1>
+        <p>SISTEM KUIZ INTERAKTIF MEDIA SOSIAL</p>
+      </div>
+      
+      <!-- Logo 2: Kanan -->
+      <img src="https://i.postimg.cc/HWZYHGr5/image-(7).png" alt="Logo Kempen / KKM" class="header-logo">
+    </div>
   </header>
 
   <main>
@@ -119,7 +166,7 @@
         </div>
 
         <div class="form-group">
-          <label><i class="fa-solid fa-id-badge"></i> Jawapan / Peranan:</label>
+          <label><i class="fa-solid fa-id-badge"></i> Jawatan / Peranan:</label>
           <input type="text" id="player-position-input" class="form-control" placeholder="Cth: Jururawat / Orang Awam / Pegawai Tadbir" maxlength="30">
         </div>
 
