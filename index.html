@@ -299,7 +299,7 @@
 
     // Call Backend API
     async function apiPost(action, payload = {}) {
-      if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("https://script.google.com/a/macros/moh.gov.my/s/AKfycbxiohkDT4i2pghPe_W3O1HFWeq2HOxQ9A0QQn_spZICVG82UWyw9SL5v79Lr-rwms5X/exec")) {
+      if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("MASUKKAN_URL")) {
         alert("Ralat Konfigurasi: Sila masukkan URL Web App Google Apps Script pada pembolehubah GAS_ENDPOINT dalam index.html.");
         return { status: "ERROR", message: "URL GAS belum dikonfigurasi." };
       }
