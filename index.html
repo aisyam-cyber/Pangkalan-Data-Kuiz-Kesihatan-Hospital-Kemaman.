@@ -52,7 +52,9 @@
     .btn-outline { background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); }
     .btn-outline:hover { background: var(--light-blue); }
 
-    .form-control { width: 100%; padding: 12px; border: 2px solid #CBD5E1; border-radius: 8px; font-size: 1rem; margin-top: 8px; outline: none; }
+    .form-group { margin-bottom: 1rem; text-align: left; }
+    .form-group label { display: block; font-weight: 600; color: var(--primary-blue); margin-bottom: 4px; font-size: 0.9rem; }
+    .form-control { width: 100%; padding: 10px 12px; border: 2px solid #CBD5E1; border-radius: 8px; font-size: 0.95rem; outline: none; }
     .form-control:focus { border-color: var(--primary-blue); }
 
     .quiz-info-box { background: var(--light-blue); border-left: 4px solid var(--primary-blue); padding: 1rem; border-radius: 6px; margin: 1.5rem 0; text-align: left; }
@@ -75,14 +77,18 @@
     .score-circle { width: 140px; height: 140px; border-radius: 50%; border: 8px solid var(--gold-premium); display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 1.5rem auto; background: var(--light-blue); }
     .score-number { font-size: 2.2rem; font-weight: 700; color: var(--primary-blue); }
     
-    /* Ranking / Leaderboard Style */
+    .participant-details-card { background: var(--light-blue); padding: 12px; border-radius: 8px; font-size: 0.9rem; text-align: left; margin-bottom: 1rem; border-left: 4px solid var(--gold-premium); }
+
+    /* Ranking Style */
     .leaderboard-box { background: #FFFDF0; border: 2px solid var(--gold-premium); border-radius: 12px; padding: 1.2rem; margin-top: 1.5rem; text-align: left; }
     .leaderboard-title { color: var(--primary-blue); font-weight: 700; font-size: 1.1rem; border-bottom: 2px solid var(--gold-premium); padding-bottom: 6px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
     .ranking-list { list-style: none; padding: 0; }
-    .ranking-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: white; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); font-size: 0.95rem; }
-    .ranking-item .rank-badge { font-weight: 700; width: 30px; }
-    .ranking-item .player-name { font-weight: 600; color: var(--primary-blue); flex: 1; }
-    .ranking-item .player-score { font-weight: 700; color: var(--correct-green); }
+    .ranking-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: white; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); font-size: 0.9rem; }
+    .ranking-item .rank-badge { font-weight: 700; width: 28px; }
+    .ranking-item .player-info { flex: 1; line-height: 1.3; }
+    .ranking-item .player-name { font-weight: 600; color: var(--primary-blue); }
+    .ranking-item .player-sub { font-size: 0.75rem; color: var(--text-muted); }
+    .ranking-item .player-score { font-weight: 700; color: var(--correct-green); font-size: 1rem; margin-left: 10px; }
 
     .review-item { border-bottom: 1px solid #E2E8F0; padding: 12px 0; margin-bottom: 8px; text-align: left; }
     .review-item.correct { border-left: 4px solid var(--correct-green); padding-left: 10px; }
@@ -107,13 +113,25 @@
       <p style="color:var(--text-muted); font-style:italic; margin-top:5px;">"Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat"</p>
 
       <div style="margin-top: 1.5rem; text-align: left;">
-        <label style="font-weight: 600; color: var(--primary-blue);"><i class="fa-solid fa-user"></i> Masukkan Nama / Nama Panggilan Anda:</label>
-        <input type="text" id="player-name-input" class="form-control" placeholder="Cth: Ahmad Kemaman" maxlength="25">
+        <div class="form-group">
+          <label><i class="fa-solid fa-user"></i> Nama Penuh / Nama Panggilan:</label>
+          <input type="text" id="player-name-input" class="form-control" placeholder="Cth: Ahmad bin Razali" maxlength="30">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-id-badge"></i> Jawapan / Peranan:</label>
+          <input type="text" id="player-position-input" class="form-control" placeholder="Cth: Jururawat / Orang Awam / Pegawai Tadbir" maxlength="30">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-building-user"></i> Tempat Bertugas / PTJ Anda:</label>
+          <input type="text" id="player-ptj-input" class="form-control" placeholder="Cth: Wad Kecemasan Hospital Kemaman / Klinik Kesihatan Chukai" maxlength="40">
+        </div>
       </div>
 
       <div class="quiz-info-box">
         <p><strong><i class="fa-solid fa-bullseye"></i> Objektif:</strong> Meningkatkan kesedaran tentang pencegahan Aedes &amp; kebersihan diri.</p>
-        <p><strong><i class="fa-solid fa-users"></i> Sasaran:</strong> Orang Awam &amp; Pesakit Hospital Kemaman</p>
+        <p><strong><i class="fa-solid fa-users"></i> Sasaran:</strong> Warga Hospital Kemaman &amp; Orang Awam</p>
         <p><strong><i class="fa-solid fa-layer-group"></i> Tahap Kesukaran:</strong> Sederhana</p>
         <p><strong><i class="fa-solid fa-list-check"></i> Jumlah Soalan:</strong> 15 Soalan</p>
       </div>
@@ -151,8 +169,13 @@
     <div id="view-result" class="card hidden" style="text-align: center;">
       <i class="fa-solid fa-trophy" style="font-size:3.5rem; color:var(--gold-premium);"></i>
       <h2 style="color:var(--primary-blue); margin-top:10px;">Keputusan Kuiz Anda</h2>
-      <p style="color:var(--text-muted); font-size:0.95rem;">Peserta: <strong id="display-player-name" style="color:var(--primary-blue);">-</strong></p>
       
+      <div class="participant-details-card">
+        <p><strong>Nama:</strong> <span id="display-player-name">-</span></p>
+        <p><strong>Jawatan:</strong> <span id="display-player-position">-</span></p>
+        <p><strong>Tempat Bertugas / PTJ:</strong> <span id="display-player-ptj">-</span></p>
+      </div>
+
       <div class="score-circle">
         <span class="score-number" id="result-score">0%</span>
         <span style="font-size:0.8rem; color:var(--text-muted);">MARKAH</span>
@@ -168,7 +191,7 @@
       <div class="leaderboard-box">
         <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING MARKAH TERTINGGI</div>
         <ul class="ranking-list" id="ranking-list-container">
-          <!-- Senarai ranking akan dijanakan secara dinamik -->
+          <!-- Senarai ranking dijanakan secara dinamik -->
         </ul>
       </div>
 
@@ -213,14 +236,23 @@
     let currentQuestionIdx = 0;
     let userAnswers = {};
     let currentPlayerName = "Peserta Awam";
+    let currentPlayerPosition = "-";
+    let currentPlayerPTJ = "-";
 
     function startQuiz() {
       const nameInput = document.getElementById("player-name-input").value.trim();
-      if (!nameInput) {
-        alert("Sila masukkan nama anda sebelum memulakan kuiz.");
+      const posInput = document.getElementById("player-position-input").value.trim();
+      const ptjInput = document.getElementById("player-ptj-input").value.trim();
+
+      if (!nameInput || !posInput || !ptjInput) {
+        alert("Sila lengkapkan ketiga-tiga maklumat (Nama, Jawatan & Tempat Bertugas/PTJ) sebelum memulakan kuiz.");
         return;
       }
+
       currentPlayerName = nameInput;
+      currentPlayerPosition = posInput;
+      currentPlayerPTJ = ptjInput;
+
       currentQuestionIdx = 0;
       userAnswers = {};
       document.getElementById("view-home").classList.add("hidden");
@@ -309,13 +341,15 @@
       const score = Math.round((correctCount / quizData.length) * 100);
       const wrongCount = quizData.length - correctCount;
 
-      // Simpan Ke Ranking (LocalStorage)
-      saveToLeaderboard(currentPlayerName, score);
+      saveToLeaderboard(currentPlayerName, currentPlayerPosition, currentPlayerPTJ, score);
 
       document.getElementById("view-quiz").classList.add("hidden");
       document.getElementById("view-result").classList.remove("hidden");
 
       document.getElementById("display-player-name").innerText = currentPlayerName;
+      document.getElementById("display-player-position").innerText = currentPlayerPosition;
+      document.getElementById("display-player-ptj").innerText = currentPlayerPTJ;
+
       document.getElementById("result-score").innerText = score + "%";
       document.getElementById("result-correct").innerText = correctCount;
       document.getElementById("result-wrong").innerText = wrongCount;
@@ -344,20 +378,18 @@
       });
     }
 
-    function saveToLeaderboard(name, score) {
-      let ranks = JSON.parse(localStorage.getItem("hk_quiz_ranks") || "[]");
-      ranks.push({ name: name, score: score, date: new Date().toLocaleDateString() });
-      // Susun mengikut markah tertinggi
+    function saveToLeaderboard(name, position, ptj, score) {
+      let ranks = JSON.parse(localStorage.getItem("hk_quiz_ranks_v2") || "[]");
+      ranks.push({ name: name, position: position, ptj: ptj, score: score });
       ranks.sort((a, b) => b.score - a.score);
-      // Ambil Top 5 sahaja
       ranks = ranks.slice(0, 5);
-      localStorage.setItem("hk_quiz_ranks", JSON.stringify(ranks));
+      localStorage.setItem("hk_quiz_ranks_v2", JSON.stringify(ranks));
     }
 
     function renderLeaderboard() {
       const container = document.getElementById("ranking-list-container");
       container.innerHTML = "";
-      let ranks = JSON.parse(localStorage.getItem("hk_quiz_ranks") || "[]");
+      let ranks = JSON.parse(localStorage.getItem("hk_quiz_ranks_v2") || "[]");
 
       if (ranks.length === 0) {
         container.innerHTML = "<li style='font-size:0.85rem; color:gray;'>Belum ada rekod ranking.</li>";
@@ -371,7 +403,10 @@
         li.className = "ranking-item";
         li.innerHTML = `
           <span class="rank-badge">${medals[idx] || (idx+1)+'.'}</span>
-          <span class="player-name">${r.name}</span>
+          <div class="player-info">
+            <div class="player-name">${r.name}</div>
+            <div class="player-sub">${r.position} | ${r.ptj}</div>
+          </div>
           <span class="player-score">${r.score}%</span>
         `;
         container.appendChild(li);
@@ -395,13 +430,13 @@
 
     function shareFacebookResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Kuiz Kesedaran Denggi Hospital Kemaman! Boleh tewaskan markah saya? Cuba di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya (${currentPlayerName} - ${currentPlayerPosition}, ${currentPlayerPTJ}) mendapat markah ${score} dalam Kuiz Kesedaran Denggi Hospital Kemaman! Jom cabar kedudukan saya di: ${window.location.href}`);
       window.open(`https://www.facebook.com/sharer/sharer.php?quote=${text}&u=${encodeURIComponent(window.location.href)}`, '_blank');
     }
 
     function shareWhatsAppResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Kuiz Kesedaran Denggi Hospital Kemaman! Cabar kedudukan ranking anda di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya (${currentPlayerName} - ${currentPlayerPosition}, ${currentPlayerPTJ}) mendapat markah ${score} dalam Kuiz Kesedaran Denggi Hospital Kemaman! Cabar kedudukan ranking anda di: ${window.location.href}`);
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
   </script>
