@@ -3,135 +3,282 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistem Kuiz Interaktif Hospital Kemaman</title>
+  <title>Sistem Kuiz Interaktif - TAMO</title>
 
   <!-- Open Graph Meta Facebook -->
-  <meta property="og:title" content="Kuiz Kesihatan Interaktif Hospital Kemaman" />
+  <meta property="og:title" content="Kuiz Kesihatan Interaktif - Terengganu Assistant Medical Officer @ TAMO" />
   <meta property="og:description" content="Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat. Jom jawab kuiz kesihatan 15 soalan ini dan cipta rekod ranking anda!" />
   <meta property="og:type" content="website" />
 
   <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      --primary-blue: #123B70;
-      --secondary-blue: #174EA6;
-      --light-blue: #E5EEFF;
-      --gold-premium: #D4AF37;
+      --primary-blue: #0A2540;
+      --secondary-blue: #134074;
+      --accent-blue: #0066FF;
+      --light-blue: #EEF4FF;
+      --gold-gradient: linear-gradient(135deg, #FFE259 0%, #FFA751 100%);
+      --gold-premium: #F59E0B;
       --white: #FFFFFF;
-      --bg-color: #F4F7FB;
-      --text-main: #172B4D;
+      --bg-color: #F8FAFC;
+      --text-main: #0F172A;
       --text-muted: #64748B;
-      --correct-green: #2E7D32;
-      --wrong-red: #C62828;
+      --correct-green: #10B981;
+      --wrong-red: #EF4444;
+      --glass-bg: rgba(255, 255, 255, 0.95);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; background-image: radial-gradient(#CBD5E1 1px, transparent 1px); background-size: 24px 24px; }
 
-    /* Header Moden dengan DUA LOGO */
+    /* Header Premium & WOW Header */
     header {
-      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      background: linear-gradient(135deg, #07192F 0%, #0D2C54 50%, #134074 100%);
       color: var(--white);
-      padding: 1.2rem 1.5rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      padding: 1.5rem 1.5rem 1.8rem;
+      box-shadow: 0 10px 30px rgba(10, 37, 64, 0.25);
       border-bottom: 4px solid var(--gold-premium);
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+      pointer-events: none;
     }
     .header-container {
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
+      gap: 20px;
+      position: relative;
+      z-index: 2;
     }
     .header-logo {
-      height: 65px;
+      height: 75px;
       width: auto;
       object-fit: contain;
-      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.2));
+      filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.3));
+      transition: transform 0.3s ease;
     }
+    .header-logo:hover { transform: scale(1.05); }
     .header-title-box {
       text-align: center;
       flex: 1;
     }
+    
+    /* Dynamic Metallic Text Header */
     header h1 { 
       font-size: 1.4rem; 
-      font-weight: 700; 
-      color: var(--gold-premium); 
+      font-weight: 800; 
+      background: linear-gradient(180deg, #FFFFFF 20%, #F1F5F9 50%, #FFD700 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       text-transform: uppercase; 
       letter-spacing: 1px; 
-      line-height: 1.2;
+      line-height: 1.25;
+      text-shadow: 0px 4px 15px rgba(0,0,0,0.3);
     }
-    header p { 
-      font-size: 0.85rem; 
-      color: var(--light-blue); 
-      font-style: italic; 
-      margin-top: 4px; 
+    .header-subtitle-badge {
+      display: inline-block;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #FBBF24;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 50px;
+      margin-top: 6px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
     }
 
-    main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 1.5rem; }
-    .card { background: var(--white); width: 100%; max-width: 750px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); padding: 2rem; margin: auto; }
+    main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 2rem 1.5rem; }
+    .card { 
+      background: var(--glass-bg); 
+      backdrop-filter: blur(10px);
+      width: 100%; 
+      max-width: 780px; 
+      border-radius: 24px; 
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08), 0 1px 3px rgba(0,0,0,0.05); 
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 2.5rem; 
+      margin: auto; 
+      animation: fadeIn 0.4s ease-out;
+    }
 
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--primary-blue); color: var(--white); border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 10px; }
-    .btn:hover { background: var(--secondary-blue); }
-    .btn-gold { background: var(--gold-premium); color: var(--primary-blue); }
-    .btn-gold:hover { background: #b8952d; }
-    .btn-outline { background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .wow-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold-gradient);
+      color: var(--primary-blue);
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 6px 16px;
+      border-radius: 30px;
+      box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+      margin-bottom: 12px;
+    }
+
+    .main-title-text {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary-blue);
+      letter-spacing: -0.5px;
+      line-height: 1.3;
+    }
+
+    .btn { 
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 10px; 
+      background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%); 
+      color: var(--white); 
+      border: none; 
+      padding: 14px 28px; 
+      border-radius: 12px; 
+      font-weight: 700; 
+      font-size: 0.98rem;
+      cursor: pointer; 
+      transition: all 0.25s ease; 
+      width: 100%; 
+      margin-top: 12px; 
+      box-shadow: 0 8px 20px rgba(10, 37, 64, 0.2);
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(10, 37, 64, 0.3); }
+    .btn-gold { 
+      background: var(--gold-gradient); 
+      color: var(--primary-blue); 
+      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(245, 158, 11, 0.45); }
+    .btn-outline { background: transparent; border: 2px solid var(--secondary-blue); color: var(--secondary-blue); }
     .btn-outline:hover { background: var(--light-blue); }
 
-    .form-group { margin-bottom: 1rem; text-align: left; }
-    .form-group label { display: block; font-weight: 600; color: var(--primary-blue); margin-bottom: 4px; font-size: 0.9rem; }
-    .form-control { width: 100%; padding: 10px 12px; border: 2px solid #CBD5E1; border-radius: 8px; font-size: 0.95rem; outline: none; }
-    .form-control:focus { border-color: var(--primary-blue); }
+    .form-grid {
+      display: grid;
+      gap: 14px;
+      background: #FFFFFF;
+      padding: 1.5rem;
+      border-radius: 16px;
+      border: 1px solid #E2E8F0;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+      margin: 1.5rem 0;
+    }
+    .form-group { text-align: left; }
+    .form-group label { display: block; font-weight: 700; color: var(--primary-blue); margin-bottom: 6px; font-size: 0.88rem; }
+    .form-control { 
+      width: 100%; 
+      padding: 12px 16px; 
+      border: 2px solid #E2E8F0; 
+      border-radius: 10px; 
+      font-size: 0.95rem; 
+      outline: none; 
+      transition: all 0.2s ease;
+      background: #F8FAFC;
+    }
+    .form-control:focus { border-color: var(--accent-blue); background: #FFFFFF; box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.1); }
 
-    .quiz-info-box { background: var(--light-blue); border-left: 4px solid var(--primary-blue); padding: 1rem; border-radius: 6px; margin: 1.5rem 0; text-align: left; }
-    .social-share { display: flex; gap: 10px; margin-top: 1rem; }
-    .btn-social { flex: 1; padding: 10px; border-radius: 6px; border: none; color: white; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; font-size: 0.9rem; }
-    .bg-fb { background-color: #1877F2; }
-    .bg-wa { background-color: #25D366; }
+    .quiz-info-box { 
+      background: linear-gradient(135deg, #EEF4FF 0%, #E2E8F0 100%); 
+      border-left: 5px solid var(--accent-blue); 
+      padding: 1.2rem; 
+      border-radius: 12px; 
+      margin: 1.5rem 0; 
+      text-align: left; 
+      font-size: 0.92rem;
+    }
+    .quiz-info-box p { margin-bottom: 6px; }
+    .quiz-info-box p:last-child { margin-bottom: 0; }
 
-    .progress-bar-container { background: #E2E8F0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 1.5rem; }
-    .progress-bar { background: var(--gold-premium); height: 100%; width: 0%; transition: width 0.3s ease; }
-    .question-header { display: flex; justify-content: space-between; font-weight: 600; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
-    .question-title { font-size: 1.15rem; font-weight: 600; color: var(--primary-blue); margin-bottom: 1.5rem; text-align: left; }
+    .social-share { display: flex; gap: 12px; margin-top: 1.2rem; }
+    .btn-social { flex: 1; padding: 12px; border-radius: 10px; border: none; color: white; cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-size: 0.9rem; transition: 0.2s; }
+    .btn-social:hover { transform: translateY(-2px); opacity: 0.95; }
+    .bg-fb { background-color: #1877F2; box-shadow: 0 4px 12px rgba(24, 119, 242, 0.25); }
+    .bg-wa { background-color: #25D366; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25); }
 
-    .options-grid { display: grid; gap: 12px; }
-    .option-card { border: 2px solid #E2E8F0; padding: 14px 18px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: 0.2s; font-weight: 500; text-align: left; }
-    .option-card:hover { border-color: var(--secondary-blue); background: var(--light-blue); }
-    .option-card.selected { border-color: var(--gold-premium); background: var(--light-blue); font-weight: 700; color: var(--primary-blue); }
-    .option-badge { background: var(--primary-blue); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+    .progress-bar-container { background: #E2E8F0; height: 12px; border-radius: 6px; overflow: hidden; margin-bottom: 1.8rem; }
+    .progress-bar { background: var(--gold-gradient); height: 100%; width: 0%; transition: width 0.3s ease; }
+    .question-header { display: flex; justify-content: space-between; font-weight: 700; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.6rem; }
+    .question-title { font-size: 1.2rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 1.8rem; text-align: left; line-height: 1.4; }
 
-    .score-circle { width: 140px; height: 140px; border-radius: 50%; border: 8px solid var(--gold-premium); display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 1.5rem auto; background: var(--light-blue); }
-    .score-number { font-size: 2.2rem; font-weight: 700; color: var(--primary-blue); }
+    .options-grid { display: grid; gap: 14px; }
+    .option-card { 
+      border: 2px solid #E2E8F0; 
+      padding: 16px 20px; 
+      border-radius: 14px; 
+      cursor: pointer; 
+      display: flex; 
+      align-items: center; 
+      gap: 14px; 
+      transition: all 0.2s ease; 
+      font-weight: 600; 
+      text-align: left; 
+      background: #FFFFFF;
+    }
+    .option-card:hover { border-color: var(--accent-blue); background: var(--light-blue); transform: translateX(4px); }
+    .option-card.selected { border-color: var(--gold-premium); background: #FFFBEB; font-weight: 700; color: var(--primary-blue); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15); }
+    .option-badge { background: var(--primary-blue); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; font-weight: 800; }
+
+    .score-circle { 
+      width: 150px; 
+      height: 150px; 
+      border-radius: 50%; 
+      border: 8px solid var(--gold-premium); 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+      margin: 1.5rem auto; 
+      background: radial-gradient(circle, #FFFFFF 0%, #FEF3C7 100%); 
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.25);
+    }
+    .score-number { font-size: 2.5rem; font-weight: 800; color: var(--primary-blue); }
     
-    .participant-details-card { background: var(--light-blue); padding: 12px; border-radius: 8px; font-size: 0.9rem; text-align: left; margin-bottom: 1rem; border-left: 4px solid var(--gold-premium); }
+    .participant-details-card { background: #FFFFFF; padding: 16px; border-radius: 14px; font-size: 0.92rem; text-align: left; margin-bottom: 1.2rem; border-left: 5px solid var(--gold-premium); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
 
     /* Ranking Style */
-    .leaderboard-box { background: #FFFDF0; border: 2px solid var(--gold-premium); border-radius: 12px; padding: 1.2rem; margin-top: 1.5rem; text-align: left; }
-    .leaderboard-title { color: var(--primary-blue); font-weight: 700; font-size: 1.1rem; border-bottom: 2px solid var(--gold-premium); padding-bottom: 6px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .leaderboard-box { background: linear-gradient(180deg, #FFFDF0 0%, #FFFFFF 100%); border: 2px solid var(--gold-premium); border-radius: 18px; padding: 1.5rem; margin-top: 1.8rem; text-align: left; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.12); }
+    .leaderboard-title { color: var(--primary-blue); font-weight: 800; font-size: 1.15rem; border-bottom: 2px solid var(--gold-premium); padding-bottom: 8px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
     .ranking-list { list-style: none; padding: 0; }
-    .ranking-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; background: white; border-radius: 8px; margin-bottom: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); font-size: 0.9rem; }
-    .ranking-item .rank-badge { font-weight: 700; width: 28px; }
-    .ranking-item .player-info { flex: 1; line-height: 1.3; }
-    .ranking-item .player-name { font-weight: 600; color: var(--primary-blue); }
-    .ranking-item .player-sub { font-size: 0.75rem; color: var(--text-muted); }
-    .ranking-item .player-score { font-weight: 700; color: var(--correct-green); font-size: 1rem; margin-left: 10px; }
+    .ranking-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: white; border-radius: 12px; margin-bottom: 10px; border: 1px solid #E2E8F0; box-shadow: 0 2px 6px rgba(0,0,0,0.03); font-size: 0.92rem; }
+    .ranking-item .rank-badge { font-weight: 800; width: 32px; font-size: 1.1rem; }
+    .ranking-item .player-info { flex: 1; line-height: 1.35; }
+    .ranking-item .player-name { font-weight: 700; color: var(--primary-blue); }
+    .ranking-item .player-sub { font-size: 0.78rem; color: var(--text-muted); }
+    .ranking-item .player-score { font-weight: 800; color: var(--correct-green); font-size: 1.1rem; margin-left: 10px; }
 
-    .review-item { border-bottom: 1px solid #E2E8F0; padding: 12px 0; margin-bottom: 8px; text-align: left; }
-    .review-item.correct { border-left: 4px solid var(--correct-green); padding-left: 10px; }
-    .review-item.wrong { border-left: 4px solid var(--wrong-red); padding-left: 10px; }
+    .review-item { border-bottom: 1px solid #E2E8F0; padding: 14px 0; margin-bottom: 8px; text-align: left; }
+    .review-item.correct { border-left: 4px solid var(--correct-green); padding-left: 12px; }
+    .review-item.wrong { border-left: 4px solid var(--wrong-red); padding-left: 12px; }
 
-    footer { text-align: center; padding: 1rem; font-size: 0.8rem; color: var(--text-muted); background: #fff; border-top: 1px solid #E2E8F0; }
+    footer { text-align: center; padding: 1.2rem; font-size: 0.82rem; color: var(--text-muted); background: #fff; border-top: 1px solid #E2E8F0; font-weight: 500; }
     .hidden { display: none !important; }
 
-    /* Media query khas telefon pintar */
-    @media (max-width: 480px) {
-      .header-logo { height: 45px; }
+    @media (max-width: 580px) {
+      .header-logo { height: 50px; }
       header h1 { font-size: 1rem; }
-      header p { font-size: 0.75rem; }
+      .header-subtitle-badge { font-size: 0.68rem; padding: 3px 10px; }
+      .card { padding: 1.5rem; border-radius: 18px; }
+      .main-title-text { font-size: 1.25rem; }
     }
   </style>
 </head>
@@ -140,50 +287,50 @@
   <header>
     <div class="header-container">
       <!-- Logo 1: Kiri -->
-      <img src="https://i.postimg.cc/vBvm5cHY/603cadc0-cb8b-4795-a308-575f9ff64620-removebg-preview-(3).png" alt="Logo Rasmi Hospital Kemaman" class="header-logo">
+      <img src="https://i.postimg.cc/vBvm5cHY/603cadc0-cb8b-4795-a308-575f9ff64620-removebg-preview-(3).png" alt="Logo Rasmi TAMO" class="header-logo">
       
       <div class="header-title-box">
-        <h1>HOSPITAL KEMAMAN</h1>
-        <p>SISTEM KUIZ INTERAKTIF MEDIA SOSIAL</p>
+        <h1>TERENGGANU ASSISTANT MEDICAL OFFICER</h1>
+        <div class="header-subtitle-badge">@ TAMO DIGITAL</div>
       </div>
       
       <!-- Logo 2: Kanan -->
-      <img src="https://i.postimg.cc/HWZYHGr5/image-(7).png" alt="Logo Kempen / KKM" class="header-logo">
+      <img src="https://i.postimg.cc/HWZYHGr5/image-(7).png" alt="Logo Kempen TAMO" class="header-logo">
     </div>
   </header>
 
   <main>
     <!-- 1. HALAMAN UTAMA KUIZ -->
     <div id="view-home" class="card" style="text-align:center;">
-      <i class="fa-solid fa-award" style="font-size:3.5rem; color:var(--gold-premium); margin-bottom:10px;"></i>
-      <h2 id="quiz-main-title" style="color:var(--primary-blue);">KUIZ KESEDARAN DEMAM DENGGI & HYGIENE</h2>
-      <p style="color:var(--text-muted); font-style:italic; margin-top:5px;">"Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat"</p>
+      <div class="wow-badge"><i class="fa-solid fa-fire"></i> KUIZ KESIHATAN INTERAKTIF</div>
+      <h2 class="main-title-text">KUIZ KESEDARAN DEMAM DENGGI & HYGIENE</h2>
+      <p style="color:var(--text-muted); font-style:italic; margin-top:6px; font-weight: 500;">“Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat”</p>
 
-      <div style="margin-top: 1.5rem; text-align: left;">
+      <div class="form-grid">
         <div class="form-group">
-          <label><i class="fa-solid fa-user"></i> Nama Penuh / Nama Panggilan:</label>
-          <input type="text" id="player-name-input" class="form-control" placeholder="Cth: Ahmad bin Razali" maxlength="30">
+          <label><i class="fa-solid fa-user-circle"></i> Nama Penuh / Nama Panggilan:</label>
+          <input type="text" id="player-name-input" class="form-control" placeholder="Cth: PPP Ahmad Bin Razali" maxlength="30">
         </div>
 
         <div class="form-group">
           <label><i class="fa-solid fa-id-badge"></i> Jawatan / Peranan:</label>
-          <input type="text" id="player-position-input" class="form-control" placeholder="Cth: Jururawat / Orang Awam / Pegawai Tadbir" maxlength="30">
+          <input type="text" id="player-position-input" class="form-control" placeholder="Cth: PPP U32 / PPP U29 / Orang Awam" maxlength="30">
         </div>
 
         <div class="form-group">
-          <label><i class="fa-solid fa-building-user"></i> Tempat Bertugas / PTJ Anda:</label>
-          <input type="text" id="player-ptj-input" class="form-control" placeholder="Cth: Wad Kecemasan Hospital Kemaman / Klinik Kesihatan Chukai" maxlength="40">
+          <label><i class="fa-solid fa-building-circle-check"></i> Tempat Bertugas / PTJ Anda:</label>
+          <input type="text" id="player-ptj-input" class="form-control" placeholder="Cth: Jabatan Kecemasan HSNZ / PKD Kemaman" maxlength="40">
         </div>
       </div>
 
       <div class="quiz-info-box">
-        <p><strong><i class="fa-solid fa-bullseye"></i> Objektif:</strong> Meningkatkan kesedaran tentang pencegahan Aedes &amp; kebersihan diri.</p>
-        <p><strong><i class="fa-solid fa-users"></i> Sasaran:</strong> Warga Hospital Kemaman &amp; Orang Awam</p>
-        <p><strong><i class="fa-solid fa-layer-group"></i> Tahap Kesukaran:</strong> Sederhana</p>
-        <p><strong><i class="fa-solid fa-list-check"></i> Jumlah Soalan:</strong> 15 Soalan</p>
+        <p><strong><i class="fa-solid fa-bullseye" style="color:var(--accent-blue);"></i> Objektif:</strong> Meningkatkan kesedaran pencegahan Aedes &amp; kebersihan diri.</p>
+        <p><strong><i class="fa-solid fa-users" style="color:var(--accent-blue);"></i> Sasaran:</strong> Warga Terengganu Assistant Medical Officer @ TAMO &amp; Orang Awam</p>
+        <p><strong><i class="fa-solid fa-layer-group" style="color:var(--accent-blue);"></i> Tahap Kesukaran:</strong> Sederhana</p>
+        <p><strong><i class="fa-solid fa-list-check" style="color:var(--accent-blue);"></i> Jumlah Soalan:</strong> 15 Soalan</p>
       </div>
 
-      <button class="btn btn-gold" onclick="startQuiz()"><i class="fa-solid fa-play"></i> MULA KUIZ SEKARANG</button>
+      <button class="btn btn-gold" onclick="startQuiz()"><i class="fa-solid fa-bolt"></i> MULA KUIZ SEKARANG</button>
 
       <div class="social-share">
         <button class="btn-social bg-fb" onclick="shareFacebook()"><i class="fa-brands fa-facebook"></i> Kongsi Facebook</button>
@@ -205,7 +352,7 @@
 
       <div class="options-grid" id="options-container"></div>
 
-      <div style="display:flex; gap:10px; margin-top:1.5rem;">
+      <div style="display:flex; gap:12px; margin-top:1.8rem;">
         <button id="btn-prev" class="btn btn-outline hidden" onclick="prevQuestion()"><i class="fa-solid fa-arrow-left"></i> Sebelum</button>
         <button id="btn-next" class="btn" onclick="nextQuestion()">Seterusnya <i class="fa-solid fa-arrow-right"></i></button>
         <button id="btn-submit" class="btn btn-gold hidden" onclick="confirmSubmit()"><i class="fa-solid fa-paper-plane"></i> Hantar Jawapan</button>
@@ -214,10 +361,10 @@
 
     <!-- 3. HALAMAN KEPUTUSAN & RANKING -->
     <div id="view-result" class="card hidden" style="text-align: center;">
-      <i class="fa-solid fa-trophy" style="font-size:3.5rem; color:var(--gold-premium);"></i>
-      <h2 style="color:var(--primary-blue); margin-top:10px;">Keputusan Kuiz Anda</h2>
+      <i class="fa-solid fa-trophy" style="font-size:3.8rem; color:var(--gold-premium); filter: drop-shadow(0 4px 10px rgba(245, 158, 11, 0.4));"></i>
+      <h2 style="color:var(--primary-blue); margin-top:10px; font-weight:800;">Keputusan Kuiz Anda</h2>
       
-      <div class="participant-details-card">
+      <div class="participant-details-card" style="margin-top:1rem;">
         <p><strong>Nama:</strong> <span id="display-player-name">-</span></p>
         <p><strong>Jawatan:</strong> <span id="display-player-position">-</span></p>
         <p><strong>Tempat Bertugas / PTJ:</strong> <span id="display-player-ptj">-</span></p>
@@ -225,11 +372,11 @@
 
       <div class="score-circle">
         <span class="score-number" id="result-score">0%</span>
-        <span style="font-size:0.8rem; color:var(--text-muted);">MARKAH</span>
+        <span style="font-size:0.78rem; color:var(--text-muted); font-weight:800; letter-spacing:1px;">MARKAH</span>
       </div>
 
-      <p id="result-motivation" style="font-weight:600; margin-bottom:1rem;"></p>
-      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">
+      <p id="result-motivation" style="font-weight:700; margin-bottom:1rem; font-size:1.05rem;"></p>
+      <p style="color:var(--text-muted); font-size:0.92rem; margin-bottom:1.5rem;">
         Betul: <strong id="result-correct" style="color:var(--correct-green);">0</strong> | 
         Salah: <strong id="result-wrong" style="color:var(--wrong-red);">0</strong>
       </p>
@@ -237,12 +384,10 @@
       <!-- CARTA RANKING (LEADERBOARD) -->
       <div class="leaderboard-box">
         <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING MARKAH TERTINGGI</div>
-        <ul class="ranking-list" id="ranking-list-container">
-          <!-- Senarai ranking dijanakan secara dinamik -->
-        </ul>
+        <ul class="ranking-list" id="ranking-list-container"></ul>
       </div>
 
-      <button class="btn btn-outline" onclick="toggleReview()" style="margin-top:1.5rem;"><i class="fa-solid fa-magnifying-glass"></i> LIHAT SEMAKAN JAWAPAN</button>
+      <button class="btn btn-outline" onclick="toggleReview()" style="margin-top:1.8rem;"><i class="fa-solid fa-magnifying-glass"></i> LIHAT SEMAKAN JAWAPAN</button>
       <button class="btn btn-gold" onclick="location.reload()" style="margin-top:10px;"><i class="fa-solid fa-rotate-right"></i> CUBA LAGI</button>
 
       <div class="social-share" style="margin-top:15px;">
@@ -251,14 +396,14 @@
       </div>
 
       <div id="review-container" class="hidden" style="margin-top:2rem; text-align:left;">
-        <h3 style="border-bottom:2px solid var(--gold-premium); padding-bottom:5px; margin-bottom:1rem; color:var(--primary-blue);">Semakan Jawapan Sahih KKM</h3>
+        <h3 style="border-bottom:2px solid var(--gold-premium); padding-bottom:6px; margin-bottom:1.2rem; color:var(--primary-blue); font-weight:800;">Semakan Jawapan Sahih KKM</h3>
         <div id="review-list"></div>
       </div>
     </div>
   </main>
 
   <footer>
-    Hak Cipta Terpelihara &copy; 2026 Unit Pendidikan Kesihatan Hospital Kemaman.
+    Hak Cipta Terpelihara &copy; 2026 Terengganu Assistant Medical Officer @ TAMO.
   </footer>
 
   <script>
@@ -426,17 +571,17 @@
     }
 
     function saveToLeaderboard(name, position, ptj, score) {
-      let ranks = JSON.parse(localStorage.getItem("hk_quiz_ranks_v2") || "[]");
+      let ranks = JSON.parse(localStorage.getItem("tamo_quiz_ranks_v2") || "[]");
       ranks.push({ name: name, position: position, ptj: ptj, score: score });
       ranks.sort((a, b) => b.score - a.score);
       ranks = ranks.slice(0, 5);
-      localStorage.setItem("hk_quiz_ranks_v2", JSON.stringify(ranks));
+      localStorage.setItem("tamo_quiz_ranks_v2", JSON.stringify(ranks));
     }
 
     function renderLeaderboard() {
       const container = document.getElementById("ranking-list-container");
       container.innerHTML = "";
-      let ranks = JSON.parse(localStorage.getItem("hk_quiz_ranks_v2") || "[]");
+      let ranks = JSON.parse(localStorage.getItem("tamo_quiz_ranks_v2") || "[]");
 
       if (ranks.length === 0) {
         container.innerHTML = "<li style='font-size:0.85rem; color:gray;'>Belum ada rekod ranking.</li>";
@@ -471,19 +616,19 @@
     }
 
     function shareWhatsApp() {
-      const text = encodeURIComponent(`Jom uji minda dan ilmu kesihatan anda dalam Kuiz Interaktif Hospital Kemaman: ${window.location.href}`);
+      const text = encodeURIComponent(`Jom uji minda dan ilmu kesihatan anda dalam Kuiz Interaktif TAMO: ${window.location.href}`);
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
 
     function shareFacebookResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya (${currentPlayerName} - ${currentPlayerPosition}, ${currentPlayerPTJ}) mendapat markah ${score} dalam Kuiz Kesedaran Denggi Hospital Kemaman! Jom cabar kedudukan saya di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya (${currentPlayerName} - ${currentPlayerPosition}, ${currentPlayerPTJ}) mendapat markah ${score} dalam Kuiz Kesedaran Denggi Terengganu Assistant Medical Officer @ TAMO! Jom cabar kedudukan saya di: ${window.location.href}`);
       window.open(`https://www.facebook.com/sharer/sharer.php?quote=${text}&u=${encodeURIComponent(window.location.href)}`, '_blank');
     }
 
     function shareWhatsAppResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya (${currentPlayerName} - ${currentPlayerPosition}, ${currentPlayerPTJ}) mendapat markah ${score} dalam Kuiz Kesedaran Denggi Hospital Kemaman! Cabar kedudukan ranking anda di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya (${currentPlayerName} - ${currentPlayerPosition}, ${currentPlayerPTJ}) mendapat markah ${score} dalam Kuiz Kesedaran Denggi Terengganu Assistant Medical Officer @ TAMO! Cabar kedudukan ranking anda di: ${window.location.href}`);
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
   </script>
