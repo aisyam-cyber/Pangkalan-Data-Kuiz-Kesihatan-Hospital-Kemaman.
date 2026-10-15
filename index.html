@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Penjana Kuiz AI Interaktif</title>
+  <title>Penjana Kuiz AI Interaktif Dwibahasa</title>
   <style>
     * { 
       box-sizing: border-box; 
@@ -24,17 +24,19 @@
     .card { 
       background: #ffffff; 
       width: 100%; 
-      max-width: 500px; 
+      max-width: 520px; 
       border-radius: 20px; 
       padding: 30px; 
       box-shadow: 0 15px 30px rgba(0,0,0,0.2); 
+      position: relative;
+      overflow: hidden;
     }
 
     h1 { 
       font-size: 1.6rem; 
       text-align: center; 
       color: #2d3748; 
-      margin-bottom: 10px; 
+      margin-bottom: 8px; 
     }
 
     p.subtitle { 
@@ -93,6 +95,39 @@
       display: none; 
     }
 
+    .timer-container {
+      width: 100%;
+      background: #edf2f7;
+      height: 8px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .timer-bar {
+      height: 100%;
+      background: #48bb78;
+      width: 100%;
+      transition: width 1s linear, background-color 0.3s;
+    }
+
+    .timer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .timer-badge {
+      font-weight: bold;
+      color: #e53e3e;
+      background: #fff5f5;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      border: 1px solid #fed7d7;
+    }
+
     .question { 
       font-size: 1.15rem; 
       font-weight: 600; 
@@ -114,7 +149,7 @@
       border-radius: 12px; 
       text-align: left; 
       cursor: pointer; 
-      font-size: 0.98rem; 
+      font-size: 0.95rem; 
       color: #4a5568;
       font-weight: 500;
       transition: all 0.2s;
@@ -166,22 +201,31 @@
     <!-- 1. SKRIN INPUT TAJUK -->
     <div id="setup-screen">
       <h1>🎮 Penjana Kuiz AI</h1>
-      <p class="subtitle">Masukkan sebarang tajuk dan AI akan jana 10 soalan automatik!</p>
-      <input type="text" id="topic-input" placeholder="Contoh: Sejarah Malaysia, Sains, Makanan...">
+      <p class="subtitle">Masukkan sebarang tajuk dan AI akan jana 10 soalan dwibahasa automatik!</p>
+      <input type="text" id="topic-input" placeholder="Contoh: Sejarah Malaysia, Science, Football...">
       <button class="btn" onclick="generateQuiz()">Jana & Mula Kuiz 🚀</button>
     </div>
 
     <!-- 2. SKRIN LOADING -->
     <div id="loading-screen" class="loading">
-      ⏳ AI sedang menjana 10 soalan...<br>
+      ⏳ AI sedang menjana 10 soalan dwibahasa...<br>
       <small style="color: #a0aec0;">(Sila tunggu beberapa saat)</small>
     </div>
 
     <!-- 3. SKRIN KUIZ -->
     <div id="quiz-screen" class="quiz-box">
-      <h2 id="quiz-title" style="font-size: 1.2rem; text-align: center; margin-bottom: 20px; color: #667eea;">Tajuk Kuiz</h2>
+      <div class="timer-header">
+        <h2 id="quiz-title" style="font-size: 1.1rem; color: #667eea;">Tajuk Kuiz</h2>
+        <span class="timer-badge" id="timer-text">⏱️ 15s</span>
+      </div>
+
+      <div class="timer-container">
+        <div class="timer-bar" id="timer-bar"></div>
+      </div>
+
       <div class="question" id="q-text">Teks Soalan</div>
       <div class="options" id="opt-container"></div>
+
       <div class="footer">
         <span id="q-count">Soalan 1 / 10</span>
         <span id="score-text">Markah: 0</span>
@@ -199,11 +243,19 @@
 
   <script>
     // ⚠️ GANTIKAN URL DI BAWAH DENGAN WEB APP URL GOOGLE APPS SCRIPT ANDA
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwtbAY0a_FRts0bfioHnzyUY6MIVXsOc4R5QjoJnnL1ybs-iDBR75NV_pNiXAb9wsLA/exec";
+    const SCRIPT_URL = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbzTzP_DxAA2mZuGv5NLybd8hKEhtnPmwMDnt38Xl5wN8-d0u0MnLIzRFIFXkgtbyKNU/exec";
+
+    // Kesan Bunyi (Sound Effects)
+    const soundCorrect = new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3');
+    const soundWrong = new Audio('https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3');
+    const soundTimeOut = new Audio('https://assets.mixkit.co/active_storage/sfx/2874/2874-preview.mp3');
 
     let questions = [];
     let currentIdx = 0;
     let score = 0;
+    let timerInterval;
+    const TIME_LIMIT = 15;
+    let timeLeft = TIME_LIMIT;
 
     async function generateQuiz() {
       const topic = document.getElementById('topic-input').value.trim();
@@ -234,6 +286,51 @@
       }
     }
 
+    function startTimer() {
+      clearInterval(timerInterval);
+      timeLeft = TIME_LIMIT;
+      updateTimerUI();
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerUI();
+
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          handleTimeOut();
+        }
+      }, 1000);
+    }
+
+    function updateTimerUI() {
+      document.getElementById('timer-text').innerText = `⏱️ ${timeLeft}s`;
+      const bar = document.getElementById('timer-bar');
+      const percentage = (timeLeft / TIME_LIMIT) * 100;
+      bar.style.width = `${percentage}%`;
+
+      if (timeLeft <= 5) {
+        bar.style.backgroundColor = '#f56565';
+      } else if (timeLeft <= 8) {
+        bar.style.backgroundColor = '#ed8936';
+      } else {
+        bar.style.backgroundColor = '#48bb78';
+      }
+    }
+
+    function handleTimeOut() {
+      soundTimeOut.play().catch(() => {});
+      const q = questions[currentIdx];
+      const allBtns = document.querySelectorAll('.opt-btn');
+      
+      allBtns.forEach(b => b.style.pointerEvents = 'none');
+
+      Object.keys(q.pilihan).forEach((key, idx) => {
+        if (key === q.jawapanBetul) allBtns[idx].classList.add('correct');
+      });
+
+      setTimeout(nextQuestion, 1500);
+    }
+
     function showQuestion() {
       const q = questions[currentIdx];
       document.getElementById('q-text').innerText = `${currentIdx + 1}. ${q.soalan}`;
@@ -249,34 +346,41 @@
         btn.onclick = () => checkAnswer(key, btn);
         container.appendChild(btn);
       });
+
+      startTimer();
     }
 
     function checkAnswer(selectedKey, btn) {
+      clearInterval(timerInterval);
       const q = questions[currentIdx];
       const allBtns = document.querySelectorAll('.opt-btn');
       allBtns.forEach(b => b.style.pointerEvents = 'none');
 
       if (selectedKey === q.jawapanBetul) {
+        soundCorrect.play().catch(() => {});
         btn.classList.add('correct');
         score++;
         document.getElementById('score-text').innerText = `Markah: ${score}`;
       } else {
+        soundWrong.play().catch(() => {});
         btn.classList.add('wrong');
         Object.keys(q.pilihan).forEach((key, idx) => {
           if (key === q.jawapanBetul) allBtns[idx].classList.add('correct');
         });
       }
 
-      setTimeout(() => {
-        currentIdx++;
-        if (currentIdx < questions.length) {
-          showQuestion();
-        } else {
-          document.getElementById('quiz-screen').style.display = 'none';
-          document.getElementById('result-screen').style.display = 'block';
-          document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
-        }
-      }, 1200);
+      setTimeout(nextQuestion, 1200);
+    }
+
+    function nextQuestion() {
+      currentIdx++;
+      if (currentIdx < questions.length) {
+        showQuestion();
+      } else {
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+        document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
+      }
     }
   </script>
 </body>
