@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Penjana Kuiz AI Interaktif Dwibahasa</title>
+  <title>Kuiz Interaktif Facebook</title>
   <style>
     * { 
       box-sizing: border-box; 
@@ -200,16 +200,15 @@
   <div class="card">
     <!-- 1. SKRIN INPUT TAJUK -->
     <div id="setup-screen">
-      <h1>🎮 Penjana Kuiz AI</h1>
-      <p class="subtitle">Masukkan sebarang tajuk dan AI akan jana 10 soalan dwibahasa automatik!</p>
-      <input type="text" id="topic-input" placeholder="Contoh: Sejarah Malaysia, Science, Football...">
-      <button class="btn" onclick="generateQuiz()">Jana & Mula Kuiz 🚀</button>
+      <h1>🎮 Kuiz Interaktif</h1>
+      <p class="subtitle">Masukkan tajuk atau pilih topik untuk memulakan kuiz!</p>
+      <input type="text" id="topic-input" placeholder="Contoh: Sejarah Malaysia, Sains, General...">
+      <button class="btn" onclick="startQuiz()">Mula Kuiz 🚀</button>
     </div>
 
     <!-- 2. SKRIN LOADING -->
     <div id="loading-screen" class="loading">
-      ⏳ AI sedang menjana 10 soalan dwibahasa...<br>
-      <small style="color: #a0aec0;">(Sila tunggu beberapa saat)</small>
+      ⏳ Memuatkan soalan dari pangkalan data...<br>
     </div>
 
     <!-- 3. SKRIN KUIZ -->
@@ -243,7 +242,7 @@
 
   <script>
     // ⚠️ GANTIKAN URL DI BAWAH DENGAN WEB APP URL GOOGLE APPS SCRIPT ANDA
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxI5yfP5X4lYjGfYB9vBq6Ce5GRkmYlf7SeuH_ff3ZJiQyn6ynMtRLmA9s4QuQExNJo/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxsPZCYvagZA8egG7BfyTVEJSwQY53u0y8IJseVm1wzcu29SjRUiW0elcpSWDadbQfs/exec";
 
     // Kesan Bunyi (Sound Effects)
     const soundCorrect = new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3');
@@ -257,9 +256,8 @@
     const TIME_LIMIT = 15;
     let timeLeft = TIME_LIMIT;
 
-    async function generateQuiz() {
+    async function startQuiz() {
       const topic = document.getElementById('topic-input').value.trim();
-      if (!topic) return alert("Sila masukkan tajuk kuiz!");
 
       document.getElementById('setup-screen').style.display = 'none';
       document.getElementById('loading-screen').style.display = 'block';
@@ -269,19 +267,19 @@
         const data = await res.json();
 
         if (data.status === "error" || !data.soalan || data.soalan.length === 0) {
-          alert("Gagal menjana soalan. Sila cuba lagi atau gunakan tajuk lain!");
+          alert("Tiada soalan dijumpai. Sila pastikan Google Sheets anda mempunyai data soalan.");
           location.reload();
           return;
         }
 
         questions = data.soalan;
-        document.getElementById('quiz-title').innerText = data.tajuk;
+        document.getElementById('quiz-title').innerText = data.tajuk || "Kuiz Interaktif";
         document.getElementById('loading-screen').style.display = 'none';
         document.getElementById('quiz-screen').style.display = 'block';
         
         showQuestion();
       } catch (err) {
-        alert("Ralat sambungan! Pastikan Web App URL dalam index.html sudah dikemaskini.");
+        alert("Ralat sambungan! Sila semak Web App URL di index.html.");
         location.reload();
       }
     }
