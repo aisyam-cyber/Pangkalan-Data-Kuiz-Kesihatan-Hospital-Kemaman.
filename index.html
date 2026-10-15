@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistem Kuiz Interaktif Hospital Kemaman</title>
-  <meta property="og:title" content="Sistem Kuiz Interaktif Hospital Kemaman" />
-  <meta property="og:description" content="Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat" />
+
+  <!-- Open Graph Meta Facebook -->
+  <meta property="og:title" content="Kuiz Kesihatan Interaktif Hospital Kemaman" />
+  <meta property="og:description" content="Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat. Jom jawab kuiz kesihatan 15 soalan ini!" />
   <meta property="og:type" content="website" />
-  
+
+  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -27,7 +30,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
     body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
-    
+
     header {
       background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
       color: var(--white);
@@ -36,15 +39,11 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       border-bottom: 4px solid var(--gold-premium);
     }
-    header h1 { font-size: 1.6rem; font-weight: 700; color: var(--gold-premium); text-transform: uppercase; letter-spacing: 1px; }
-    header p { font-size: 0.95rem; color: var(--light-blue); font-style: italic; margin-top: 4px; }
-
-    .nav-tabs { display: flex; justify-content: center; background: #0e2a52; padding: 0.5rem; gap: 10px; }
-    .nav-tabs button { background: transparent; border: none; color: white; padding: 8px 16px; border-radius: 20px; font-weight: 500; cursor: pointer; transition: 0.3s; }
-    .nav-tabs button.active { background: var(--gold-premium); color: var(--primary-blue); font-weight: 700; }
+    header h1 { font-size: 1.5rem; font-weight: 700; color: var(--gold-premium); text-transform: uppercase; letter-spacing: 1px; }
+    header p { font-size: 0.9rem; color: var(--light-blue); font-style: italic; margin-top: 4px; }
 
     main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 1.5rem; }
-    .card { background: var(--white); width: 100%; max-width: 750px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); padding: 2rem; margin: auto; transition: all 0.3s ease; }
+    .card { background: var(--white); width: 100%; max-width: 750px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); padding: 2rem; margin: auto; }
 
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--primary-blue); color: var(--white); border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 10px; }
     .btn:hover { background: var(--secondary-blue); }
@@ -53,35 +52,28 @@
     .btn-outline { background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); }
     .btn-outline:hover { background: var(--light-blue); }
 
-    .quiz-info-box { background: var(--light-blue); border-left: 4px solid var(--primary-blue); padding: 1rem; border-radius: 6px; margin: 1.5rem 0; }
+    .quiz-info-box { background: var(--light-blue); border-left: 4px solid var(--primary-blue); padding: 1rem; border-radius: 6px; margin: 1.5rem 0; text-align: left; }
     .social-share { display: flex; gap: 10px; margin-top: 1rem; }
-    .btn-social { flex: 1; padding: 10px; border-radius: 6px; border: none; color: white; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn-social { flex: 1; padding: 10px; border-radius: 6px; border: none; color: white; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; font-size: 0.9rem; }
     .bg-fb { background-color: #1877F2; }
     .bg-wa { background-color: #25D366; }
 
     .progress-bar-container { background: #E2E8F0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 1.5rem; }
     .progress-bar { background: var(--gold-premium); height: 100%; width: 0%; transition: width 0.3s ease; }
     .question-header { display: flex; justify-content: space-between; font-weight: 600; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
-    .question-title { font-size: 1.25rem; font-weight: 600; color: var(--primary-blue); margin-bottom: 1.5rem; }
+    .question-title { font-size: 1.15rem; font-weight: 600; color: var(--primary-blue); margin-bottom: 1.5rem; text-align: left; }
 
     .options-grid { display: grid; gap: 12px; }
-    .option-card { border: 2px solid #E2E8F0; padding: 14px 18px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: 0.2s; font-weight: 500; }
+    .option-card { border: 2px solid #E2E8F0; padding: 14px 18px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: 0.2s; font-weight: 500; text-align: left; }
     .option-card:hover { border-color: var(--secondary-blue); background: var(--light-blue); }
     .option-card.selected { border-color: var(--gold-premium); background: var(--light-blue); font-weight: 700; color: var(--primary-blue); }
-    .option-badge { background: var(--primary-blue); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+    .option-badge { background: var(--primary-blue); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
 
     .score-circle { width: 140px; height: 140px; border-radius: 50%; border: 8px solid var(--gold-premium); display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 1.5rem auto; background: var(--light-blue); }
     .score-number { font-size: 2.2rem; font-weight: 700; color: var(--primary-blue); }
-    .review-item { border-bottom: 1px solid #E2E8F0; padding: 12px 0; margin-bottom: 8px; }
+    .review-item { border-bottom: 1px solid #E2E8F0; padding: 12px 0; margin-bottom: 8px; text-align: left; }
     .review-item.correct { border-left: 4px solid var(--correct-green); padding-left: 10px; }
     .review-item.wrong { border-left: 4px solid var(--wrong-red); padding-left: 10px; }
-
-    .form-group { margin-bottom: 1rem; text-align: left; }
-    .form-group label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.9rem; }
-    .form-control { width: 100%; padding: 10px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 0.95rem; }
-
-    .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--gold-premium); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     footer { text-align: center; padding: 1rem; font-size: 0.8rem; color: var(--text-muted); background: #fff; border-top: 1px solid #E2E8F0; }
     .hidden { display: none !important; }
@@ -94,23 +86,17 @@
     <p>SISTEM KUIZ INTERAKTIF MEDIA SOSIAL</p>
   </header>
 
-  <div class="nav-tabs">
-    <button id="nav-public" class="active" onclick="switchTab('public')"><i class="fa-solid fa-gamepad"></i> Kuiz Awam</button>
-    <button id="nav-admin" onclick="switchTab('admin')"><i class="fa-solid fa-user-shield"></i> Portal Pentadbir</button>
-  </div>
-
   <main>
-    <div id="view-home" class="card">
-      <div style="text-align:center;">
-        <i class="fa-solid fa-award" style="font-size:3rem; color:var(--gold-premium); margin-bottom:10px;"></i>
-        <h2 id="quiz-title" style="color:var(--primary-blue);">Memuat naik kuiz...</h2>
-        <p id="quiz-tagline" style="color:var(--text-muted); font-style:italic; margin-top:5px;">"Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat"</p>
-      </div>
+    <!-- 1. HALAMAN UTAMA KUIZ -->
+    <div id="view-home" class="card" style="text-align:center;">
+      <i class="fa-solid fa-award" style="font-size:3.5rem; color:var(--gold-premium); margin-bottom:10px;"></i>
+      <h2 id="quiz-main-title" style="color:var(--primary-blue);">KUIZ KESEDARAN DEMAM DENGGI & HYGIENE</h2>
+      <p style="color:var(--text-muted); font-style:italic; margin-top:5px;">"Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat"</p>
 
       <div class="quiz-info-box">
-        <p><strong><i class="fa-solid fa-bullseye"></i> Objektif:</strong> <span id="quiz-objective">-</span></p>
-        <p><strong><i class="fa-solid fa-users"></i> Sasaran:</strong> <span id="quiz-target">-</span></p>
-        <p><strong><i class="fa-solid fa-layer-group"></i> Tahap:</strong> <span id="quiz-level">-</span></p>
+        <p><strong><i class="fa-solid fa-bullseye"></i> Objektif:</strong> Meningkatkan kesedaran tentang pencegahan Aedes &amp; kebersihan diri.</p>
+        <p><strong><i class="fa-solid fa-users"></i> Sasaran:</strong> Orang Awam &amp; Pesakit Hospital Kemaman</p>
+        <p><strong><i class="fa-solid fa-layer-group"></i> Tahap Kesukaran:</strong> Sederhana</p>
         <p><strong><i class="fa-solid fa-list-check"></i> Jumlah Soalan:</strong> 15 Soalan</p>
       </div>
 
@@ -122,6 +108,7 @@
       </div>
     </div>
 
+    <!-- 2. PAPARAN SOALAN INTERAKTIF -->
     <div id="view-quiz" class="card hidden">
       <div class="question-header">
         <span id="question-number-label">SOALAN 1 DARIPADA 15</span>
@@ -131,7 +118,7 @@
         <div id="progress-bar" class="progress-bar"></div>
       </div>
 
-      <div id="question-text" class="question-title">Soalan sedang dimuatkan...</div>
+      <div id="question-text" class="question-title">Soalan dimuatkan...</div>
 
       <div class="options-grid" id="options-container"></div>
 
@@ -142,6 +129,7 @@
       </div>
     </div>
 
+    <!-- 3. HALAMAN KEPUTUSAN -->
     <div id="view-result" class="card hidden" style="text-align: center;">
       <i class="fa-solid fa-trophy" style="font-size:3.5rem; color:var(--gold-premium);"></i>
       <h2 style="color:var(--primary-blue); margin-top:10px;">Keputusan Kuiz Anda</h2>
@@ -166,183 +154,189 @@
       </div>
 
       <div id="review-container" class="hidden" style="margin-top:2rem; text-align:left;">
-        <h3 style="border-bottom:2px solid var(--gold-premium); padding-bottom:5px; margin-bottom:1rem;">Semakan Jawapan Sahih</h3>
+        <h3 style="border-bottom:2px solid var(--gold-premium); padding-bottom:5px; margin-bottom:1rem; color:var(--primary-blue);">Semakan Jawapan Sahih KKM</h3>
         <div id="review-list"></div>
       </div>
-    </div>
-
-    <div id="view-admin" class="card hidden">
-      <div id="admin-login-box">
-        <h2 style="color:var(--primary-blue); text-align:center; margin-bottom:1.5rem;"><i class="fa-solid fa-lock"></i> Log Masuk Pentadbir</h2>
-        <div class="form-group">
-          <label>ID Pengguna</label>
-          <input type="text" id="admin-user" class="form-control" placeholder="Masukkan ID Pengguna">
-        </div>
-        <div class="form-group">
-          <label>Kata Laluan</label>
-          <input type="password" id="admin-pass" class="form-control" placeholder="Masukkan Kata Laluan">
-        </div>
-        <button class="btn btn-gold" onclick="adminLogin()"><i class="fa-solid fa-right-to-bracket"></i> LOG MASUK</button>
-      </div>
-
-      <div id="admin-dashboard-box" class="hidden">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
-          <h3>Papan Pemuka Pentadbir</h3>
-          <button class="btn btn-outline" style="width:auto; padding:6px 12px;" onclick="adminLogout()">Log Keluar</button>
-        </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; text-align:center; margin-bottom:1.5rem;">
-          <div style="background:var(--light-blue); padding:10px; border-radius:8px;">
-            <div style="font-size:1.4rem; font-weight:700;" id="stat-quizzes">0</div>
-            <div style="font-size:0.75rem;">Jumlah Kuiz</div>
-          </div>
-          <div style="background:var(--light-blue); padding:10px; border-radius:8px;">
-            <div style="font-size:1.4rem; font-weight:700;" id="stat-submissions">0</div>
-            <div style="font-size:0.75rem;">Penyertaan</div>
-          </div>
-          <div style="background:var(--light-blue); padding:10px; border-radius:8px;">
-            <div style="font-size:1.4rem; font-weight:700;" id="stat-avg">0%</div>
-            <div style="font-size:0.75rem;">Purata Markah</div>
-          </div>
-        </div>
-
-        <h4 style="margin-bottom:10px;">Jana Kuiz Kesihatan Baharu (AI Gemini)</h4>
-        <div class="form-group"><label>Tajuk Kuiz</label><input type="text" id="ai-tajuk" class="form-control" placeholder="Cth: Kesedaran Demam Denggi"></div>
-        <div class="form-group"><label>Tema / Bidang</label><input type="text" id="ai-tema" class="form-control" placeholder="Cth: Kesihatan Awam / Vektor"></div>
-        <div class="form-group"><label>Objektif Pembelajaran</label><input type="text" id="ai-objektif" class="form-control" placeholder="Cth: Memahami langkah pencegahan awal Aedes"></div>
-        <div class="form-group"><label>Sasaran Peserta</label><input type="text" id="ai-sasaran" class="form-control" placeholder="Cth: Orang Awam / Komuniti Kemaman"></div>
-        <div class="form-group">
-          <label>Tahap Kesukaran</label>
-          <select id="ai-tahap" class="form-control">
-            <option value="Mudah">Mudah</option>
-            <option value="Sederhana" selected>Sederhana</option>
-            <option value="Sukar">Sukar</option>
-          </select>
-        </div>
-
-        <button class="btn btn-gold" onclick="generateQuizAI()"><i class="fa-solid fa-wand-magic-sparkles"></i> JANA 15 SOALAN AUTOMATIK</button>
-
-        <hr style="margin:2rem 0; border:0; border-top:1px solid #E2E8F0;">
-        <h4>Senarai Kuiz Pangkalan Data</h4>
-        <div id="admin-quiz-list" style="margin-top:10px; font-size:0.9rem;"></div>
-      </div>
-    </div>
-
-    <div id="loading-spinner" class="hidden" style="text-align:center;">
-      <div class="spinner"></div>
-      <p id="loading-text">Sedang memproses...</p>
     </div>
   </main>
 
   <footer>
-    Hak Cipta Terpelihara &copy; 2026 Unit Pendidikan Kesihatan & Media Sosial Hospital Kemaman.
+    Hak Cipta Terpelihara &copy; 2026 Unit Pendidikan Kesihatan Hospital Kemaman.
   </footer>
 
   <script>
-    // masukkan URL Web App Google Apps Script anda di bawah ini:
-    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbzNXkA8J0V4X1vBtuQQeEalDKDMQklBmmkjaClx1ZUI6yXLdYixvG_bRntYSIFI5wjs/exec";
+    // BANK SOALAN RASMI (15 SOALAN DITERAPKAN TERUS DALAM KOD)
+    const quizData = [
+      {
+        nombor: 1,
+        soalan: "Apakah vektor utama yang menyebarkan virus Demam Denggi?",
+        pilihanA: "Nyamuk Anopheles",
+        pilihanB: "Nyamuk Aedes",
+        pilihanC: "Nyamuk Culex",
+        pilihanD: "Lalat Rumah",
+        jawapanBetul: "B",
+        penerangan: "Nyamuk Aedes aegypti dan Aedes albopictus adalah pembawa utama virus Denggi."
+      },
+      {
+        nombor: 2,
+        soalan: "Waktu manakah nyamuk Aedes paling aktif menggigit manusia?",
+        pilihanA: "Tengah malam",
+        pilihanB: "Awal pagi dan lewat petang",
+        pilihanC: "Tengah hari tegak",
+        pilihanD: "Hanya waktu hujan",
+        jawapanBetul: "B",
+        penerangan: "Nyamuk Aedes paling aktif menggigit pada waktu subuh/awal pagi dan lewat petang sebelum gelap."
+      },
+      {
+        nombor: 3,
+        soalan: "Berapa lamakah masa yang diperlukan oleh jentik-jentik Aedes untuk menjadi nyamuk dewasa?",
+        pilihanA: "1 hingga 2 hari",
+        pilihanB: "7 hingga 10 hari",
+        pilihanC: "1 bulan",
+        pilihanD: "3 bulan",
+        jawapanBetul: "B",
+        penerangan: "Kitaran hidup Aedes dari telur ke nyamuk dewasa mengambil masa kira-kira 7 hingga 10 hari sahaja."
+      },
+      {
+        nombor: 4,
+        soalan: "Apakah langkah terbaik untuk memusnahkan tempat pembiakan nyamuk Aedes di rumah?",
+        pilihanA: "Menutup lampu bilik",
+        pilihanB: "Membuang air bertakung dan membersihkan bekas seminggu sekali",
+        pilihanC: "Menyembur racun serangga setiap jam",
+        pilihanD: "Membiarkan pasu bunga kering tanpa dijaga",
+        jawapanBetul: "B",
+        penerangan: "Pemeriksaan dan pembersihan bekas takungan air sekurang-kurangnya seminggu sekali dapat menyekat kitaran hidup Aedes."
+      },
+      {
+        nombor: 5,
+        soalan: "Berapakah tempoh masa minimum yang disyorkan KKM untuk mencuci tangan dengan sabun?",
+        pilihanA: "5 saat",
+        pilihanB: "20 saat",
+        pilihanC: "2 minit",
+        pilihanD: "5 minit",
+        jawapanBetul: "B",
+        penerangan: "Mencuci tangan dengan air dan sabun sekurang-kurangnya 20 saat efektif membunuh kuman."
+      },
+      {
+        nombor: 6,
+        soalan: "Manakah antara berikut BUKAN gejala utama Demam Denggi?",
+        pilihanA: "Demam tinggi mendadak",
+        pilihanB: "Sakit belakang mata dan sendi",
+        pilihanC: "Gusi berdarah atau ruam kulit",
+        pilihanD: "Kuku menjadi hijau",
+        jawapanBetul: "D",
+        penerangan: "Gejala Denggi meliputi demam tinggi, sakit sendi/otot, sakit belakang mata, dan ruam."
+      },
+      {
+        nombor: 7,
+        soalan: "Apakah bahan yang boleh dimasukkan ke dalam bekas takungan air untuk membunuh jentik-jentik?",
+        pilihanA: "Garam dapur",
+        pilihanB: "Ubat jentik-jentik (Abate)",
+        pilihanC: "Sabun pencuci pinggan",
+        pilihanD: "Minyak masak",
+        jawapanBetul: "B",
+        penerangan: "Abate (temephos) ialah bahan larvicide selamat yang diluluskan untuk membunuh jentik-jentik."
+      },
+      {
+        nombor: 8,
+        soalan: "Apakah tindakan awal jika anda atau ahli keluarga mengalami demam berterusan lebih dari 2 hari?",
+        pilihanA: "Makan ubat tahan sakit dan duduk di rumah",
+        pilihanB: "Segera mendapatkan pemeriksaan di klinik atau hospital terdekat",
+        pilihanC: "Minum air ais dengan banyak",
+        pilihanD: "Melakukan senaman berat",
+        jawapanBetul: "B",
+        penerangan: "Pemeriksaan darah awal di fasiliti kesihatan penting untuk mengesan Denggi lebih awal."
+      },
+      {
+        nombor: 9,
+        soalan: "Berapakah jumlah langkah basuh tangan berkesan yang disyorkan oleh Kementerian Kesihatan Malaysia?",
+        pilihanA: "3 Langkah",
+        pilihanB: "5 Langkah",
+        pilihanC: "7 Langkah",
+        pilihanD: "10 Langkah",
+        jawapanBetul: "C",
+        penerangan: "KKM mempromosikan 7 langkah cuci tangan yang betul untuk kebersihan optima."
+      },
+      {
+        nombor: 10,
+        soalan: "Mengapakah pesakit Denggi dilarang mengambil ubat jenis NSAID seperti Aspirin atau Ibuprofen tanpa nasihat doktor?",
+        pilihanA: "Menerutkan kulit",
+        pilihanB: "Boleh meningkatkan risiko pendarahan dalaman",
+        pilihanC: "Mengenakan rasa mengantuk",
+        pilihanD: "Menyebabkan demam makin tinggi",
+        jawapanBetul: "B",
+        penerangan: "Aspirin dan Ibuprofen menipiskan darah dan boleh mencetuskan pendarahan serius bagi pesakit Denggi."
+      },
+      {
+        nombor: 11,
+        soalan: "Apakah jenis air yang menjadi pilihan nyamuk Aedes untuk bertelur?",
+        pilihanA: "Air parit yang kotor dan berbau",
+        pilihanB: "Air jernih dan tenang yang bertakung",
+        pilihanC: "Air laut yang masin",
+        pilihanD: "Air yang mengalir deras",
+        jawapanBetul: "B",
+        penerangan: "Aedes sangat gemar bertelur dalam air jernih yang bertakung seperti di dalam alas pasu, tayar, dan alas dispenser air."
+      },
+      {
+        nombor: 12,
+        soalan: "Apakah nama kempen kesihatan kebersihan persekitaran yang dijalankan komuniti untuk membanteras Denggi?",
+        pilihanA: "Gotong-Royong Mega Cari dan Musnah Aedes",
+        pilihanB: "Kempen Bebas Plastik",
+        pilihanC: "Program Tanaman Pokok",
+        pilihanD: "Hari Sukan Komuniti",
+        jawapanBetul: "A",
+        penerangan: "Gotong-royong 'Cari dan Musnah' tempat pembiakan Aedes ialah aktiviti pencegahan utama KKM."
+      },
+      {
+        nombor: 13,
+        soalan: "Berapakah sukatan minum air masak yang disyorkan sehari untuk orang dewasa bagi menjaga kesihatan?",
+        pilihanA: "1 hingga 2 gelas",
+        pilihanB: "6 hingga 8 gelas (kira-kira 2 Liter)",
+        pilihanC: "5 Liter",
+        pilihanD: "Hanya minum bila haus",
+        jawapanBetul: "B",
+        penerangan: "Minum 6-8 gelas air sehari memastikan badan kekal terhidrasi dengan baik."
+      },
+      {
+        nombor: 14,
+        soalan: "Antara bekas berikut, yang manakah paling kerap menjadi tempat pembiakan Aedes di kawasan luar rumah?",
+        pilihanA: "Tayar terbuang, botol kosong, dan alas pasu bunga",
+        pilihanB: "Peti ais yang berfungsi",
+        pilihanC: "Kipas angin",
+        pilihanD: "Papan pemotong kayu",
+        jawapanBetul: "A",
+        penerangan: "Tayar, plastik, botol terbuang, dan pasu bunga mudah bertakung air hujan dan menjadi sarang Aedes."
+      },
+      {
+        nombor: 15,
+        soalan: "Apakah peranan komuniti di bawah pergerakan COMBI KKM?",
+        pilihanA: "Menjual ubat ubatan",
+        pilihanB: "Mendorong perubahan tingkah laku komuniti untuk pencegahan Denggi",
+        pilihanC: "Membina hospital baharu",
+        pilihanD: "Mengutip cukai pintu",
+        jawapanBetul: "B",
+        penerangan: "COMBI (Communication for Behavioral Change) melatih masyarakat menjadi ejen perubahan memerangi Aedes."
+      }
+    ];
 
-    let currentQuiz = null;
-    let quizQuestions = [];
     let currentQuestionIdx = 0;
     let userAnswers = {};
-    let submissionId = null;
-    let adminToken = null;
-    let adminUser = null;
 
-    window.onload = function() {
-      loadPublishedQuiz();
-    };
-
-    function showLoading(msg) {
-      document.getElementById("loading-text").innerText = msg || "Sedang memproses...";
-      document.getElementById("loading-spinner").classList.remove("hidden");
-    }
-
-    function hideLoading() {
-      document.getElementById("loading-spinner").classList.add("hidden");
-    }
-
-    function switchTab(tab) {
-      document.getElementById("nav-public").classList.remove("active");
-      document.getElementById("nav-admin").classList.remove("active");
+    function startQuiz() {
+      currentQuestionIdx = 0;
+      userAnswers = {};
       document.getElementById("view-home").classList.add("hidden");
-      document.getElementById("view-quiz").classList.add("hidden");
-      document.getElementById("view-result").classList.add("hidden");
-      document.getElementById("view-admin").classList.add("hidden");
-
-      if (tab === 'public') {
-        document.getElementById("nav-public").classList.add("active");
-        document.getElementById("view-home").classList.remove("hidden");
-      } else if (tab === 'admin') {
-        document.getElementById("nav-admin").classList.add("active");
-        document.getElementById("view-admin").classList.remove("hidden");
-      }
-    }
-
-    async function apiPost(action, payload = {}) {
-      if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("MASUKKAN_URL")) {
-        alert("Ralat Konfigurasi: Sila masukkan URL Web App Google Apps Script pada GAS_ENDPOINT dalam index.html.");
-        return { status: "ERROR", message: "URL GAS belum dikonfigurasi." };
-      }
-
-      showLoading();
-      try {
-        const res = await fetch(GAS_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify({ action: action, payload: payload })
-        });
-        const data = await res.json();
-        hideLoading();
-        return data;
-      } catch (err) {
-        hideLoading();
-        alert("Ralat Rangkaian/Pelayan: " + err.toString());
-        return { status: "ERROR", message: err.toString() };
-      }
-    }
-
-    async function loadPublishedQuiz() {
-      const res = await apiPost("GET_PUBLISHED_QUIZ", {});
-      if (res.status === "SUCCESS") {
-        currentQuiz = res.quiz;
-        quizQuestions = res.questions;
-
-        document.getElementById("quiz-title").innerText = currentQuiz.tajuk;
-        document.getElementById("quiz-objective").innerText = currentQuiz.objektif;
-        document.getElementById("quiz-target").innerText = currentQuiz.sasaran;
-        document.getElementById("quiz-level").innerText = currentQuiz.tahap;
-      } else {
-        document.getElementById("quiz-title").innerText = "Tiada Kuiz Diterbitkan";
-      }
-    }
-
-    async function startQuiz() {
-      if (!currentQuiz || quizQuestions.length === 0) {
-        alert("Kuiz belum sedia untuk dimainkan.");
-        return;
-      }
-
-      const res = await apiPost("START_QUIZ_SESSION", { quizId: currentQuiz.id });
-      if (res.status === "SUCCESS") {
-        submissionId = res.submissionId;
-        currentQuestionIdx = 0;
-        userAnswers = {};
-        
-        document.getElementById("view-home").classList.add("hidden");
-        document.getElementById("view-quiz").classList.remove("hidden");
-        renderQuestion();
-      }
+      document.getElementById("view-quiz").classList.remove("hidden");
+      renderQuestion();
     }
 
     function renderQuestion() {
-      const q = quizQuestions[currentQuestionIdx];
-      const total = quizQuestions.length;
+      const q = quizData[currentQuestionIdx];
+      const total = quizData.length;
 
       document.getElementById("question-number-label").innerText = `SOALAN ${currentQuestionIdx + 1} DARIPADA ${total}`;
       document.getElementById("answered-count-label").innerText = `Dijawab: ${Object.keys(userAnswers).length}/${total}`;
-      
+
       const progressPercent = ((currentQuestionIdx + 1) / total) * 100;
       document.getElementById("progress-bar").style.width = `${progressPercent}%`;
 
@@ -359,10 +353,10 @@
       ];
 
       options.forEach(opt => {
-        const isSelected = (userAnswers[q.idSoalan] === opt.key);
+        const isSelected = (userAnswers[currentQuestionIdx] === opt.key);
         const optCard = document.createElement("div");
         optCard.className = `option-card ${isSelected ? 'selected' : ''}`;
-        optCard.onclick = () => selectAnswer(q.idSoalan, opt.key);
+        optCard.onclick = () => selectAnswer(opt.key);
         optCard.innerHTML = `
           <div class="option-badge">${opt.key}</div>
           <div>${opt.text}</div>
@@ -371,7 +365,7 @@
       });
 
       document.getElementById("btn-prev").classList.toggle("hidden", currentQuestionIdx === 0);
-      
+
       if (currentQuestionIdx === total - 1) {
         document.getElementById("btn-next").classList.add("hidden");
         document.getElementById("btn-submit").classList.remove("hidden");
@@ -381,13 +375,13 @@
       }
     }
 
-    function selectAnswer(qId, key) {
-      userAnswers[qId] = key;
+    function selectAnswer(key) {
+      userAnswers[currentQuestionIdx] = key;
       renderQuestion();
     }
 
     function nextQuestion() {
-      if (currentQuestionIdx < quizQuestions.length - 1) {
+      if (currentQuestionIdx < quizData.length - 1) {
         currentQuestionIdx++;
         renderQuestion();
       }
@@ -400,59 +394,55 @@
       }
     }
 
-    async function confirmSubmit() {
-      if (Object.keys(userAnswers).length < quizQuestions.length) {
+    function confirmSubmit() {
+      if (Object.keys(userAnswers).length < quizData.length) {
         if (!confirm("Anda belum menjawab semua soalan. Adakah anda pasti mahu menghantar jawapan?")) {
           return;
         }
       }
 
-      const res = await apiPost("SUBMIT_QUIZ", {
-        submissionId: submissionId,
-        quizId: currentQuiz.id,
-        userAnswers: userAnswers
+      let correctCount = 0;
+      quizData.forEach((q, idx) => {
+        if (userAnswers[idx] === q.jawapanBetul) {
+          correctCount++;
+        }
       });
 
-      if (res.status === "SUCCESS") {
-        document.getElementById("view-quiz").classList.add("hidden");
-        document.getElementById("view-result").classList.remove("hidden");
+      const score = Math.round((correctCount / quizData.length) * 100);
+      const wrongCount = quizData.length - correctCount;
 
-        document.getElementById("result-score").innerText = res.score + "%";
-        document.getElementById("result-correct").innerText = res.correctCount;
-        document.getElementById("result-wrong").innerText = res.wrongCount;
+      document.getElementById("view-quiz").classList.add("hidden");
+      document.getElementById("view-result").classList.remove("hidden");
 
-        let msg = "Tahniah! Cemerlang.";
-        if (res.score < 50) msg = "Teruskan usaha, tingkatkan ilmu kesihatan anda!";
-        else if (res.score < 80) msg = "Syabas! Keputusan yang baik.";
-        document.getElementById("result-motivation").innerText = msg;
-      }
+      document.getElementById("result-score").innerText = score + "%";
+      document.getElementById("result-correct").innerText = correctCount;
+      document.getElementById("result-wrong").innerText = wrongCount;
+
+      let msg = "Tahniah! Pencapaian Cemerlang.";
+      if (score < 50) msg = "Teruskan usaha untuk tingkatkan pengetahuan kesihatan anda!";
+      else if (score < 80) msg = "Syabas! Keputusan yang baik.";
+      document.getElementById("result-motivation").innerText = msg;
+
+      // Sediakan Senarai Semakan Jawapan
+      const listDiv = document.getElementById("review-list");
+      listDiv.innerHTML = "";
+      quizData.forEach((q, idx) => {
+        const userChoice = userAnswers[idx] || "Tiada Jawapan";
+        const isBetul = (userChoice === q.jawapanBetul);
+        const item = document.createElement("div");
+        item.className = `review-item ${isBetul ? 'correct' : 'wrong'}`;
+        item.innerHTML = `
+          <p><strong>${q.nombor}. ${q.soalan}</strong></p>
+          <p style="font-size:0.85rem; margin-top:4px;">Jawapan Anda: <strong>${userChoice}</strong> | Jawapan Betul: <strong style="color:var(--correct-green);">${q.jawapanBetul}</strong></p>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:2px;"><em>Penerangan: ${q.penerangan}</em></p>
+        `;
+        listDiv.appendChild(item);
+      });
     }
 
-    async function toggleReview() {
+    function toggleReview() {
       const revContainer = document.getElementById("review-container");
-      if (!revContainer.classList.contains("hidden")) {
-        revContainer.classList.add("hidden");
-        return;
-      }
-
-      const res = await apiPost("GET_QUIZ_RESULT", { submissionId: submissionId });
-      if (res.status === "SUCCESS") {
-        const listDiv = document.getElementById("review-list");
-        listDiv.innerHTML = "";
-
-        res.reviews.forEach(r => {
-          const item = document.createElement("div");
-          item.className = `review-item ${r.isBetul ? 'correct' : 'wrong'}`;
-          item.innerHTML = `
-            <p><strong>${r.nombor}. ${r.soalan}</strong></p>
-            <p style="font-size:0.85rem;">Jawapan Anda: <strong>${r.jawapanDipilih}</strong> | Jawapan Betul: <strong style="color:var(--correct-green);">${r.jawapanBetul}</strong></p>
-            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;"><em>Penerangan: ${r.penerangan}</em></p>
-          `;
-          listDiv.appendChild(item);
-        });
-
-        revContainer.classList.remove("hidden");
-      }
+      revContainer.classList.toggle("hidden");
     }
 
     function shareFacebook() {
@@ -467,128 +457,14 @@
 
     function shareFacebookResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya baru sahaja mendapat markah ${score} dalam Kuiz Interaktif Hospital Kemaman! Jom cuba di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya mendapat markah ${score} dalam Kuiz Kesedaran Denggi Hospital Kemaman! Jom cuba di: ${window.location.href}`);
       window.open(`https://www.facebook.com/sharer/sharer.php?quote=${text}&u=${encodeURIComponent(window.location.href)}`, '_blank');
     }
 
     function shareWhatsAppResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya mendapat markah ${score} dalam Kuiz Interaktif Hospital Kemaman! Cabar diri anda di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya mendapat markah ${score} dalam Kuiz Kesedaran Denggi Hospital Kemaman! Jom uji minda anda di: ${window.location.href}`);
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
-    }
-
-    async function adminLogin() {
-      const u = document.getElementById("admin-user").value;
-      const p = document.getElementById("admin-pass").value;
-
-      const res = await apiPost("ADMIN_LOGIN", { username: u, password: p });
-      if (res.status === "SUCCESS") {
-        adminToken = res.token;
-        adminUser = res.user;
-
-        document.getElementById("admin-login-box").classList.add("hidden");
-        document.getElementById("admin-dashboard-box").classList.remove("hidden");
-
-        loadAdminDashboard();
-      } else {
-        alert(res.message);
-      }
-    }
-
-    function adminLogout() {
-      adminToken = null;
-      adminUser = null;
-      document.getElementById("admin-login-box").classList.remove("hidden");
-      document.getElementById("admin-dashboard-box").classList.add("hidden");
-    }
-
-    async function loadAdminDashboard() {
-      const statsRes = await apiPost("GET_DASHBOARD_STATS", { token: adminToken });
-      if (statsRes.status === "SUCCESS") {
-        document.getElementById("stat-quizzes").innerText = statsRes.stats.totalQuizzes;
-        document.getElementById("stat-submissions").innerText = statsRes.stats.totalSubmissions;
-        document.getElementById("stat-avg").innerText = statsRes.stats.avgScore + "%";
-      }
-
-      const listRes = await apiPost("LIST_ALL_QUIZZES", { token: adminToken });
-      if (listRes.status === "SUCCESS") {
-        const div = document.getElementById("admin-quiz-list");
-        div.innerHTML = "";
-
-        listRes.list.forEach(q => {
-          const row = document.createElement("div");
-          row.style.cssText = "padding:10px; border-bottom:1px solid #ddd; display:flex; justify-content:space-between; align-items:center;";
-          row.innerHTML = `
-            <div>
-              <strong>${q.tajuk}</strong> (${q.status})
-              <div style="font-size:0.75rem; color:gray;">Dicipta: ${q.tarikh}</div>
-            </div>
-            <div>
-              ${q.status !== 'DITERBITKAN' ? `<button onclick="pubQuiz('${q.id}')" style="padding:4px 8px; font-size:0.75rem;" class="btn btn-gold">Terbitkan</button>` : '<span style="color:green; font-weight:bold;">Aktif</span>'}
-            </div>
-          `;
-          div.appendChild(row);
-        });
-      }
-    }
-
-    async function generateQuizAI() {
-      const payload = {
-        token: adminToken,
-        tajuk: document.getElementById("ai-tajuk").value,
-        tema: document.getElementById("ai-tema").value,
-        objektif: document.getElementById("ai-objektif").value,
-        sasaran: document.getElementById("ai-sasaran").value,
-        tahap: document.getElementById("ai-tahap").value
-      };
-
-      if (!payload.tajuk || !payload.tema) {
-        alert("Sila isi Tajuk dan Tema Kuiz.");
-        return;
-      }
-
-      showLoading("Sedang menjana 15 soalan menggunakan Gemini AI...");
-      const genRes = await apiPost("GENERATE_QUESTIONS", payload);
-
-      if (genRes.status === "SUCCESS") {
-        showLoading("Menyimpan kuiz ke pangkalan data...");
-        const saveRes = await apiPost("CREATE_QUIZ", {
-          token: adminToken,
-          username: adminUser.id,
-          tajuk: payload.tajuk,
-          tema: payload.tema,
-          objektif: payload.objektif,
-          sasaran: payload.sasaran,
-          tahap: payload.tahap,
-          soalan: genRes.questions
-        });
-
-        if (saveRes.status === "SUCCESS") {
-          alert("Kuiz berjaya dijana dan disimpan dalam status MENUNGGU SEMAKAN!");
-          loadAdminDashboard();
-        } else {
-          alert("Gagal menyimpan kuiz: " + saveRes.message);
-        }
-      } else {
-        alert("Gagal menjana soalan AI: " + genRes.message);
-      }
-      hideLoading();
-    }
-
-    async function pubQuiz(qId) {
-      if (confirm("Adakah anda pasti mahu menerbitkan kuiz ini kepada awam?")) {
-        const res = await apiPost("UPDATE_QUIZ_STATUS", {
-          token: adminToken,
-          username: adminUser.id,
-          quizId: qId,
-          newStatus: "DITERBITKAN"
-        });
-        if (res.status === "SUCCESS") {
-          alert("Kuiz kini rasmi diterbitkan!");
-          loadAdminDashboard();
-          loadPublishedQuiz();
-        }
-      }
     }
   </script>
 </body>
