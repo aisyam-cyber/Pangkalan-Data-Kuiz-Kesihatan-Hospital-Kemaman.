@@ -2,986 +2,833 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kuiz Kesihatan Mingguan | Hospital Kemaman</title>
-  <style>
-    :root {
-      --blue: #123b70;
-      --blue2: #1d5a9e;
-      --gold: #c9a449;
-      --ink: #182638;
-      --muted: #637184;
-      --bg: #f3f6fa;
-      --white: #fff;
-      --line: #dfe6ef;
-      --green: #137547;
-      --red: #b42318;
-      --radius: 16px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123b70">
+<meta name="description" content="Kuiz Kesihatan Mingguan Hospital Kemaman. Uji pengetahuan dan pelajari amalan kesihatan yang baik.">
+<title>Kuiz Kesihatan Mingguan | Hospital Kemaman</title>
 
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      color: var(--ink);
-      background: var(--bg);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.55;
-    }
-
-    button, input, textarea, select { font: inherit; }
-
-    button {
-      cursor: pointer;
-      border: 0;
-      border-radius: 10px;
-      padding: 11px 16px;
-      font-weight: 700;
-    }
-
-    button:disabled { opacity: .55; cursor: not-allowed; }
-
-    .topbar {
-      color: white;
-      background: linear-gradient(120deg, #102e57, #1d5a9e);
-      border-bottom: 4px solid var(--gold);
-      padding: 22px 16px;
-    }
-
-    .top-inner, .container {
-      width: min(1120px, calc(100% - 28px));
-      margin: auto;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .brand-mark {
-      display: grid;
-      place-items: center;
-      width: 54px;
-      height: 54px;
-      flex: 0 0 54px;
-      border: 1px solid #e3c66f;
-      border-radius: 14px;
-      font-size: 26px;
-      background: rgba(255,255,255,.08);
-    }
-
-    h1 { font-size: clamp(20px, 4vw, 29px); margin: 0 0 4px; }
-    .subtitle { margin: 0; color: #e2ebf8; font-size: 14px; }
-
-    .nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 20px 0;
-    }
-
-    .nav button { background: #e5ebf4; color: var(--blue); }
-    .nav button.active { background: var(--blue); color: white; }
-
-    .card {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: clamp(16px, 3vw, 25px);
-      box-shadow: 0 5px 18px rgba(19, 45, 79, .045);
-      margin-bottom: 18px;
-    }
-
-    .hero {
-      color: white;
-      background: linear-gradient(130deg, #123b70, #2168a9);
-      border-bottom: 4px solid var(--gold);
-    }
-
-    .hero p { color: #eaf1fb; }
-    .eyebrow { text-transform: uppercase; letter-spacing: .09em; font-size: 12px; font-weight: 800; }
-    h2 { margin: 0 0 12px; font-size: 23px; }
-    h3 { margin: 0 0 10px; font-size: 18px; }
-    .muted { color: var(--muted); }
-    .small { font-size: 13px; }
-    .hidden { display: none !important; }
-
-    .btn-primary { background: var(--blue); color: white; }
-    .btn-secondary { background: #e7edf5; color: var(--blue); }
-    .btn-gold { background: var(--gold); color: #1c2a3a; }
-    .btn-danger { background: #fde9e7; color: var(--red); }
-    .btn-green { background: #dff5e8; color: #0e633b; }
-
-    .row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .row-between { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-    .field { display: flex; flex-direction: column; gap: 6px; }
-    label { font-weight: 700; font-size: 14px; }
-
-    input, textarea, select {
-      width: 100%;
-      border: 1px solid #cbd5e1;
-      background: white;
-      border-radius: 9px;
-      padding: 10px 12px;
-      color: var(--ink);
-    }
-
-    textarea { min-height: 90px; resize: vertical; }
-    input:focus, textarea:focus, select:focus {
-      outline: 2px solid #8db9eb;
-      border-color: var(--blue2);
-    }
-
-    .question-card {
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      padding: 17px;
-      margin: 14px 0;
-      background: #fff;
-    }
-
-    .q-number {
-      color: var(--blue);
-      font-weight: 800;
-      margin-bottom: 7px;
-    }
-
-    .option {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      border: 1px solid #dfe6ef;
-      padding: 11px 12px;
-      border-radius: 10px;
-      margin-top: 8px;
-      cursor: pointer;
-      font-weight: 400;
-    }
-
-    .option:hover { background: #f4f8fd; }
-    .option input { width: auto; margin-top: 5px; }
-    .option.selected { border-color: var(--blue2); background: #edf5ff; }
-
-    .progress {
-      height: 8px;
-      background: #e6ebf2;
-      border-radius: 99px;
-      overflow: hidden;
-      margin: 12px 0 18px;
-    }
-
-    .progress > div {
-      height: 100%;
-      background: var(--gold);
-      width: 0;
-      transition: width .2s ease;
-    }
-
-    .notice {
-      border-radius: 10px;
-      padding: 12px 14px;
-      margin: 12px 0;
-      background: #edf4fd;
-      border: 1px solid #d7e6f8;
-    }
-
-    .notice.error { background: #fff0ee; border-color: #f3c5bf; color: #8f1d14; }
-    .notice.success { background: #eaf8ef; border-color: #c6e8d2; color: #145b36; }
-
-    .score {
-      font-size: 40px;
-      font-weight: 800;
-      color: var(--blue);
-      line-height: 1.2;
-    }
-
-    .feedback-item {
-      padding: 14px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .feedback-item:last-child { border-bottom: 0; }
-    .correct-text { color: var(--green); font-weight: 800; }
-    .wrong-text { color: var(--red); font-weight: 800; }
-
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; min-width: 650px; }
-    th, td { text-align: left; padding: 11px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
-    th { background: #f2f6fb; color: var(--blue); font-size: 13px; }
-    td { font-size: 14px; }
-
-    .badge {
-      display: inline-block;
-      border-radius: 999px;
-      padding: 4px 9px;
-      background: #e9edf3;
-      color: #344054;
-      font-size: 11px;
-      font-weight: 800;
-      white-space: nowrap;
-    }
-
-    .badge.green { background: #dcf7e7; color: #11643a; }
-    .badge.gold { background: #fff0c7; color: #704e00; }
-    .badge.blue { background: #dfeeff; color: #164b87; }
-
-    .q-editor {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 15px;
-      margin: 14px 0;
-    }
-
-    .q-editor summary { cursor: pointer; color: var(--blue); font-weight: 800; }
-    .q-editor .grid { margin-top: 13px; }
-    .footer { padding: 26px 12px; text-align: center; color: var(--muted); font-size: 12px; }
-
-    #busy {
-      position: fixed;
-      inset: 0;
-      z-index: 10;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(17, 35, 57, .42);
-      padding: 20px;
-    }
-
-    #busy.visible { display: flex; }
-    .busy-box { background: white; border-radius: 14px; padding: 22px; max-width: 360px; width: 100%; text-align: center; }
-
-    @media (max-width: 700px) {
-      .grid { grid-template-columns: 1fr; }
-      .brand { align-items: flex-start; }
-      .brand-mark { width: 45px; height: 45px; flex-basis: 45px; }
-      .nav button { flex: 1 1 auto; }
-      .card { border-radius: 13px; }
-    }
-  </style>
+<style>
+:root{
+  --blue:#123b70;
+  --blue2:#1c5a99;
+  --gold:#c9a449;
+  --bg:#f3f6fa;
+  --ink:#1c2938;
+  --muted:#657386;
+  --line:#dfe6ef;
+  --green:#137547;
+  --red:#b42318;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Arial,Helvetica,sans-serif}
+button,input,textarea,select{font:inherit}
+button{border:0;border-radius:9px;padding:11px 15px;font-weight:700;cursor:pointer}
+button:disabled{opacity:.55;cursor:wait}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #8bb9ed;outline-offset:2px}
+header{background:linear-gradient(120deg,#102e57,#1c5a99);border-bottom:4px solid var(--gold);color:white;padding:22px 16px}
+.wrap{width:min(1100px,calc(100% - 28px));margin:auto}
+.brand{display:flex;gap:13px;align-items:center}
+.logo{width:50px;height:50px;display:grid;place-items:center;border:1px solid var(--gold);border-radius:13px;font-size:25px;flex-shrink:0}
+h1{font-size:clamp(21px,4vw,29px);margin:0}
+header p{margin:4px 0 0;color:#e2ebf8;font-size:14px}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+nav button{background:#e5ebf4;color:var(--blue)}
+nav button.active{background:var(--blue);color:white}
+.card{background:white;border:1px solid var(--line);border-radius:15px;padding:clamp(16px,3vw,25px);margin-bottom:18px;box-shadow:0 4px 16px #152f4d08}
+.hero{background:linear-gradient(130deg,#123b70,#2168a9);color:white;border-bottom:4px solid var(--gold)}
+.hero p{color:#eaf1fb}
+h2{font-size:23px;margin:0 0 12px}
+h3{font-size:18px;margin:0 0 10px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.hidden{display:none!important}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:9px}
+.between{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.primary{background:var(--blue);color:white}
+.secondary{background:#e7edf5;color:var(--blue)}
+.gold{background:var(--gold);color:#1c2938}
+.danger{background:#fde9e7;color:var(--red)}
+.green{background:#def5e7;color:#11643a}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.field{display:flex;flex-direction:column;gap:5px}
+label{font-size:14px;font-weight:700}
+input,textarea,select{width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:9px;background:white;color:var(--ink)}
+textarea{min-height:85px;resize:vertical}
+.notice{padding:12px 14px;border-radius:10px;background:#edf4fd;border:1px solid #d7e6f8;margin:12px 0}
+.notice.error{background:#fff0ee;color:#8f1d14;border-color:#f3c5bf}
+.notice.success{background:#eaf8ef;color:#145b36;border-color:#c6e8d2}
+.badge{display:inline-block;background:#e8edf4;color:#344054;border-radius:99px;padding:4px 9px;font-size:11px;font-weight:800}
+.badge.green{background:#dcf7e7;color:#11643a}
+.badge.gold{background:#fff0c7;color:#704e00}
+.badge.blue{background:#dfeeff;color:#164b87}
+.qcard{border:1px solid var(--line);border-radius:12px;padding:16px;margin:13px 0}
+.qnum{font-weight:800;color:var(--blue);font-size:13px}
+.option{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin-top:8px;cursor:pointer;font-weight:400}
+.option input{width:auto;margin-top:5px}
+.option.selected{background:#edf5ff;border-color:var(--blue2)}
+.progress{height:8px;background:#e6ebf2;border-radius:99px;overflow:hidden;margin:12px 0 18px}
+.progress div{height:100%;width:0;background:var(--gold);transition:width .2s}
+.score{font-size:40px;color:var(--blue);font-weight:800}
+.feedback{padding:13px 0;border-bottom:1px solid var(--line)}
+.correct{color:var(--green);font-weight:800}
+.wrong{color:var(--red);font-weight:800}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:620px}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f2f6fb;color:var(--blue);font-size:13px}
+.qedit{border:1px solid var(--line);border-radius:11px;padding:13px;margin:12px 0}
+.qedit summary{cursor:pointer;color:var(--blue);font-weight:800}
+.qedit .grid{margin-top:12px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px 10px}
+#busy{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:#12243a66;z-index:10;padding:20px}
+#busy.show{display:flex}
+.busybox{background:white;border-radius:14px;padding:22px;max-width:340px;width:100%;text-align:center}
+@media(max-width:650px){
+  .grid{grid-template-columns:1fr}
+  .logo{width:44px;height:44px;flex:0 0 44px}
+  nav button{flex:1}
+}
+</style>
 </head>
+
 <body>
-  <header class="topbar">
-    <div class="top-inner">
-      <div class="brand">
-        <div class="brand-mark" aria-hidden="true">✚</div>
-        <div>
-          <h1>Kuiz Kesihatan Mingguan</h1>
-          <p class="subtitle">Hospital Kemaman · Pendidikan Kesihatan untuk Orang Awam</p>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <nav class="nav" aria-label="Navigasi sistem">
-      <button id="navQuiz" class="active" onclick="showView('quiz')">Kuiz Awam</button>
-      <button id="navAdmin" onclick="showView('admin')">Pengurusan Pentadbir</button>
-    </nav>
-
-    <section id="quizView">
-      <div class="card hero">
-        <div class="eyebrow">Ketahui · Fahami · Amalkan</div>
-        <h2 id="publicTitle" style="margin-top:8px">Kuiz Kesihatan Mingguan Hospital Kemaman</h2>
-        <p id="publicObjective">Uji pengetahuan anda dan pelajari amalan kesihatan yang baik.</p>
-        <div class="row">
-          <span class="badge gold" id="publicTheme">Tema kesihatan</span>
-          <span class="badge" id="questionCount">10 soalan</span>
-        </div>
-      </div>
-
-      <div id="quizMessage" class="notice hidden" role="status"></div>
-
-      <div id="quizContainer" class="card hidden">
-        <div class="row-between">
-          <strong>Kuiz interaktif</strong>
-          <span id="progressText" class="muted small">0 daripada 10 dijawab</span>
-        </div>
-        <div class="progress"><div id="progressBar"></div></div>
-        <div id="questionsArea"></div>
-        <div class="row">
-          <button id="submitQuizButton" class="btn-primary" onclick="submitPublicQuiz()">Hantar Jawapan</button>
-          <button class="btn-secondary" onclick="resetPublicQuiz()">Mula Semula</button>
-        </div>
-        <p class="small muted">Sila jawab semua soalan. Skor akan dipaparkan selepas jawapan dihantar.</p>
-      </div>
-
-      <div id="resultContainer" class="card hidden"></div>
-    </section>
-
-    <section id="adminView" class="hidden">
-      <div class="card">
-        <h2>Pengurusan Kuiz Mingguan</h2>
-        <p class="muted">Bahagian pentadbir dilindungi oleh PIN. Jangan kongsikan PIN dengan orang awam.</p>
-        <div id="adminLogin">
-          <div class="field" style="max-width:420px">
-            <label for="adminPin">PIN Pentadbir</label>
-            <input id="adminPin" type="password" autocomplete="current-password" placeholder="Masukkan PIN pentadbir">
-          </div>
-          <div class="row" style="margin-top:12px">
-            <button class="btn-primary" onclick="loginAdmin()">Log Masuk</button>
-          </div>
-        </div>
-        <div id="adminMessage" class="notice hidden" role="status"></div>
-      </div>
-
-      <div id="adminPanel" class="hidden">
-        <div class="card">
-          <div class="row-between">
-            <div>
-              <h2>Rekod Kuiz</h2>
-              <p class="muted small">Cipta kuiz baharu, semak status atau buka rekod DRAF untuk disunting.</p>
-            </div>
-            <div class="row">
-              <button class="btn-secondary" onclick="refreshAdmin()">Muat Semula</button>
-              <button class="btn-primary" onclick="newQuiz()">+ Kuiz Baharu</button>
-            </div>
-          </div>
-          <div id="recordsTable" class="table-wrap"></div>
-        </div>
-
-        <div class="card" id="editorCard">
-          <div class="row-between">
-            <h2 id="editorTitle">Cipta Kuiz Baharu</h2>
-            <button class="btn-secondary" onclick="clearEditor()">Kosongkan Borang</button>
-          </div>
-          <input id="quizId" type="hidden">
-
-          <div class="grid">
-            <div class="field">
-              <label for="quizTitle">Tajuk kuiz *</label>
-              <input id="quizTitle" maxlength="180" placeholder="Contoh: Kenali Tanda Awal Strok">
-            </div>
-            <div class="field">
-              <label for="quizTheme">Tema kesihatan *</label>
-              <input id="quizTheme" maxlength="180" placeholder="Contoh: Kesihatan Otak dan Strok">
-            </div>
-            <div class="field">
-              <label for="quizStart">Tarikh mula</label>
-              <input id="quizStart" type="date">
-            </div>
-            <div class="field">
-              <label for="quizEnd">Tarikh tamat</label>
-              <input id="quizEnd" type="date">
-            </div>
-            <div class="field">
-              <label for="quizAudience">Sasaran pembaca</label>
-              <input id="quizAudience" value="Orang awam">
-            </div>
-            <div class="field">
-              <label for="quizObjective">Objektif pendidikan</label>
-              <input id="quizObjective" placeholder="Apakah yang peserta akan pelajari?">
-            </div>
-          </div>
-
-          <div class="notice">
-            <strong>Nota penyuntingan:</strong> Sediakan 5 hingga 10 soalan. Setiap soalan memerlukan empat pilihan, satu jawapan betul dan maklum balas pendidikan. Sahkan fakta kesihatan sebelum meluluskan kuiz.
-          </div>
-
-          <h3>Bank soalan kuiz</h3>
-          <div id="questionEditor"></div>
-
-          <div class="row">
-            <button class="btn-primary" onclick="saveQuizForm()">Simpan sebagai DRAF</button>
-            <button class="btn-secondary" onclick="previewFacebookPost()">Pratonton Hantaran</button>
-            <button class="btn-secondary" onclick="copyPost()">Salin Hantaran</button>
-          </div>
-          <div id="saveMessage" class="notice hidden" role="status"></div>
-        </div>
-
-        <div class="card">
-          <h2>Pratonton Hantaran Facebook</h2>
-          <p class="muted small">Teks ini boleh disalin dan diterbitkan secara manual pada halaman Facebook rasmi hospital. Sistem ini tidak menerbitkan hantaran secara automatik ke Facebook.</p>
-          <textarea id="facebookPreview" rows="12" placeholder="Teks hantaran akan dipaparkan di sini." readonly></textarea>
-          <div class="row" style="margin-top:10px">
-            <button class="btn-primary" onclick="copyPost()">Salin Teks Hantaran</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    Hospital Kemaman · Sistem Pendidikan Kesihatan Digital
-    <br>Maklumat kesihatan untuk pendidikan umum. Dapatkan nasihat profesional kesihatan bagi keadaan khusus.
-  </footer>
-
-  <div id="busy" aria-live="polite">
-    <div class="busy-box">
-      <strong id="busyText">Sedang memproses...</strong>
-      <p class="muted small">Sila tunggu sebentar.</p>
+<header>
+  <div class="wrap brand">
+    <div class="logo" aria-hidden="true">✚</div>
+    <div>
+      <h1>Kuiz Kesihatan Mingguan</h1>
+      <p>Hospital Kemaman · Pendidikan Kesihatan untuk Orang Awam</p>
     </div>
   </div>
+</header>
 
-  <script>
-    'use strict';
+<main class="wrap">
+<nav aria-label="Navigasi utama">
+  <button id="navPublic" class="active" onclick="showView('public')">Kuiz Awam</button>
+  <button id="navAdmin" onclick="showView('admin')">Pengurusan Pentadbir</button>
+</nav>
 
-    let currentQuiz = null;
-    let currentAnswers = [];
-    let adminPin = '';
-    let adminRecords = [];
-    let lastSavedPost = '';
-    let lastSavedUrl = '';
+<section id="publicView">
+  <div class="card hero">
+    <div class="small">KETAHUI · FAHAMI · AMALKAN</div>
+    <h2 id="pubTitle" style="margin-top:8px">Kuiz Kesihatan Mingguan Hospital Kemaman</h2>
+    <p id="pubObjective">Uji pengetahuan dan pelajari amalan kesihatan yang baik.</p>
+    <span id="pubTheme" class="badge gold">Kesihatan umum</span>
+    <span id="pubCount" class="badge">Memuatkan soalan...</span>
+  </div>
 
-    function showBusy(message) {
-      document.getElementById('busyText').textContent = message || 'Sedang memproses...';
-      document.getElementById('busy').classList.add('visible');
+  <div id="publicMsg" class="notice hidden" role="status" aria-live="polite"></div>
+
+  <div id="quizCard" class="card hidden">
+    <div class="between">
+      <strong>Kuiz interaktif</strong>
+      <span id="progressText" class="muted small"></span>
+    </div>
+    <div class="progress" aria-label="Kemajuan menjawab">
+      <div id="progressBar"></div>
+    </div>
+    <div id="questionArea"></div>
+    <div class="row">
+      <button class="primary" id="submitBtn" onclick="submitQuiz()">Hantar Jawapan</button>
+      <button class="secondary" onclick="resetQuiz()">Mula Semula</button>
+    </div>
+    <p class="small muted">Jawab semua soalan untuk melihat skor dan maklum balas pendidikan.</p>
+  </div>
+
+  <div id="resultCard" class="card hidden"></div>
+</section>
+
+<section id="adminView" class="hidden">
+  <div class="card">
+    <h2>Pengurusan Kuiz Mingguan</h2>
+    <p class="muted small">Akses pentadbir dilindungi PIN. Jangan kongsi PIN kepada orang awam.</p>
+
+    <div id="loginArea">
+      <div class="field" style="max-width:420px">
+        <label for="pinInput">PIN Pentadbir</label>
+        <input id="pinInput" type="password" autocomplete="current-password" placeholder="Masukkan PIN">
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button class="primary" onclick="login()">Log Masuk</button>
+      </div>
+    </div>
+    <div id="adminMsg" class="notice hidden" role="status" aria-live="polite"></div>
+  </div>
+
+  <div id="adminPanel" class="hidden">
+    <div class="card">
+      <div class="between">
+        <div>
+          <h2>Rekod Kuiz</h2>
+          <p class="small muted">Sunting rekod DRAF atau urus status penerbitan.</p>
+        </div>
+        <div class="row">
+          <button class="secondary" onclick="refreshRecords()">Muat Semula</button>
+          <button class="primary" onclick="newQuiz()">+ Kuiz Baharu</button>
+          <button class="danger" onclick="logout()">Log Keluar</button>
+        </div>
+      </div>
+      <div id="records" class="tablewrap"></div>
+    </div>
+
+    <div class="card" id="editor">
+      <div class="between">
+        <h2 id="editorHeading">Cipta Kuiz Baharu</h2>
+        <button class="secondary" onclick="clearForm()">Kosongkan</button>
+      </div>
+      <input id="quizId" type="hidden">
+
+      <div class="grid">
+        <div class="field">
+          <label for="title">Tajuk kuiz *</label>
+          <input id="title" maxlength="180" placeholder="Contoh: Kenali Tanda Awal Strok">
+        </div>
+        <div class="field">
+          <label for="theme">Tema kesihatan *</label>
+          <input id="theme" maxlength="180" placeholder="Contoh: Kesihatan otak">
+        </div>
+        <div class="field">
+          <label for="start">Tarikh mula</label>
+          <input id="start" type="date">
+        </div>
+        <div class="field">
+          <label for="end">Tarikh tamat</label>
+          <input id="end" type="date">
+        </div>
+        <div class="field">
+          <label for="audience">Sasaran pembaca</label>
+          <input id="audience" value="Orang awam">
+        </div>
+        <div class="field">
+          <label for="objective">Objektif pendidikan</label>
+          <input id="objective" placeholder="Apakah yang peserta akan pelajari?">
+        </div>
+      </div>
+
+      <div class="notice">
+        Sediakan 5 hingga 10 soalan. Setiap soalan memerlukan empat pilihan, satu jawapan betul dan maklum balas pendidikan. Sahkan fakta kesihatan sebelum meluluskan kuiz.
+      </div>
+
+      <h3>Bank soalan</h3>
+      <div id="questionEditor"></div>
+
+      <div class="row">
+        <button class="primary" onclick="saveQuiz()">Simpan sebagai DRAF</button>
+        <button class="secondary" onclick="previewPost()">Pratonton Hantaran</button>
+        <button class="secondary" onclick="copyPost()">Salin Hantaran</button>
+      </div>
+      <div id="saveMsg" class="notice hidden" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="card">
+      <h2>Pratonton Hantaran Facebook</h2>
+      <p class="small muted">Teks boleh disalin untuk penerbitan manual pada halaman Facebook rasmi. Penerbitan automatik Meta belum disambungkan.</p>
+      <textarea id="postText" rows="12" readonly placeholder="Teks hantaran dipaparkan di sini."></textarea>
+      <div class="row" style="margin-top:10px">
+        <button class="primary" onclick="copyPost()">Salin Teks</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  Hospital Kemaman · Sistem Pendidikan Kesihatan Digital<br>
+  Maklumat untuk pendidikan umum. Dapatkan nasihat profesional kesihatan bagi keadaan khusus.
+</footer>
+
+<!-- Iframe dan borang untuk komunikasi dengan Google Apps Script -->
+<iframe name="hkmApiFrame" id="hkmApiFrame" title="Sambungan sistem" style="display:none"></iframe>
+
+<form id="apiForm" method="post" target="hkmApiFrame" style="display:none">
+  <input name="requestId" id="apiRequestId">
+  <input name="action" id="apiAction">
+  <input name="payload" id="apiPayload">
+  <input name="pin" id="apiPin">
+</form>
+
+<div id="busy" role="dialog" aria-modal="true" aria-live="polite">
+  <div class="busybox">
+    <strong id="busyText">Sedang memproses...</strong>
+    <p class="muted small">Sila tunggu sebentar.</p>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+/* URL WEB APP GOOGLE APPS SCRIPT HOSPITAL KEMAMAN */
+const API_URL = 'https://script.google.com/a/macros/moh.gov.my/s/AKfycbzx9hiuXwLHuy7ixY7kJkFa7XBtuxn49ukk5yvhzvgFLmv70N3HsUhhsStHMA_lA7yF/exec';
+
+let adminPin = '';
+let currentQuiz = null;
+let answers = [];
+let adminRecords = [];
+let requestCounter = 0;
+const pending = new Map();
+
+function showBusy(text){
+  document.getElementById('busyText').textContent=text||'Sedang memproses...';
+  document.getElementById('busy').classList.add('show');
+}
+function hideBusy(){
+  document.getElementById('busy').classList.remove('show');
+}
+function msg(id,text,type){
+  const e=document.getElementById(id);
+  e.textContent=text||'';
+  e.className='notice'+(type?' '+type:'')+(text?'':' hidden');
+}
+function esc(v){
+  return String(v==null?'':v).replace(/[&<>"']/g,c=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+/* Menghantar permintaan kepada Apps Script */
+function api(action,payload,pin){
+  return new Promise((resolve,reject)=>{
+    if(!API_URL || !API_URL.endsWith('/exec')){
+      reject(new Error('URL Web App Apps Script tidak sah. Sila semak tetapan API_URL.'));
+      return;
     }
 
-    function hideBusy() {
-      document.getElementById('busy').classList.remove('visible');
-    }
+    const requestId='REQ-'+Date.now()+'-'+(++requestCounter);
+    pending.set(requestId,{resolve,reject});
 
-    function message(id, text, type) {
-      const element = document.getElementById(id);
-      element.textContent = text || '';
-      element.className = 'notice' + (type ? ' ' + type : '') + (text ? '' : ' hidden');
-    }
+    document.getElementById('apiForm').action=API_URL;
+    document.getElementById('apiRequestId').value=requestId;
+    document.getElementById('apiAction').value=action;
+    document.getElementById('apiPayload').value=JSON.stringify(payload||{});
+    document.getElementById('apiPin').value=pin||'';
 
-    function escapeHtml(value) {
-      return String(value == null ? '' : value).replace(/[&<>"']/g, function (char) {
-        return {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#39;'
-        }[char];
-      });
-    }
+    showBusy('Sedang berhubung dengan pangkalan data...');
+    document.getElementById('apiForm').submit();
 
-    function runServer(functionName, args, onSuccess, onFailure) {
-      const runner = google.script.run
-        .withSuccessHandler(function (result) {
-          hideBusy();
-          if (onSuccess) onSuccess(result);
-        })
-        .withFailureHandler(function (error) {
-          hideBusy();
-          const text = error && error.message ? error.message : 'Ralat tidak diketahui.';
-          if (onFailure) onFailure(text);
-          else alert(text);
-        });
-
-      showBusy('Sedang memproses...');
-      runner[functionName].apply(runner, args || []);
-    }
-
-    function showView(view) {
-      document.getElementById('quizView').classList.toggle('hidden', view !== 'quiz');
-      document.getElementById('adminView').classList.toggle('hidden', view !== 'admin');
-      document.getElementById('navQuiz').classList.toggle('active', view === 'quiz');
-      document.getElementById('navAdmin').classList.toggle('active', view === 'admin');
-
-      if (view === 'admin' && adminPin) refreshAdmin();
-    }
-
-    function getRequestedQuizId(callback) {
-      try {
-        if (google.script && google.script.url && google.script.url.getLocation) {
-          google.script.url.getLocation(function (location) {
-            const id = location && location.parameter ? location.parameter.quiz : '';
-            callback(id || '');
-          });
-        } else {
-          callback('');
-        }
-      } catch (error) {
-        callback('');
+    setTimeout(()=>{
+      if(pending.has(requestId)){
+        pending.delete(requestId);
+        hideBusy();
+        reject(new Error('Tiada respons diterima. Semak URL /exec, deployment Apps Script dan akses aplikasi web.'));
       }
+    },30000);
+  });
+}
+
+/*
+ * Apps Script perlu menghantar respons menggunakan:
+ * parent.postMessage({
+ *   channel: 'HKM_KUIZ_API',
+ *   requestId: requestId,
+ *   result: result
+ * }, '*');
+ */
+window.addEventListener('message',function(event){
+  const data=event.data;
+  if(!data || data.channel!=='HKM_KUIZ_API' || !data.requestId)return;
+
+  const task=pending.get(data.requestId);
+  if(!task)return;
+
+  pending.delete(data.requestId);
+  hideBusy();
+
+  if(data.result && data.result.success===false){
+    task.reject(new Error(data.result.message||'Permintaan gagal.'));
+  }else{
+    task.resolve(data.result);
+  }
+});
+
+function showView(view){
+  document.getElementById('publicView').classList.toggle('hidden',view!=='public');
+  document.getElementById('adminView').classList.toggle('hidden',view!=='admin');
+  document.getElementById('navPublic').classList.toggle('active',view==='public');
+  document.getElementById('navAdmin').classList.toggle('active',view==='admin');
+
+  if(view==='admin'&&adminPin)refreshRecords();
+}
+
+function getQuizIdFromUrl(){
+  return new URLSearchParams(window.location.search).get('quiz')||'';
+}
+
+/* Memuatkan kuiz yang diterbitkan */
+async function loadPublicQuiz(){
+  try{
+    const data=await api('getPublicQuiz',{quizId:getQuizIdFromUrl()});
+
+    if(!data || !Array.isArray(data.questions) || !data.questions.length){
+      throw new Error('Tiada soalan kuiz tersedia untuk dipaparkan.');
     }
 
-    function loadPublicQuiz() {
-      getRequestedQuizId(function (requestedId) {
-        runServer('getPublicQuiz', [requestedId], function (data) {
-          if (!data || !data.success) {
-            document.getElementById('quizContainer').classList.add('hidden');
-            message('quizMessage', data && data.message ? data.message : 'Kuiz belum tersedia.', '');
-            return;
-          }
+    currentQuiz=data;
+    answers=new Array(data.questions.length).fill(null);
 
-          currentQuiz = data;
-          currentAnswers = new Array(data.questions.length).fill(null);
+    document.getElementById('pubTitle').textContent=data.title||'Kuiz Kesihatan Mingguan Hospital Kemaman';
+    document.getElementById('pubObjective').textContent=data.objective||'Jawab soalan dan pelajari fakta kesihatan.';
+    document.getElementById('pubTheme').textContent=data.theme||'Kesihatan umum';
+    document.getElementById('pubCount').textContent=data.questions.length+' soalan';
 
-          document.getElementById('publicTitle').textContent = data.title;
-          document.getElementById('publicObjective').textContent =
-            data.objective || 'Jawab soalan dan pelajari fakta kesihatan.';
-          document.getElementById('publicTheme').textContent = data.theme || 'Kesihatan umum';
-          document.getElementById('questionCount').textContent =
-            data.questions.length + ' soalan';
+    renderQuestions();
+    document.getElementById('quizCard').classList.remove('hidden');
+    document.getElementById('resultCard').classList.add('hidden');
+    msg('publicMsg','','');
+    updateProgress();
+  }catch(err){
+    document.getElementById('quizCard').classList.add('hidden');
+    msg('publicMsg',err.message,'error');
+  }
+}
 
-          renderPublicQuestions();
-          document.getElementById('quizContainer').classList.remove('hidden');
-          document.getElementById('resultContainer').classList.add('hidden');
-          message('quizMessage', '', '');
-          updateProgress();
-        }, function (error) {
-          message('quizMessage', error, 'error');
-        });
+function renderQuestions(){
+  const area=document.getElementById('questionArea');
+  area.innerHTML='';
+
+  currentQuiz.questions.forEach((q,i)=>{
+    const card=document.createElement('div');
+    card.className='qcard';
+
+    let opts='';
+    (q.options||[]).forEach((opt,j)=>{
+      opts+='<label class="option" id="opt-'+i+'-'+j+'">'+
+        '<input type="radio" name="q'+i+'" value="'+j+'">'+
+        '<span><strong>'+String.fromCharCode(65+j)+'.</strong> '+esc(opt)+'</span>'+
+        '</label>';
+    });
+
+    card.innerHTML=
+      '<div class="qnum">SOALAN '+(i+1)+' DARIPADA '+currentQuiz.questions.length+'</div>'+
+      '<h3>'+esc(q.question)+'</h3>'+opts;
+
+    area.appendChild(card);
+
+    card.querySelectorAll('input').forEach(input=>{
+      input.addEventListener('change',()=>{
+        answers[i]=Number(input.value);
+        card.querySelectorAll('.option').forEach(el=>el.classList.remove('selected'));
+        input.closest('.option').classList.add('selected');
+        updateProgress();
       });
-    }
+    });
+  });
+}
 
-    function renderPublicQuestions() {
-      const area = document.getElementById('questionsArea');
-      area.innerHTML = '';
+function updateProgress(){
+  if(!currentQuiz)return;
+  const count=answers.filter(v=>v!==null).length;
+  document.getElementById('progressText').textContent=count+' daripada '+answers.length+' dijawab';
+  document.getElementById('progressBar').style.width=(count/answers.length*100)+'%';
+}
 
-      currentQuiz.questions.forEach(function (question, index) {
-        const card = document.createElement('div');
-        card.className = 'question-card';
+/* Menghantar jawapan peserta */
+async function submitQuiz(){
+  if(!currentQuiz)return;
 
-        let optionsHtml = '';
-        question.options.forEach(function (option, optionIndex) {
-          optionsHtml +=
-            '<label class="option" id="option-' + index + '-' + optionIndex + '">' +
-              '<input type="radio" name="q-' + index + '" value="' + optionIndex + '">' +
-              '<span><strong>' + String.fromCharCode(65 + optionIndex) + '.</strong> ' +
-              escapeHtml(option) + '</span>' +
-            '</label>';
-        });
+  const missing=answers.filter(v=>v===null).length;
+  if(missing){
+    msg('publicMsg','Sila jawab semua soalan. '+missing+' soalan belum dijawab.','error');
+    return;
+  }
 
-        card.innerHTML =
-          '<div class="q-number">SOALAN ' + (index + 1) + ' DARIPADA ' +
-            currentQuiz.questions.length + '</div>' +
-          '<h3>' + escapeHtml(question.question) + '</h3>' +
-          optionsHtml;
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true;
 
-        area.appendChild(card);
+  try{
+    const result=await api('submitQuiz',{id:currentQuiz.id,answers:answers});
+    renderResult(result);
+    msg('publicMsg','','');
+  }catch(err){
+    msg('publicMsg',err.message,'error');
+  }finally{
+    btn.disabled=false;
+  }
+}
 
-        card.querySelectorAll('input[type="radio"]').forEach(function (radio) {
-          radio.addEventListener('change', function () {
-            currentAnswers[index] = Number(radio.value);
-            card.querySelectorAll('.option').forEach(function (option) {
-              option.classList.remove('selected');
-            });
-            radio.closest('.option').classList.add('selected');
-            updateProgress();
-          });
-        });
-      });
-    }
+function renderResult(result){
+  if(!result || !Array.isArray(result.feedback)){
+    msg('publicMsg','Respons keputusan tidak lengkap. Sila cuba lagi.','error');
+    return;
+  }
 
-    function updateProgress() {
-      if (!currentQuiz) return;
-      const answered = currentAnswers.filter(function (answer) {
-        return answer !== null;
-      }).length;
+  let html=
+    '<div class="small">KEPUTUSAN KUIZ</div>'+
+    '<h2>'+esc(result.title||'Keputusan Kuiz')+'</h2>'+
+    '<div class="score">'+esc(result.score)+' / '+esc(result.total)+'</div>'+
+    '<p><strong>Skor: '+esc(result.percentage)+'%</strong></p>'+
+    '<p>'+(Number(result.percentage)>=80
+      ?'Tahniah! Pengetahuan anda sangat baik.'
+      :Number(result.percentage)>=50
+      ?'Usaha yang baik. Semak penerangan untuk mengukuhkan pengetahuan.'
+      :'Terima kasih kerana menyertai. Gunakan penerangan di bawah sebagai peluang untuk belajar.')+'</p><hr>';
 
-      document.getElementById('progressText').textContent =
-        answered + ' daripada ' + currentAnswers.length + ' dijawab';
-      document.getElementById('progressBar').style.width =
-        (answered / currentAnswers.length * 100) + '%';
-    }
+  result.feedback.forEach(item=>{
+    html+='<div class="feedback">'+
+      '<div class="'+(item.isCorrect?'correct':'wrong')+'">Soalan '+esc(item.number)+': '+(item.isCorrect?'Betul':'Belum tepat')+'</div>'+
+      '<strong>'+esc(item.question)+'</strong>'+
+      '<p class="small">Jawapan betul: <strong>'+esc(item.correctAnswer)+'</strong></p>'+
+      '<p>'+esc(item.explanation)+'</p>'+
+      '</div>';
+  });
 
-    function submitPublicQuiz() {
-      if (!currentQuiz) return;
+  html+='<div class="row" style="margin-top:16px"><button class="primary" onclick="resetQuiz()">Cuba Lagi</button></div>';
 
-      const unanswered = currentAnswers.filter(function (answer) {
-        return answer === null;
-      }).length;
+  const card=document.getElementById('resultCard');
+  card.innerHTML=html;
+  card.classList.remove('hidden');
+  document.getElementById('quizCard').classList.add('hidden');
+  card.scrollIntoView({behavior:'smooth'});
+}
 
-      if (unanswered > 0) {
-        message('quizMessage', 'Sila jawab semua soalan. Masih ada ' + unanswered + ' soalan belum dijawab.', 'error');
-        return;
-      }
-
-      const button = document.getElementById('submitQuizButton');
-      button.disabled = true;
-
-      runServer('submitQuiz', [currentQuiz.id, currentAnswers], function (result) {
-        button.disabled = false;
-        renderResult(result);
-        message('quizMessage', '', '');
-      }, function (error) {
-        button.disabled = false;
-        message('quizMessage', error, 'error');
-      });
-    }
-
-    function renderResult(result) {
-      const container = document.getElementById('resultContainer');
-      let html =
-        '<div class="eyebrow">Keputusan Kuiz</div>' +
-        '<h2 style="margin-top:8px">' + escapeHtml(result.title) + '</h2>' +
-        '<div class="score">' + result.score + ' / ' + result.total + '</div>' +
-        '<p><strong>Skor anda: ' + result.percentage + '%</strong></p>' +
-        '<p>' + (result.percentage >= 80
-          ? 'Tahniah! Pengetahuan anda sangat baik. Teruskan mengamalkan maklumat kesihatan yang tepat.'
-          : result.percentage >= 50
-            ? 'Usaha yang baik. Baca maklum balas bagi setiap soalan untuk mengukuhkan pengetahuan anda.'
-            : 'Terima kasih kerana menyertai. Gunakan penerangan di bawah sebagai peluang untuk belajar.') +
-        '</p><hr>';
-
-      result.feedback.forEach(function (item) {
-        html +=
-          '<div class="feedback-item">' +
-          '<div class="' + (item.isCorrect ? 'correct-text' : 'wrong-text') + '">' +
-            'Soalan ' + item.number + ': ' + (item.isCorrect ? 'Betul' : 'Belum tepat') +
-          '</div>' +
-          '<strong>' + escapeHtml(item.question) + '</strong>' +
-          '<p class="small">Jawapan betul: <strong>' + escapeHtml(item.correctAnswer) + '</strong></p>' +
-          '<p>' + escapeHtml(item.explanation) + '</p>' +
-          '</div>';
-      });
-
-      html += '<div class="row" style="margin-top:16px">' +
-        '<button class="btn-primary" onclick="resetPublicQuiz()">Cuba Lagi</button>' +
-        '</div>';
-
-      container.innerHTML = html;
-      container.classList.remove('hidden');
-      document.getElementById('quizContainer').classList.add('hidden');
-      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    function resetPublicQuiz() {
-      if (!currentQuiz) {
-        loadPublicQuiz();
-        return;
-      }
-
-      currentAnswers = new Array(currentQuiz.questions.length).fill(null);
-      document.getElementById('resultContainer').classList.add('hidden');
-      document.getElementById('quizContainer').classList.remove('hidden');
-      renderPublicQuestions();
-      updateProgress();
-      message('quizMessage', '', '');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function loginAdmin() {
-      const pin = document.getElementById('adminPin').value.trim();
-      if (!pin) {
-        message('adminMessage', 'Sila masukkan PIN pentadbir.', 'error');
-        return;
-      }
-
-      adminPin = pin;
-      runServer('getAdminData', [adminPin], function (data) {
-        document.getElementById('adminLogin').classList.add('hidden');
-        document.getElementById('adminPanel').classList.remove('hidden');
-        message('adminMessage', 'Log masuk berjaya.', 'success');
-        renderRecords(data.records || []);
-      }, function (error) {
-        adminPin = '';
-        message('adminMessage', error, 'error');
-      });
-    }
-
-    function refreshAdmin() {
-      if (!adminPin) return;
-      runServer('getAdminData', [adminPin], function (data) {
-        renderRecords(data.records || []);
-      }, function (error) {
-        message('adminMessage', error, 'error');
-      });
-    }
-
-    function statusBadge(status) {
-      let cls = '';
-      if (status === 'DITERBITKAN') cls = 'green';
-      else if (status === 'DILULUSKAN') cls = 'gold';
-      else if (status === 'DRAF') cls = 'blue';
-
-      return '<span class="badge ' + cls + '">' + escapeHtml(status) + '</span>';
-    }
-
-    function renderRecords(records) {
-      adminRecords = records;
-      const container = document.getElementById('recordsTable');
-
-      if (!records.length) {
-        container.innerHTML = '<p class="muted">Belum ada rekod kuiz. Klik “Kuiz Baharu” untuk bermula.</p>';
-        return;
-      }
-
-      let html = '<table><thead><tr><th>Tajuk</th><th>Status</th><th>Penyertaan</th><th>Tindakan</th></tr></thead><tbody>';
-
-      records.forEach(function (record) {
-        html += '<tr>' +
-          '<td><strong>' + escapeHtml(record.title) + '</strong><br><span class="muted small">' +
-            escapeHtml(record.theme) + '</span></td>' +
-          '<td>' + statusBadge(record.status) + '</td>' +
-          '<td>' + Number(record.participation || 0) + '</td>' +
-          '<td><div class="row">' +
-            (record.status === 'DRAF'
-              ? '<button class="btn-secondary" onclick="editQuiz(\'' + escapeHtml(record.id) + '\')">Sunting</button>' +
-                '<button class="btn-gold" onclick="changeStatus(\'' + escapeHtml(record.id) + '\',\'DILULUSKAN\')">Luluskan</button>'
-              : '') +
-            (record.status === 'DILULUSKAN'
-              ? '<button class="btn-green" onclick="changeStatus(\'' + escapeHtml(record.id) + '\',\'DITERBITKAN\')">Terbitkan</button>' +
-                '<button class="btn-secondary" onclick="changeStatus(\'' + escapeHtml(record.id) + '\',\'DRAF\')">Kembali ke DRAF</button>'
-              : '') +
-            (record.status === 'DITERBITKAN'
-              ? '<button class="btn-secondary" onclick="copyQuizLink(\'' + escapeHtml(record.id) + '\')">Salin Pautan</button>' +
-                '<button class="btn-danger" onclick="changeStatus(\'' + escapeHtml(record.id) + '\',\'DIARKIBKAN\')">Arkib</button>'
-              : '') +
-            (record.status === 'DIARKIBKAN'
-              ? '<span class="muted small">Rekod arkib</span>'
-              : '') +
-          '</div></td></tr>';
-      });
-
-      html += '</tbody></table>';
-      container.innerHTML = html;
-    }
-
-    function changeStatus(id, status) {
-      if (!confirm('Adakah anda pasti mahu menukar status kuiz kepada ' + status + '?')) return;
-
-      runServer('updateQuizStatus', [id, status, adminPin], function (result) {
-        message('adminMessage', result.message || 'Status dikemas kini.', 'success');
-        refreshAdmin();
-      }, function (error) {
-        message('adminMessage', error, 'error');
-      });
-    }
-
-    function copyQuizLink(id) {
-      const url = getWebAppUrl() + '?quiz=' + encodeURIComponent(id);
-      copyText(url);
-    }
-
-    function getWebAppUrl() {
-      // Pautan sebenar akan tersedia daripada pautan yang disimpan semasa menyimpan rekod.
-      return lastSavedUrl || window.location.href.split('?')[0];
-    }
-
-    function newQuiz() {
-      clearEditor();
-      document.getElementById('editorCard').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function clearEditor() {
-      document.getElementById('quizId').value = '';
-      document.getElementById('quizTitle').value = '';
-      document.getElementById('quizTheme').value = '';
-      document.getElementById('quizStart').value = '';
-      document.getElementById('quizEnd').value = '';
-      document.getElementById('quizAudience').value = 'Orang awam';
-      document.getElementById('quizObjective').value = '';
-      document.getElementById('editorTitle').textContent = 'Cipta Kuiz Baharu';
-      document.getElementById('facebookPreview').value = '';
-      lastSavedPost = '';
-      lastSavedUrl = '';
-      renderQuestionEditor([]);
-      message('saveMessage', '', '');
-    }
-
-    function renderQuestionEditor(questions) {
-      const container = document.getElementById('questionEditor');
-      container.innerHTML = '';
-
-      for (let i = 0; i < 10; i++) {
-        const q = questions[i] || {
-          question: '',
-          options: ['', '', '', ''],
-          correctIndex: 0,
-          explanation: ''
-        };
-
-        const details = document.createElement('details');
-        details.className = 'q-editor';
-        details.open = i < 5;
-
-        details.innerHTML =
-          '<summary>Soalan ' + (i + 1) + (i < 5 ? ' · wajib diisi' : ' · pilihan tambahan') + '</summary>' +
-          '<div class="field">' +
-            '<label>Ayat soalan</label>' +
-            '<textarea class="q-text" maxlength="1000" placeholder="Tulis soalan ' + (i + 1) + '">' +
-              escapeHtml(q.question || '') + '</textarea>' +
-          '</div>' +
-          '<div class="grid">' +
-            [0,1,2,3].map(function (j) {
-              return '<div class="field"><label>Pilihan ' + String.fromCharCode(65 + j) + '</label>' +
-                '<input class="q-option" maxlength="500" value="' +
-                escapeHtml((q.options || [])[j] || '') + '" placeholder="Pilihan jawapan"></div>';
-            }).join('') +
-            '<div class="field"><label>Jawapan betul</label><select class="q-correct">' +
-              [0,1,2,3].map(function (j) {
-                return '<option value="' + j + '"' + (Number(q.correctIndex) === j ? ' selected' : '') + '>' +
-                  String.fromCharCode(65 + j) + '</option>';
-              }).join('') +
-            '</select></div>' +
-            '<div class="field"><label>Maklum balas pendidikan</label>' +
-              '<textarea class="q-explanation" maxlength="1500" placeholder="Terangkan fakta kesihatan yang betul.">' +
-                escapeHtml(q.explanation || '') + '</textarea></div>' +
-          '</div>';
-
-        container.appendChild(details);
-      }
-    }
-
-    function collectQuestions() {
-      const blocks = Array.from(document.querySelectorAll('.q-editor'));
-      const questions = [];
-
-      blocks.forEach(function (block) {
-        const question = block.querySelector('.q-text').value.trim();
-        const options = Array.from(block.querySelectorAll('.q-option')).map(function (input) {
-          return input.value.trim();
-        });
-        const explanation = block.querySelector('.q-explanation').value.trim();
-        const correctIndex = Number(block.querySelector('.q-correct').value);
-
-        const completelyBlank = !question && options.every(function (v) { return !v; }) && !explanation;
-        if (completelyBlank) return;
-
-        questions.push({
-          question: question,
-          options: options,
-          correctIndex: correctIndex,
-          explanation: explanation
-        });
-      });
-
-      return questions;
-    }
-
-    function collectQuizForm() {
-      return {
-        id: document.getElementById('quizId').value.trim(),
-        title: document.getElementById('quizTitle').value.trim(),
-        theme: document.getElementById('quizTheme').value.trim(),
-        startDate: document.getElementById('quizStart').value,
-        endDate: document.getElementById('quizEnd').value,
-        audience: document.getElementById('quizAudience').value.trim(),
-        objective: document.getElementById('quizObjective').value.trim(),
-        questions: collectQuestions()
-      };
-    }
-
-    function saveQuizForm() {
-      const payload = collectQuizForm();
-
-      if (!payload.title || !payload.theme) {
-        message('saveMessage', 'Tajuk dan tema kuiz wajib diisi.', 'error');
-        return;
-      }
-
-      if (payload.questions.length < 5 || payload.questions.length > 10) {
-        message('saveMessage', 'Sediakan sekurang-kurangnya 5 dan maksimum 10 soalan.', 'error');
-        return;
-      }
-
-      runServer('saveQuiz', [payload, adminPin], function (result) {
-        document.getElementById('quizId').value = result.id;
-        document.getElementById('editorTitle').textContent = 'Sunting Kuiz DRAF';
-        lastSavedPost = result.facebookPost || '';
-        lastSavedUrl = result.publicUrl || '';
-        document.getElementById('facebookPreview').value = lastSavedPost;
-        message('saveMessage', result.message + ' ID: ' + result.id, 'success');
-        refreshAdmin();
-      }, function (error) {
-        message('saveMessage', error, 'error');
-      });
-    }
-
-    function editQuiz(id) {
-      runServer('getQuizForEdit', [id, adminPin], function (result) {
-        const q = result.quiz;
-        document.getElementById('quizId').value = q.id;
-        document.getElementById('quizTitle').value = q.title || '';
-        document.getElementById('quizTheme').value = q.theme || '';
-        document.getElementById('quizStart').value = q.startDate || '';
-        document.getElementById('quizEnd').value = q.endDate || '';
-        document.getElementById('quizAudience').value = q.audience || 'Orang awam';
-        document.getElementById('quizObjective').value = q.objective || '';
-        document.getElementById('editorTitle').textContent = 'Sunting Kuiz DRAF';
-        renderQuestionEditor(q.questions || []);
-        message('saveMessage', 'Rekod DRAF berjaya dimuatkan.', 'success');
-        document.getElementById('editorCard').scrollIntoView({ behavior: 'smooth' });
-      }, function (error) {
-        message('adminMessage', error, 'error');
-      });
-    }
-
-    function previewFacebookPost() {
-      const payload = collectQuizForm();
-      const url = lastSavedUrl || getWebAppUrl();
-
-      const post = [
-        '🩺 KUIZ KESIHATAN MINGGUAN HOSPITAL KEMAMAN',
-        '',
-        '📌 ' + (payload.title || '[Tajuk kuiz]'),
-        '🎯 Tema: ' + (payload.theme || '[Tema kesihatan]'),
-        '',
-        payload.objective || 'Uji pengetahuan dan tambah ilmu kesihatan.',
-        '',
-        'Jom jawab kuiz interaktif ini dan semak pengetahuan kesihatan anda!',
-        '✅ Jawab semua soalan untuk melihat skor dan maklum balas pendidikan.',
-        payload.startDate && payload.endDate
-          ? '📅 Tempoh: ' + payload.startDate + ' hingga ' + payload.endDate
-          : '',
-        '',
-        '👉 Sertai kuiz di sini:',
-        url,
-        '',
-        'Kongsikan kepada keluarga dan rakan-rakan.',
-        '',
-        '#HospitalKemaman #KuizKesihatan #KesihatanAwam #InfoKesihatan'
-      ].filter(function (line) {
-        return line !== null && line !== undefined;
-      }).join('\n').replace(/\n{3,}/g, '\n\n');
-
-      document.getElementById('facebookPreview').value = post;
-      lastSavedPost = post;
-      document.getElementById('facebookPreview').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function copyPost() {
-      const text = document.getElementById('facebookPreview').value;
-      if (!text.trim()) {
-        previewFacebookPost();
-      }
-      copyText(document.getElementById('facebookPreview').value);
-    }
-
-    function copyText(text) {
-      if (!text) {
-        alert('Tiada teks atau pautan untuk disalin.');
-        return;
-      }
-
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () {
-          alert('Berjaya disalin.');
-        }).catch(function () {
-          fallbackCopy(text);
-        });
-      } else {
-        fallbackCopy(text);
-      }
-    }
-
-    function fallbackCopy(text) {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-
-      try {
-        document.execCommand('copy');
-        alert('Teks disalin.');
-      } catch (error) {
-        alert('Salin teks secara manual daripada kotak teks.');
-      }
-
-      textarea.remove();
-    }
-
-    // Permulaan aplikasi.
-    renderQuestionEditor([]);
+function resetQuiz(){
+  if(!currentQuiz){
     loadPublicQuiz();
-  </script>
+    return;
+  }
+
+  answers=new Array(currentQuiz.questions.length).fill(null);
+  renderQuestions();
+  updateProgress();
+  document.getElementById('resultCard').classList.add('hidden');
+  document.getElementById('quizCard').classList.remove('hidden');
+  msg('publicMsg','','');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* Log masuk pentadbir */
+async function login(){
+  const pin=document.getElementById('pinInput').value.trim();
+
+  if(!pin){
+    msg('adminMsg','Sila masukkan PIN pentadbir.','error');
+    return;
+  }
+
+  try{
+    const data=await api('getAdminData',{},pin);
+    adminPin=pin;
+    document.getElementById('loginArea').classList.add('hidden');
+    document.getElementById('adminPanel').classList.remove('hidden');
+    msg('adminMsg','Log masuk berjaya.','success');
+    renderRecords(data.records||[]);
+  }catch(err){
+    adminPin='';
+    msg('adminMsg',err.message,'error');
+  }
+}
+
+function logout(){
+  adminPin='';
+  document.getElementById('pinInput').value='';
+  document.getElementById('loginArea').classList.remove('hidden');
+  document.getElementById('adminPanel').classList.add('hidden');
+  msg('adminMsg','Anda telah log keluar.','success');
+}
+
+async function refreshRecords(){
+  if(!adminPin)return;
+
+  try{
+    const data=await api('getAdminData',{},adminPin);
+    renderRecords(data.records||[]);
+  }catch(err){
+    msg('adminMsg',err.message,'error');
+  }
+}
+
+function renderRecords(records){
+  adminRecords=records;
+  const el=document.getElementById('records');
+
+  if(!records.length){
+    el.innerHTML='<p class="muted">Belum ada rekod. Klik Kuiz Baharu untuk bermula.</p>';
+    return;
+  }
+
+  let html='<table><thead><tr><th>Tajuk</th><th>Status</th><th>Penyertaan</th><th>Tindakan</th></tr></thead><tbody>';
+
+  records.forEach(r=>{
+    let actions='';
+
+    if(r.status==='DRAF'){
+      actions+='<button class="secondary" onclick="editQuiz('+JSON.stringify(String(r.id))+')">Sunting</button> '+
+        '<button class="gold" onclick="changeStatus('+JSON.stringify(String(r.id))+',\'DILULUSKAN\')">Luluskan</button>';
+    }
+
+    if(r.status==='DILULUSKAN'){
+      actions+='<button class="green" onclick="changeStatus('+JSON.stringify(String(r.id))+',\'DITERBITKAN\')">Terbitkan</button> '+
+        '<button class="secondary" onclick="changeStatus('+JSON.stringify(String(r.id))+',\'DRAF\')">Kembali DRAF</button>';
+    }
+
+    if(r.status==='DITERBITKAN'){
+      actions+='<button class="secondary" onclick="copyLink('+JSON.stringify(String(r.id))+')">Salin pautan</button> '+
+        '<button class="danger" onclick="changeStatus('+JSON.stringify(String(r.id))+',\'DIARKIBKAN\')">Arkib</button>';
+    }
+
+    html+='<tr>'+
+      '<td><strong>'+esc(r.title)+'</strong><br><span class="muted small">'+esc(r.theme)+'</span></td>'+
+      '<td><span class="badge '+(r.status==='DITERBITKAN'?'green':r.status==='DILULUSKAN'?'gold':'blue')+'">'+esc(r.status)+'</span></td>'+
+      '<td>'+Number(r.participation||0)+'</td>'+
+      '<td><div class="row">'+actions+'</div></td>'+
+      '</tr>';
+  });
+
+  el.innerHTML=html+'</tbody></table>';
+}
+
+async function changeStatus(id,status){
+  if(!confirm('Tukar status kuiz kepada '+status+'?'))return;
+
+  try{
+    const r=await api('updateQuizStatus',{id:id,status:status},adminPin);
+    msg('adminMsg',r.message||'Status kuiz berjaya dikemas kini.','success');
+    await refreshRecords();
+  }catch(err){
+    msg('adminMsg',err.message,'error');
+  }
+}
+
+function copyLink(id){
+  const r=adminRecords.find(x=>String(x.id)===String(id));
+
+  if(!r||!r.publicUrl){
+    alert('Pautan kuiz belum tersedia.');
+    return;
+  }
+
+  copyText(r.publicUrl);
+}
+
+function newQuiz(){
+  clearForm();
+  document.getElementById('editor').scrollIntoView({behavior:'smooth'});
+}
+
+function clearForm(){
+  ['quizId','title','theme','start','end','objective'].forEach(id=>{
+    document.getElementById(id).value='';
+  });
+
+  document.getElementById('audience').value='Orang awam';
+  document.getElementById('editorHeading').textContent='Cipta Kuiz Baharu';
+  document.getElementById('postText').value='';
+  renderQuestionEditor([]);
+  msg('saveMsg','','');
+}
+
+/* Paparan editor untuk maksimum 10 soalan */
+function renderQuestionEditor(questions){
+  const area=document.getElementById('questionEditor');
+  area.innerHTML='';
+
+  for(let i=0;i<10;i++){
+    const q=questions[i]||{
+      question:'',
+      options:['','','',''],
+      correctIndex:0,
+      explanation:''
+    };
+
+    const details=document.createElement('details');
+    details.className='qedit';
+    details.open=i<5;
+
+    details.innerHTML=
+      '<summary>Soalan '+(i+1)+(i<5?' · wajib':' · pilihan')+'</summary>'+
+      '<div class="field"><label>Soalan</label><textarea class="qtext" maxlength="1000">'+esc(q.question||'')+'</textarea></div>'+
+      '<div class="grid">'+
+      [0,1,2,3].map(j=>
+        '<div class="field"><label>Pilihan '+String.fromCharCode(65+j)+'</label>'+
+        '<input class="qopt" maxlength="500" value="'+esc((q.options||[])[j]||'')+'"></div>'
+      ).join('')+
+      '<div class="field"><label>Jawapan betul</label><select class="qcorrect">'+
+      [0,1,2,3].map(j=>
+        '<option value="'+j+'"'+(Number(q.correctIndex)===j?' selected':'')+'>'+String.fromCharCode(65+j)+'</option>'
+      ).join('')+
+      '</select></div>'+
+      '<div class="field"><label>Maklum balas pendidikan</label><textarea class="qexplain" maxlength="1500">'+esc(q.explanation||'')+'</textarea></div>'+
+      '</div>';
+
+    area.appendChild(details);
+  }
+}
+
+function collectQuestions(){
+  const out=[];
+
+  document.querySelectorAll('.qedit').forEach(block=>{
+    const question=block.querySelector('.qtext').value.trim();
+    const options=Array.from(block.querySelectorAll('.qopt')).map(x=>x.value.trim());
+    const explanation=block.querySelector('.qexplain').value.trim();
+
+    const blank=!question&&options.every(x=>!x)&&!explanation;
+
+    if(!blank){
+      out.push({
+        question:question,
+        options:options,
+        correctIndex:Number(block.querySelector('.qcorrect').value),
+        explanation:explanation
+      });
+    }
+  });
+
+  return out;
+}
+
+function collectForm(){
+  return{
+    id:document.getElementById('quizId').value.trim(),
+    title:document.getElementById('title').value.trim(),
+    theme:document.getElementById('theme').value.trim(),
+    startDate:document.getElementById('start').value,
+    endDate:document.getElementById('end').value,
+    audience:document.getElementById('audience').value.trim(),
+    objective:document.getElementById('objective').value.trim(),
+    questions:collectQuestions()
+  };
+}
+
+/* Simpan kuiz melalui Apps Script */
+async function saveQuiz(){
+  const p=collectForm();
+
+  if(!p.title||!p.theme){
+    msg('saveMsg','Tajuk dan tema wajib diisi.','error');
+    return;
+  }
+
+  if(p.startDate&&p.endDate&&p.endDate<p.startDate){
+    msg('saveMsg','Tarikh tamat tidak boleh lebih awal daripada tarikh mula.','error');
+    return;
+  }
+
+  if(p.questions.length<5||p.questions.length>10){
+    msg('saveMsg','Sediakan 5 hingga 10 soalan.','error');
+    return;
+  }
+
+  for(let i=0;i<p.questions.length;i++){
+    const q=p.questions[i];
+
+    if(!q.question||q.options.some(x=>!x)||!q.explanation){
+      msg('saveMsg','Lengkapkan teks soalan, empat pilihan jawapan dan maklum balas bagi setiap soalan yang digunakan.','error');
+      return;
+    }
+
+    if(new Set(q.options).size!==q.options.length){
+      msg('saveMsg','Pilihan jawapan bagi setiap soalan mestilah berbeza. Semak soalan '+(i+1)+'.','error');
+      return;
+    }
+  }
+
+  try{
+    const r=await api('saveQuiz',p,adminPin);
+
+    document.getElementById('quizId').value=r.id;
+    document.getElementById('editorHeading').textContent='Sunting Kuiz DRAF';
+    document.getElementById('postText').value=r.facebookPost||'';
+
+    msg('saveMsg',(r.message||'Kuiz berjaya disimpan.')+' ID: '+r.id,'success');
+    await refreshRecords();
+  }catch(err){
+    msg('saveMsg',err.message,'error');
+  }
+}
+
+async function editQuiz(id){
+  try{
+    const r=await api('getQuizForEdit',{id:id},adminPin);
+    const q=r.quiz;
+
+    document.getElementById('quizId').value=q.id;
+    document.getElementById('title').value=q.title||'';
+    document.getElementById('theme').value=q.theme||'';
+    document.getElementById('start').value=q.startDate||'';
+    document.getElementById('end').value=q.endDate||'';
+    document.getElementById('audience').value=q.audience||'Orang awam';
+    document.getElementById('objective').value=q.objective||'';
+    document.getElementById('editorHeading').textContent='Sunting Kuiz DRAF';
+
+    renderQuestionEditor(q.questions||[]);
+    msg('saveMsg','Rekod berjaya dimuatkan.','success');
+    document.getElementById('editor').scrollIntoView({behavior:'smooth'});
+  }catch(err){
+    msg('adminMsg',err.message,'error');
+  }
+}
+
+/* Jana teks untuk hantaran Facebook */
+function previewPost(){
+  const p=collectForm();
+  const r=adminRecords.find(x=>String(x.id)===String(p.id));
+  const url=(r&&r.publicUrl)||'[Simpan dan terbitkan kuiz untuk mendapatkan pautan sebenar]';
+
+  const lines=[
+    '🩺 KUIZ KESIHATAN MINGGUAN HOSPITAL KEMAMAN',
+    '',
+    '📌 '+(p.title||'[Tajuk kuiz]'),
+    '🎯 Tema: '+(p.theme||'[Tema kesihatan]'),
+    '',
+    p.objective||'Uji pengetahuan dan tambah ilmu kesihatan.',
+    '',
+    'Jom jawab kuiz interaktif ini dan semak pengetahuan kesihatan anda!',
+    '✅ Jawab semua soalan untuk melihat skor dan maklum balas pendidikan.',
+    p.startDate&&p.endDate?'📅 Tempoh: '+p.startDate+' hingga '+p.endDate:'',
+    '',
+    '👉 Sertai kuiz di sini:',
+    url,
+    '',
+    'Kongsikan kepada keluarga dan rakan-rakan.',
+    '',
+    '#HospitalKemaman #KuizKesihatan #KesihatanAwam #InfoKesihatan'
+  ];
+
+  document.getElementById('postText').value=lines.join('\n').replace(/\n{3,}/g,'\n\n');
+  document.getElementById('postText').scrollIntoView({behavior:'smooth'});
+}
+
+function copyPost(){
+  if(!document.getElementById('postText').value.trim())previewPost();
+  copyText(document.getElementById('postText').value);
+}
+
+async function copyText(text){
+  if(!text){
+    alert('Tiada teks untuk disalin.');
+    return;
+  }
+
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      await navigator.clipboard.writeText(text);
+    }else{
+      throw new Error('Clipboard tidak tersedia');
+    }
+    alert('Berjaya disalin.');
+  }catch(e){
+    const t=document.createElement('textarea');
+    t.value=text;
+    t.style.position='fixed';
+    t.style.opacity='0';
+    document.body.appendChild(t);
+    t.select();
+
+    try{
+      const ok=document.execCommand('copy');
+      alert(ok?'Teks disalin.':'Sila salin teks secara manual.');
+    }catch(err){
+      alert('Sila salin teks secara manual.');
+    }
+
+    t.remove();
+  }
+}
+
+/* Permulaan aplikasi */
+renderQuestionEditor([]);
+loadPublicQuiz();
+</script>
 </body>
 </html>
