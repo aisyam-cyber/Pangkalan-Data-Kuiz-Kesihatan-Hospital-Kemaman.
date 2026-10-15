@@ -1,1 +1,1 @@
-# Pangkalan-Data-Kuiz-Kesihatan-Hospital-Kemaman.
+# Pangkalan-Data-Kuiz-Kesihatan-Terengganu-Assistant-Medical-Officer-TAMO.
