@@ -3,460 +3,618 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuiz Interaktif Facebook dengan Leaderboard</title>
+  <title>Sistem Kuiz Interaktif Hospital Kemaman</title>
+  <!-- Meta Open Graph -->
+  <meta property="og:title" content="Sistem Kuiz Interaktif Hospital Kemaman" />
+  <meta property="og:description" content="Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat" />
+  <meta property="og:type" content="website" />
+  
+  <!-- Font Google & Icon FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
-    * { 
-      box-sizing: border-box; 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-      margin: 0; 
-      padding: 0; 
+    :root {
+      --primary-blue: #123B70;
+      --secondary-blue: #174EA6;
+      --light-blue: #E5EEFF;
+      --gold-premium: #D4AF37;
+      --white: #FFFFFF;
+      --bg-color: #F4F7FB;
+      --text-main: #172B4D;
+      --text-muted: #64748B;
+      --correct-green: #2E7D32;
+      --wrong-red: #C62828;
     }
 
-    body { 
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
-      min-height: 100vh; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      padding: 20px; 
-    }
-
-    .card { 
-      background: #ffffff; 
-      width: 100%; 
-      max-width: 520px; 
-      border-radius: 20px; 
-      padding: 30px; 
-      box-shadow: 0 15px 30px rgba(0,0,0,0.2); 
-      position: relative;
-      overflow: hidden;
-    }
-
-    h1 { 
-      font-size: 1.6rem; 
-      text-align: center; 
-      color: #2d3748; 
-      margin-bottom: 8px; 
-    }
-
-    p.subtitle { 
-      text-align: center; 
-      color: #718096; 
-      margin-bottom: 25px; 
-      font-size: 0.95rem; 
-    }
-
-    input[type="text"] { 
-      width: 100%; 
-      padding: 14px; 
-      border: 2px solid #e2e8f0; 
-      border-radius: 12px; 
-      font-size: 1rem; 
-      margin-bottom: 15px; 
-      outline: none; 
-      transition: border-color 0.2s;
-    }
-
-    input[type="text"]:focus { 
-      border-color: #667eea; 
-    }
-
-    .btn { 
-      width: 100%; 
-      background: #667eea; 
-      color: #ffffff; 
-      border: none; 
-      padding: 14px; 
-      border-radius: 12px; 
-      font-size: 1rem; 
-      font-weight: bold; 
-      cursor: pointer; 
-      transition: background 0.2s, transform 0.1s; 
-    }
-
-    .btn:hover { 
-      background: #5a67d8; 
-    }
-
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    .loading { 
-      text-align: center; 
-      display: none; 
-      padding: 30px 0; 
-      font-weight: 500; 
-      color: #4a5568; 
-      line-height: 1.6;
-    }
-
-    .quiz-box { 
-      display: none; 
-    }
-
-    .timer-container {
-      width: 100%;
-      background: #edf2f7;
-      height: 8px;
-      border-radius: 4px;
-      margin-bottom: 20px;
-      overflow: hidden;
-    }
-
-    .timer-bar {
-      height: 100%;
-      background: #48bb78;
-      width: 100%;
-      transition: width 1s linear, background-color 0.3s;
-    }
-
-    .timer-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .timer-badge {
-      font-weight: bold;
-      color: #e53e3e;
-      background: #fff5f5;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      border: 1px solid #fed7d7;
-    }
-
-    .question { 
-      font-size: 1.15rem; 
-      font-weight: 600; 
-      color: #2d3748; 
-      margin-bottom: 20px; 
-      line-height: 1.4;
-    }
-
-    .options { 
-      display: grid; 
-      gap: 12px; 
-      margin-bottom: 20px; 
-    }
-
-    .opt-btn { 
-      background: #f7fafc; 
-      border: 2px solid #e2e8f0; 
-      padding: 14px; 
-      border-radius: 12px; 
-      text-align: left; 
-      cursor: pointer; 
-      font-size: 0.95rem; 
-      color: #4a5568;
-      font-weight: 500;
-      transition: all 0.2s;
-    }
-
-    .opt-btn:hover {
-      background: #edf2f7;
-      border-color: #cbd5e0;
-    }
-
-    .opt-btn.correct { 
-      background: #48bb78 !important; 
-      color: #ffffff !important; 
-      border-color: #38a169 !important; 
-    }
-
-    .opt-btn.wrong { 
-      background: #f56565 !important; 
-      color: #ffffff !important; 
-      border-color: #e53e3e !important; 
-    }
-
-    .footer { 
-      display: flex; 
-      justify-content: space-between; 
-      font-size: 0.9rem; 
-      color: #718096; 
-      font-weight: 600;
-      border-top: 1px solid #edf2f7;
-      padding-top: 15px;
-    }
-
-    .result-screen {
-      display: none;
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: var(--white);
+      padding: 1.5rem;
       text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-bottom: 4px solid var(--gold-premium);
     }
+    header h1 { font-size: 1.6rem; font-weight: 700; color: var(--gold-premium); text-transform: uppercase; letter-spacing: 1px; }
+    header p { font-size: 0.95rem; color: var(--light-blue); font-style: italic; margin-top: 4px; }
 
-    .score-badge {
-      font-size: 3.5rem;
-      font-weight: bold;
-      color: #667eea;
-      margin: 15px 0 20px 0;
-    }
+    .nav-tabs { display: flex; justify-content: center; background: #0e2a52; padding: 0.5rem; gap: 10px; }
+    .nav-tabs button { background: transparent; border: none; color: white; padding: 8px 16px; border-radius: 20px; font-weight: 500; cursor: pointer; transition: 0.3s; }
+    .nav-tabs button.active { background: var(--gold-premium); color: var(--primary-blue); font-weight: 700; }
 
-    .leaderboard-box {
-      display: none;
-      text-align: left;
-      margin-top: 20px;
-      background: #f7fafc;
-      padding: 15px 20px;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-    }
+    main { flex: 1; display: flex; justify-content: center; align-items: center; padding: 1.5rem; }
+    .card { background: var(--white); width: 100%; max-width: 750px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); padding: 2rem; margin: auto; transition: all 0.3s ease; }
 
-    .leaderboard-box ol {
-      padding-left: 20px;
-      font-size: 0.95rem;
-      color: #4a5568;
-      line-height: 1.8;
-    }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: var(--primary-blue); color: var(--white); border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; width: 100%; margin-top: 10px; }
+    .btn:hover { background: var(--secondary-blue); }
+    .btn-gold { background: var(--gold-premium); color: var(--primary-blue); }
+    .btn-gold:hover { background: #b8952d; }
+    .btn-outline { background: transparent; border: 2px solid var(--primary-blue); color: var(--primary-blue); }
+    .btn-outline:hover { background: var(--light-blue); }
+
+    /* Home View */
+    .quiz-info-box { background: var(--light-blue); border-left: 4px solid var(--primary-blue); padding: 1rem; border-radius: 6px; margin: 1.5rem 0; }
+    .social-share { display: flex; gap: 10px; margin-top: 1rem; }
+    .btn-social { flex: 1; padding: 10px; border-radius: 6px; border: none; color: white; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .bg-fb { background-color: #1877F2; }
+    .bg-wa { background-color: #25D366; }
+
+    /* Interactive Quiz View */
+    .progress-bar-container { background: #E2E8F0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 1.5rem; }
+    .progress-bar { background: var(--gold-premium); height: 100%; width: 0%; transition: width 0.3s ease; }
+    .question-header { display: flex; justify-content: space-between; font-weight: 600; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; }
+    .question-title { font-size: 1.25rem; font-weight: 600; color: var(--primary-blue); margin-bottom: 1.5rem; }
+
+    .options-grid { display: grid; gap: 12px; }
+    .option-card { border: 2px solid #E2E8F0; padding: 14px 18px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: 0.2s; font-weight: 500; }
+    .option-card:hover { border-color: var(--secondary-blue); background: var(--light-blue); }
+    .option-card.selected { border-color: var(--gold-premium); background: var(--light-blue); font-weight: 700; color: var(--primary-blue); }
+    .option-badge { background: var(--primary-blue); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+
+    /* Result View */
+    .score-circle { width: 140px; height: 140px; border-radius: 50%; border: 8px solid var(--gold-premium); display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 1.5rem auto; background: var(--light-blue); }
+    .score-number { font-size: 2.2rem; font-weight: 700; color: var(--primary-blue); }
+    .review-item { border-bottom: 1px solid #E2E8F0; padding: 12px 0; }
+    .review-item.correct { border-left: 4px solid var(--correct-green); padding-left: 10px; }
+    .review-item.wrong { border-left: 4px solid var(--wrong-red); padding-left: 10px; }
+
+    /* Admin View */
+    .form-group { margin-bottom: 1rem; text-align: left; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 0.9rem; }
+    .form-control { width: 100%; padding: 10px; border: 1px solid #CBD5E1; border-radius: 6px; font-size: 0.95rem; }
+
+    /* Loading Spinner */
+    .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--gold-premium); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    footer { text-align: center; padding: 1rem; font-size: 0.8rem; color: var(--text-muted); background: #fff; border-top: 1px solid #E2E8F0; }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <!-- 1. SKRIN INPUT TAJUK -->
-    <div id="setup-screen">
-      <h1>🎮 Kuiz Interaktif AI</h1>
-      <p class="subtitle">Masukkan sebarang tajuk dan AI akan jana 10 soalan automatik!</p>
-      <input type="text" id="topic-input" placeholder="Contoh: Sejarah Malaysia, Sains, Makanan...">
-      <button class="btn" onclick="startQuiz()">Jana & Mula Kuiz 🚀</button>
-    </div>
+  <header>
+    <h1><i class="fa-solid =>-hospital"></i> HOSPITAL KEMAMAN</h1>
+    <p>SISTEM KUIZ INTERAKTIF MEDIA SOSIAL</p>
+  </header>
 
-    <!-- 2. SKRIN LOADING -->
-    <div id="loading-screen" class="loading">
-      ⏳ AI sedang menjana 10 soalan dwibahasa...<br>
-      <small style="color: #a0aec0;">(Sila tunggu beberapa saat)</small>
-    </div>
-
-    <!-- 3. SKRIN KUIZ -->
-    <div id="quiz-screen" class="quiz-box">
-      <div class="timer-header">
-        <h2 id="quiz-title" style="font-size: 1.1rem; color: #667eea;">Tajuk Kuiz</h2>
-        <span class="timer-badge" id="timer-text">⏱️ 15s</span>
-      </div>
-
-      <div class="timer-container">
-        <div class="timer-bar" id="timer-bar"></div>
-      </div>
-
-      <div class="question" id="q-text">Teks Soalan</div>
-      <div class="options" id="opt-container"></div>
-
-      <div class="footer">
-        <span id="q-count">Soalan 1 / 10</span>
-        <span id="score-text">Markah: 0</span>
-      </div>
-    </div>
-
-    <!-- 4. SKRIN KEPUTUSAN & LEADERBOARD -->
-    <div id="result-screen" class="result-screen">
-      <h1>Tahniah! 🎉</h1>
-      <p style="color: #718096; margin-top: 5px;">Skor Akhir Anda:</p>
-      <div class="score-badge" id="final-score">0 / 10</div>
-
-      <!-- BORANG SIMPAN LEADERBOARD -->
-      <div id="save-score-box" style="margin-bottom: 20px;">
-        <input type="text" id="player-name" placeholder="Masukkan nama anda..." />
-        <button class="btn" onclick="submitScore()">Simpan Markah ke Leaderboard 🏆</button>
-      </div>
-
-      <!-- PAPARAN TOP 10 LEADERBOARD -->
-      <div id="leaderboard-box" class="leaderboard-box">
-        <h3 style="text-align: center; color: #2d3748; margin-bottom: 12px;">👑 Top 10 Pemain Terbaik</h3>
-        <ol id="leaderboard-list"></ol>
-      </div>
-
-      <button class="btn" onclick="location.reload()" style="margin-top: 20px; background: #4a5568;">Main Kuiz Baharu 🔄</button>
-    </div>
+  <div class="nav-tabs">
+    <button id="nav-public" class="active" onclick="switchTab('public')"><i class="fa-solid fa-gamepad"></i> Kuiz Awam</button>
+    <button id="nav-admin" onclick="switchTab('admin')"><i class="fa-solid fa-user-shield"></i> Portal Pentadbir</button>
   </div>
 
+  <main>
+    <!-- 1. VIEW HALAMAN UTAMA KUIZ AWAM -->
+    <div id="view-home" class="card">
+      <div style="text-align:center;">
+        <i class="fa-solid fa-award" style="font-size:3rem; color:var(--gold-premium); margin-bottom:10px;"></i>
+        <h2 id="quiz-title" style="color:var(--primary-blue);">Memuat naik kuiz...</h2>
+        <p id="quiz-tagline" style="color:var(--text-muted); font-style:italic; margin-top:5px;">"Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat"</p>
+      </div>
+
+      <div class="quiz-info-box">
+        <p><strong><i class="fa-solid fa-bullseye"></i> Objektif:</strong> <span id="quiz-objective">-</span></p>
+        <p><strong><i class="fa-solid fa-users"></i> Sasaran:</strong> <span id="quiz-target">-</span></p>
+        <p><strong><i class="fa-solid fa-layer-group"></i> Tahap:</strong> <span id="quiz-level">-</span></p>
+        <p><strong><i class="fa-solid fa-list-check"></i> Jumlah Soalan:</strong> 15 Soalan</p>
+      </div>
+
+      <button class="btn btn-gold" onclick="startQuiz()"><i class="fa-solid fa-play"></i> MULA KUIZ SEKARANG</button>
+
+      <div class="social-share">
+        <button class="btn-social bg-fb" onclick="shareFacebook()"><i class="fa-brands fa-facebook"></i> Kongsi Facebook</button>
+        <button class="btn-social bg-wa" onclick="shareWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Kongsi WhatsApp</button>
+      </div>
+    </div>
+
+    <!-- 2. VIEW PAPARAN SOALAN INTERAKTIF -->
+    <div id="view-quiz" class="card hidden">
+      <div class="question-header">
+        <span id="question-number-label">SOALAN 1 DARIPADA 15</span>
+        <span id="answered-count-label">Dijawab: 0/15</span>
+      </div>
+      <div class="progress-bar-container">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+
+      <div id="question-text" class="question-title">Soalan sedang dimuatkan...</div>
+
+      <div class="options-grid" id="options-container">
+        <!-- Pilihan A, B, C, D akan dijanakan secara dinamik -->
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:1.5rem;">
+        <button id="btn-prev" class="btn btn-outline hidden" onclick="prevQuestion()"><i class="fa-solid fa-arrow-left"></i> Seterusnya</button>
+        <button id="btn-next" class="btn" onclick="nextQuestion()">Seterusnya <i class="fa-solid fa-arrow-right"></i></button>
+        <button id="btn-submit" class="btn btn-gold hidden" onclick="confirmSubmit()"><i class="fa-solid fa-paper-plane"></i> Hantar Jawapan</button>
+      </div>
+    </div>
+
+    <!-- 3. VIEW HALAMAN KEPUTUSAN -->
+    <div id="view-result" class="card hidden" style="text-align: center;">
+      <i class="fa-solid fa-trophy" style="font-size:3.5rem; color:var(--gold-premium);"></i>
+      <h2 style="color:var(--primary-blue); margin-top:10px;">Keputusan Kuiz Anda</h2>
+      
+      <div class="score-circle">
+        <span class="score-number" id="result-score">0%</span>
+        <span style="font-size:0.8rem; color:var(--text-muted);">MARKAH</span>
+      </div>
+
+      <p id="result-motivation" style="font-weight:600; margin-bottom:1rem;"></p>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1.5rem;">
+        Betul: <strong id="result-correct" style="color:var(--correct-green);">0</strong> | 
+        Salah: <strong id="result-wrong" style="color:var(--wrong-red);">0</strong>
+      </p>
+
+      <button class="btn btn-outline" onclick="toggleReview()"><i class="fa-solid fa-magnifying-glass"></i> LIHAT SEMAKAN JAWAPAN</button>
+      <button class="btn btn-gold" onclick="location.reload()" style="margin-top:10px;"><i class="fa-solid fa-rotate-right"></i> CUBA LAGI</button>
+
+      <div class="social-share" style="margin-top:15px;">
+        <button class="btn-social bg-fb" onclick="shareFacebookResult()"><i class="fa-brands fa-facebook"></i> Kongsi Keputusan</button>
+        <button class="btn-social bg-wa" onclick="shareWhatsAppResult()"><i class="fa-brands fa-whatsapp"></i> Kongsi WhatsApp</button>
+      </div>
+
+      <div id="review-container" class="hidden" style="margin-top:2rem; text-align:left;">
+        <h3 style="border-bottom:2px solid var(--gold-premium); padding-bottom:5px; margin-bottom:1rem;">Semakan Jawapan Sahih</h3>
+        <div id="review-list"></div>
+      </div>
+    </div>
+
+    <!-- 4. VIEW PORTAL PENTADBIR (ADMIN) -->
+    <div id="view-admin" class="card hidden">
+      <!-- Admin Login -->
+      <div id="admin-login-box">
+        <h2 style="color:var(--primary-blue); text-align:center; margin-bottom:1.5rem;"><i class="fa-solid fa-lock"></i> Log Masuk Pentadbir</h2>
+        <div class="form-group">
+          <label>ID Pengguna</label>
+          <input type="text" id="admin-user" class="form-control" placeholder="Masukkan ID Pengguna">
+        </div>
+        <div class="form-group">
+          <label>Kata Laluan</label>
+          <input type="password" id="admin-pass" class="form-control" placeholder="Masukkan Kata Laluan">
+        </div>
+        <button class="btn btn-gold" onclick="adminLogin()"><i class="fa-solid fa-right-to-bracket"></i> LOG MASUK</button>
+      </div>
+
+      <!-- Admin Dashboard -->
+      <div id="admin-dashboard-box" class="hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+          <h3>Papan Pemuka Pentadbir</h3>
+          <button class="btn btn-outline" style="width:auto; padding:6px 12px;" onclick="adminLogout()">Log Keluar</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; text-align:center; margin-bottom:1.5rem;">
+          <div style="background:var(--light-blue); padding:10px; border-radius:8px;">
+            <div style="font-size:1.4rem; font-weight:700;" id="stat-quizzes">0</div>
+            <div style="font-size:0.75rem;">Jumlah Kuiz</div>
+          </div>
+          <div style="background:var(--light-blue); padding:10px; border-radius:8px;">
+            <div style="font-size:1.4rem; font-weight:700;" id="stat-submissions">0</div>
+            <div style="font-size:0.75rem;">Penyertaan</div>
+          </div>
+          <div style="background:var(--light-blue); padding:10px; border-radius:8px;">
+            <div style="font-size:1.4rem; font-weight:700;" id="stat-avg">0%</div>
+            <div style="font-size:0.75rem;">Purata Markah</div>
+          </div>
+        </div>
+
+        <h4 style="margin-bottom:10px;">Jana Kuiz Kesihatan Baharu (AI Gemini)</h4>
+        <div class="form-group"><label>Tajuk Kuiz</label><input type="text" id="ai-tajuk" class="form-control" placeholder="Cth: Kesedaran Demam Denggi"></div>
+        <div class="form-group"><label>Tema / Bidang</label><input type="text" id="ai-tema" class="form-control" placeholder="Cth: Kesihatan Awam / Vektor"></div>
+        <div class="form-group"><label>Objektif Pembelajaran</label><input type="text" id="ai-objektif" class="form-control" placeholder="Cth: Memahami langkah pencegahan awal Aedes"></div>
+        <div class="form-group"><label>Sasaran Peserta</label><input type="text" id="ai-sasaran" class="form-control" placeholder="Cth: Orang Awam / Komuniti Kemaman"></div>
+        <div class="form-group">
+          <label>Tahap Kesukaran</label>
+          <select id="ai-tahap" class="form-control">
+            <option value="Mudah">Mudah</option>
+            <option value="Sederhana" selected>Sederhana</option>
+            <option value="Sukar">Sukar</option>
+          </select>
+        </div>
+
+        <button class="btn btn-gold" onclick="generateQuizAI()"><i class="fa-solid fa-wand-magic-sparkles"></i> JANA 15 SOALAN AUTOMATIK</button>
+
+        <hr style="margin:2rem 0; border:0; border-top:1px solid #E2E8F0;">
+        <h4>Senarai Kuiz Pangkalan Data</h4>
+        <div id="admin-quiz-list" style="margin-top:10px; font-size:0.9rem;"></div>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-spinner" class="hidden" style="text-align:center;">
+      <div class="spinner"></div>
+      <p id="loading-text">Sedang memproses...</p>
+    </div>
+  </main>
+
+  <footer>
+    Hak Cipta Terpelihara &copy; 2026 Unit Pendidikan Kesihatan & Media Sosial Hospital Kemaman.
+  </footer>
+
   <script>
-    // ⚠️ GANTIKAN URL DI BAWAH DENGAN WEB APP URL GOOGLE APPS SCRIPT ANDA
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDp-DVIxU5QK4dPk4RuRTr2E0qQRKWhVmGCNG-7xR2XMraBticOMD0T0082lvAhNkI/exec";
+    // ** KONFIGURASI PENTING: TAMBAHKAN URL DEPLOYMENT GOOGLE APPS SCRIPT DI SINI **
+    const GAS_ENDPOINT = "MASUKKAN_URL_WEB_APP_GOOGLE_APPS_SCRIPT_DI_SINI";
 
-    // Kesan Bunyi (Sound Effects)
-    const soundCorrect = new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3');
-    const soundWrong = new Audio('https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3');
-    const soundTimeOut = new Audio('https://assets.mixkit.co/active_storage/sfx/2874/2874-preview.mp3');
+    // Application State
+    let currentQuiz = null;
+    let quizQuestions = [];
+    let currentQuestionIdx = 0;
+    let userAnswers = {};
+    let submissionId = null;
+    let adminToken = null;
+    let adminUser = null;
 
-    let questions = [];
-    let currentIdx = 0;
-    let score = 0;
-    let timerInterval;
-    const TIME_LIMIT = 15;
-    let timeLeft = TIME_LIMIT;
+    window.onload = function() {
+      loadPublishedQuiz();
+    };
 
-    async function startQuiz() {
-      const topic = document.getElementById('topic-input').value.trim();
-      if (!topic) return alert("Sila masukkan tajuk kuiz!");
+    function showLoading(msg) {
+      document.getElementById("loading-text").innerText = msg || "Sedang memproses...";
+      document.getElementById("loading-spinner").classList.remove("hidden");
+    }
 
-      document.getElementById('setup-screen').style.display = 'none';
-      document.getElementById('loading-screen').style.display = 'block';
+    function hideLoading() {
+      document.getElementById("loading-spinner").classList.add("hidden");
+    }
 
+    function switchTab(tab) {
+      document.getElementById("nav-public").classList.remove("active");
+      document.getElementById("nav-admin").classList.remove("active");
+      document.getElementById("view-home").classList.add("hidden");
+      document.getElementById("view-quiz").classList.add("hidden");
+      document.getElementById("view-result").classList.add("hidden");
+      document.getElementById("view-admin").classList.add("hidden");
+
+      if (tab === 'public') {
+        document.getElementById("nav-public").classList.add("active");
+        document.getElementById("view-home").classList.remove("hidden");
+      } else if (tab === 'admin') {
+        document.getElementById("nav-admin").classList.add("active");
+        document.getElementById("view-admin").classList.remove("hidden");
+      }
+    }
+
+    // Call Backend API
+    async function apiPost(action, payload = {}) {
+      if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("https://script.google.com/a/macros/moh.gov.my/s/AKfycbxiohkDT4i2pghPe_W3O1HFWeq2HOxQ9A0QQn_spZICVG82UWyw9SL5v79Lr-rwms5X/exec")) {
+        alert("Ralat Konfigurasi: Sila masukkan URL Web App Google Apps Script pada pembolehubah GAS_ENDPOINT dalam index.html.");
+        return { status: "ERROR", message: "URL GAS belum dikonfigurasi." };
+      }
+
+      showLoading();
       try {
-        const res = await fetch(`${SCRIPT_URL}?tajuk=${encodeURIComponent(topic)}`);
-        const data = await res.json();
-
-        if (data.status === "error" || !data.soalan || data.soalan.length === 0) {
-          alert("Gagal menjana soalan. Sila cuba tajuk lain!");
-          location.reload();
-          return;
-        }
-
-        questions = data.soalan;
-        document.getElementById('quiz-title').innerText = data.tajuk || "Kuiz Interaktif";
-        document.getElementById('loading-screen').style.display = 'none';
-        document.getElementById('quiz-screen').style.display = 'block';
-        
-        showQuestion();
-      } catch (err) {
-        alert("Ralat sambungan! Pastikan Web App URL telah dikemaskini.");
-        location.reload();
-      }
-    }
-
-    function startTimer() {
-      clearInterval(timerInterval);
-      timeLeft = TIME_LIMIT;
-      updateTimerUI();
-
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        updateTimerUI();
-
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          handleTimeOut();
-        }
-      }, 1000);
-    }
-
-    function updateTimerUI() {
-      document.getElementById('timer-text').innerText = `⏱️ ${timeLeft}s`;
-      const bar = document.getElementById('timer-bar');
-      const percentage = (timeLeft / TIME_LIMIT) * 100;
-      bar.style.width = `${percentage}%`;
-
-      if (timeLeft <= 5) {
-        bar.style.backgroundColor = '#f56565';
-      } else if (timeLeft <= 8) {
-        bar.style.backgroundColor = '#ed8936';
-      } else {
-        bar.style.backgroundColor = '#48bb78';
-      }
-    }
-
-    function handleTimeOut() {
-      soundTimeOut.play().catch(() => {});
-      const q = questions[currentIdx];
-      const allBtns = document.querySelectorAll('.opt-btn');
-      
-      allBtns.forEach(b => b.style.pointerEvents = 'none');
-
-      Object.keys(q.pilihan).forEach((key, idx) => {
-        if (key === q.jawapanBetul) allBtns[idx].classList.add('correct');
-      });
-
-      setTimeout(nextQuestion, 1500);
-    }
-
-    function showQuestion() {
-      const q = questions[currentIdx];
-      document.getElementById('q-text').innerText = `${currentIdx + 1}. ${q.soalan}`;
-      document.getElementById('q-count').innerText = `Soalan ${currentIdx + 1} / ${questions.length}`;
-      
-      const container = document.getElementById('opt-container');
-      container.innerHTML = '';
-
-      Object.keys(q.pilihan).forEach(key => {
-        const btn = document.createElement('button');
-        btn.className = 'opt-btn';
-        btn.innerText = `${key}) ${q.pilihan[key]}`;
-        btn.onclick = () => checkAnswer(key, btn);
-        container.appendChild(btn);
-      });
-
-      startTimer();
-    }
-
-    function checkAnswer(selectedKey, btn) {
-      clearInterval(timerInterval);
-      const q = questions[currentIdx];
-      const allBtns = document.querySelectorAll('.opt-btn');
-      allBtns.forEach(b => b.style.pointerEvents = 'none');
-
-      if (selectedKey === q.jawapanBetul) {
-        soundCorrect.play().catch(() => {});
-        btn.classList.add('correct');
-        score++;
-        document.getElementById('score-text').innerText = `Markah: ${score}`;
-      } else {
-        soundWrong.play().catch(() => {});
-        btn.classList.add('wrong');
-        Object.keys(q.pilihan).forEach((key, idx) => {
-          if (key === q.jawapanBetul) allBtns[idx].classList.add('correct');
+        const res = await fetch(GAS_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: action, payload: payload })
         });
+        const data = await res.json();
+        hideLoading();
+        return data;
+      } catch (err) {
+        hideLoading();
+        alert("Ralat Rangkaian/Pelayan: " + err.toString());
+        return { status: "ERROR", message: err.toString() };
+      }
+    }
+
+    // Load Main Published Quiz
+    async function loadPublishedQuiz() {
+      const res = await apiPost("GET_PUBLISHED_QUIZ", {});
+      if (res.status === "SUCCESS") {
+        currentQuiz = res.quiz;
+        quizQuestions = res.questions;
+
+        document.getElementById("quiz-title").innerText = currentQuiz.tajuk;
+        document.getElementById("quiz-objective").innerText = currentQuiz.objektif;
+        document.getElementById("quiz-target").innerText = currentQuiz.sasaran;
+        document.getElementById("quiz-level").innerText = currentQuiz.tahap;
+      } else {
+        document.getElementById("quiz-title").innerText = "Tiada Kuiz Diterbitkan";
+      }
+    }
+
+    // Start Interactive Quiz
+    async function startQuiz() {
+      if (!currentQuiz || quizQuestions.length === 0) {
+        alert("Kuiz belum sedia untuk dimainkan.");
+        return;
       }
 
-      setTimeout(nextQuestion, 1200);
+      const res = await apiPost("START_QUIZ_SESSION", { quizId: currentQuiz.id });
+      if (res.status === "SUCCESS") {
+        submissionId = res.submissionId;
+        currentQuestionIdx = 0;
+        userAnswers = {};
+        
+        document.getElementById("view-home").classList.add("hidden");
+        document.getElementById("view-quiz").classList.remove("hidden");
+        renderQuestion();
+      }
+    }
+
+    // Render Question Card
+    function renderQuestion() {
+      const q = quizQuestions[currentQuestionIdx];
+      const total = quizQuestions.length;
+
+      document.getElementById("question-number-label").innerText = `SOALAN ${currentQuestionIdx + 1} DARIPADA ${total}`;
+      document.getElementById("answered-count-label").innerText = `Dijawab: ${Object.keys(userAnswers).length}/${total}`;
+      
+      const progressPercent = ((currentQuestionIdx + 1) / total) * 100;
+      document.getElementById("progress-bar").style.width = `${progressPercent}%`;
+
+      document.getElementById("question-text").innerText = `${q.nombor}. ${q.soalan}`;
+
+      const optionsContainer = document.getElementById("options-container");
+      optionsContainer.innerHTML = "";
+
+      const options = [
+        { key: "A", text: q.pilihanA },
+        { key: "B", text: q.pilihanB },
+        { key: "C", text: q.pilihanC },
+        { key: "D", text: q.pilihanD }
+      ];
+
+      options.forEach(opt => {
+        const isSelected = (userAnswers[q.idSoalan] === opt.key);
+        const optCard = document.createElement("div");
+        optCard.className = `option-card ${isSelected ? 'selected' : ''}`;
+        optCard.onclick = () => selectAnswer(q.idSoalan, opt.key);
+        optCard.innerHTML = `
+          <div class="option-badge">${opt.key}</div>
+          <div>${opt.text}</div>
+        `;
+        optionsContainer.appendChild(optCard);
+      });
+
+      // Navigation buttons control
+      document.getElementById("btn-prev").classList.toggle("hidden", currentQuestionIdx === 0);
+      
+      if (currentQuestionIdx === total - 1) {
+        document.getElementById("btn-next").classList.add("hidden");
+        document.getElementById("btn-submit").classList.remove("hidden");
+      } else {
+        document.getElementById("btn-next").classList.remove("hidden");
+        document.getElementById("btn-submit").classList.add("hidden");
+      }
+    }
+
+    function selectAnswer(qId, key) {
+      userAnswers[qId] = key;
+      renderQuestion();
     }
 
     function nextQuestion() {
-      currentIdx++;
-      if (currentIdx < questions.length) {
-        showQuestion();
-      } else {
-        document.getElementById('quiz-screen').style.display = 'none';
-        document.getElementById('result-screen').style.display = 'block';
-        document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
+      if (currentQuestionIdx < quizQuestions.length - 1) {
+        currentQuestionIdx++;
+        renderQuestion();
       }
     }
 
-    async function submitScore() {
-      const name = document.getElementById('player-name').value.trim();
-      if (!name) return alert("Sila masukkan nama anda!");
+    function prevQuestion() {
+      if (currentQuestionIdx > 0) {
+        currentQuestionIdx--;
+        renderQuestion();
+      }
+    }
 
-      const saveBtn = event.target;
-      saveBtn.innerText = "Laporan disimpan...";
-      saveBtn.disabled = true;
-
-      try {
-        const response = await fetch(SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify({
-            nama: name,
-            tajuk: document.getElementById('quiz-title').innerText,
-            markah: score
-          })
-        });
-
-        const resData = await response.json();
-        if (resData.status === "success" && resData.leaderboard) {
-          document.getElementById('save-score-box').style.display = 'none';
-          displayLeaderboard(resData.leaderboard);
-        } else {
-          alert("Markah anda berjaya disimpan!");
-          document.getElementById('save-score-box').style.display = 'none';
+    // Confirm & Submit
+    async function confirmSubmit() {
+      if (Object.keys(userAnswers).length < quizQuestions.length) {
+        if (!confirm("Anda belum menjawab semua soalan. Adakah anda pasti mahu menghantar jawapan?")) {
+          return;
         }
-      } catch (err) {
-        alert("Markah anda berjaya disimpan!");
-        document.getElementById('save-score-box').style.display = 'none';
       }
-    }
 
-    function displayLeaderboard(list) {
-      const container = document.getElementById('leaderboard-list');
-      container.innerHTML = '';
-      
-      list.forEach(item => {
-        const li = document.createElement('li');
-        li.innerHTML = `<strong>${item.nama}</strong> - ${item.markah}/10 markah <small style="color:#a0aec0;">(${item.tajuk})</small>`;
-        container.appendChild(li);
+      const res = await apiPost("SUBMIT_QUIZ", {
+        submissionId: submissionId,
+        quizId: currentQuiz.id,
+        userAnswers: userAnswers
       });
 
-      document.getElementById('leaderboard-box').style.display = 'block';
+      if (res.status === "SUCCESS") {
+        document.getElementById("view-quiz").classList.add("hidden");
+        document.getElementById("view-result").classList.remove("hidden");
+
+        document.getElementById("result-score").innerText = res.score + "%";
+        document.getElementById("result-correct").innerText = res.correctCount;
+        document.getElementById("result-wrong").innerText = res.wrongCount;
+
+        let msg = "Tahniah! Cemerlang.";
+        if (res.score < 50) msg = "Teruskan usaha, tingkatkan ilmu kesihatan anda!";
+        else if (res.score < 80) msg = "Syabas! Keputusan yang baik.";
+        document.getElementById("result-motivation").innerText = msg;
+      }
+    }
+
+    // Toggle Review Explanations
+    async function toggleReview() {
+      const revContainer = document.getElementById("review-container");
+      if (!revContainer.classList.contains("hidden")) {
+        revContainer.classList.add("hidden");
+        return;
+      }
+
+      const res = await apiPost("GET_QUIZ_RESULT", { submissionId: submissionId });
+      if (res.status === "SUCCESS") {
+        const listDiv = document.getElementById("review-list");
+        listDiv.innerHTML = "";
+
+        res.reviews.forEach(r => {
+          const item = document.createElement("div");
+          item.className = `review-item ${r.isBetul ? 'correct' : 'wrong'}`;
+          item.innerHTML = `
+            <p><strong>${r.nombor}. ${r.soalan}</strong></p>
+            <p style="font-size:0.85rem;">Jawapan Anda: <strong>${r.jawapanDipilih}</strong> | Jawapan Betul: <strong style="color:var(--correct-green);">${r.jawapanBetul}</strong></p>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;"><em>Penerangan: ${r.penerangan}</em></p>
+          `;
+          listDiv.appendChild(item);
+        });
+
+        revContainer.classList.remove("hidden");
+      }
+    }
+
+    // Social Sharing Helpers
+    function shareFacebook() {
+      const url = encodeURIComponent(window.location.href);
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+    }
+
+    function shareWhatsApp() {
+      const text = encodeURIComponent(`Jom uji minda dan ilmu kesihatan anda dalam Kuiz Interaktif Hospital Kemaman: ${window.location.href}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    function shareFacebookResult() {
+      const score = document.getElementById("result-score").innerText;
+      const text = encodeURIComponent(`Saya baru sahaja mendapat markah ${score} dalam Kuiz Interaktif Hospital Kemaman! Jom cuba di: ${window.location.href}`);
+      window.open(`https://www.facebook.com/sharer/sharer.php?quote=${text}&u=${encodeURIComponent(window.location.href)}`, '_blank');
+    }
+
+    function shareWhatsAppResult() {
+      const score = document.getElementById("result-score").innerText;
+      const text = encodeURIComponent(`Saya mendapat markah ${score} dalam Kuiz Interaktif Hospital Kemaman! Cabar diri anda di: ${window.location.href}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    // Admin Auth & Module
+    async function adminLogin() {
+      const u = document.getElementById("admin-user").value;
+      const p = document.getElementById("admin-pass").value;
+
+      const res = await apiPost("ADMIN_LOGIN", { username: u, password: p });
+      if (res.status === "SUCCESS") {
+        adminToken = res.token;
+        adminUser = res.user;
+
+        document.getElementById("admin-login-box").classList.add("hidden");
+        document.getElementById("admin-dashboard-box").classList.remove("hidden");
+
+        loadAdminDashboard();
+      } else {
+        alert(res.message);
+      }
+    }
+
+    function adminLogout() {
+      adminToken = null;
+      adminUser = null;
+      document.getElementById("admin-login-box").classList.remove("hidden");
+      document.getElementById("admin-dashboard-box").classList.add("hidden");
+    }
+
+    async function loadAdminDashboard() {
+      const statsRes = await apiPost("GET_DASHBOARD_STATS", { token: adminToken });
+      if (statsRes.status === "SUCCESS") {
+        document.getElementById("stat-quizzes").innerText = statsRes.stats.totalQuizzes;
+        document.getElementById("stat-submissions").innerText = statsRes.stats.totalSubmissions;
+        document.getElementById("stat-avg").innerText = statsRes.stats.avgScore + "%";
+      }
+
+      const listRes = await apiPost("LIST_ALL_QUIZZES", { token: adminToken });
+      if (listRes.status === "SUCCESS") {
+        const div = document.getElementById("admin-quiz-list");
+        div.innerHTML = "";
+
+        listRes.list.forEach(q => {
+          const row = document.createElement("div");
+          row.style.cssText = "padding:10px; border-bottom:1px solid #ddd; display:flex; justify-size:space-between; align-items:center;";
+          row.innerHTML = `
+            <div>
+              <strong>${q.tajuk}</strong> (${q.status})
+              <div style="font-size:0.75rem; color:gray;">Dicipta: ${q.tarikh}</div>
+            </div>
+            <div>
+              ${q.status !== 'DITERBITKAN' ? `<button onclick="pubQuiz('${q.id}')" style="padding:4px 8px; font-size:0.75rem;" class="btn btn-gold">Terbitkan</button>` : '<span style="color:green; font-weight:bold;">Aktif</span>'}
+            </div>
+          `;
+          div.appendChild(row);
+        });
+      }
+    }
+
+    async function generateQuizAI() {
+      const payload = {
+        token: adminToken,
+        tajuk: document.getElementById("ai-tajuk").value,
+        tema: document.getElementById("ai-tema").value,
+        objektif: document.getElementById("ai-objektif").value,
+        sasaran: document.getElementById("ai-sasaran").value,
+        tahap: document.getElementById("ai-tahap").value
+      };
+
+      if (!payload.tajuk || !payload.tema) {
+        alert("Sila isi Tajuk dan Tema Kuiz.");
+        return;
+      }
+
+      showLoading("Sedang menjana 15 soalan menggunakan Gemini AI...");
+      const genRes = await apiPost("GENERATE_QUESTIONS", payload);
+
+      if (genRes.status === "SUCCESS") {
+        showLoading("Menyimpan kuiz ke pangkalan data...");
+        const saveRes = await apiPost("CREATE_QUIZ", {
+          token: adminToken,
+          username: adminUser.id,
+          tajuk: payload.tajuk,
+          tema: payload.tema,
+          objektif: payload.objektif,
+          sasaran: payload.sasaran,
+          tahap: payload.tahap,
+          soalan: genRes.questions
+        });
+
+        if (saveRes.status === "SUCCESS") {
+          alert("Kuiz berjaya dijana dan disimpan dalam status MENUNGGU SEMAKAN!");
+          loadAdminDashboard();
+        } else {
+          alert("Gagal menyimpan kuiz: " + saveRes.message);
+        }
+      } else {
+        alert("Gagal menjana soalan AI: " + genRes.message);
+      }
+      hideLoading();
+    }
+
+    async function pubQuiz(qId) {
+      if (confirm("Adakah anda pasti mahu menerbitkan kuiz ini kepada awam?")) {
+        const res = await apiPost("UPDATE_QUIZ_STATUS", {
+          token: adminToken,
+          username: adminUser.id,
+          quizId: qId,
+          newStatus: "DITERBITKAN"
+        });
+        if (res.status === "SUCCESS") {
+          alert("Kuiz kini rasmi diterbitkan!");
+          loadAdminDashboard();
+          loadPublishedQuiz();
+        }
+      }
     }
   </script>
 </body>
