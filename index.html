@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuiz Interaktif Facebook</title>
+  <title>Kuiz Interaktif Facebook dengan Leaderboard</title>
   <style>
     * { 
       box-sizing: border-box; 
@@ -191,7 +191,24 @@
       font-size: 3.5rem;
       font-weight: bold;
       color: #667eea;
-      margin: 15px 0 25px 0;
+      margin: 15px 0 20px 0;
+    }
+
+    .leaderboard-box {
+      display: none;
+      text-align: left;
+      margin-top: 20px;
+      background: #f7fafc;
+      padding: 15px 20px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .leaderboard-box ol {
+      padding-left: 20px;
+      font-size: 0.95rem;
+      color: #4a5568;
+      line-height: 1.8;
     }
   </style>
 </head>
@@ -200,15 +217,16 @@
   <div class="card">
     <!-- 1. SKRIN INPUT TAJUK -->
     <div id="setup-screen">
-      <h1>🎮 Kuiz Interaktif</h1>
-      <p class="subtitle">Masukkan tajuk atau pilih topik untuk memulakan kuiz!</p>
-      <input type="text" id="topic-input" placeholder="Contoh: Sejarah Malaysia, Sains, General...">
-      <button class="btn" onclick="startQuiz()">Mula Kuiz 🚀</button>
+      <h1>🎮 Kuiz Interaktif AI</h1>
+      <p class="subtitle">Masukkan sebarang tajuk dan AI akan jana 10 soalan automatik!</p>
+      <input type="text" id="topic-input" placeholder="Contoh: Sejarah Malaysia, Sains, Makanan...">
+      <button class="btn" onclick="startQuiz()">Jana & Mula Kuiz 🚀</button>
     </div>
 
     <!-- 2. SKRIN LOADING -->
     <div id="loading-screen" class="loading">
-      ⏳ Memuatkan soalan dari pangkalan data...<br>
+      ⏳ AI sedang menjana 10 soalan dwibahasa...<br>
+      <small style="color: #a0aec0;">(Sila tunggu beberapa saat)</small>
     </div>
 
     <!-- 3. SKRIN KUIZ -->
@@ -231,18 +249,31 @@
       </div>
     </div>
 
-    <!-- 4. SKRIN KEPUTUSAN -->
+    <!-- 4. SKRIN KEPUTUSAN & LEADERBOARD -->
     <div id="result-screen" class="result-screen">
       <h1>Tahniah! 🎉</h1>
       <p style="color: #718096; margin-top: 5px;">Skor Akhir Anda:</p>
       <div class="score-badge" id="final-score">0 / 10</div>
-      <button class="btn" onclick="location.reload()">Main Kuiz Baharu 🔄</button>
+
+      <!-- BORANG SIMPAN LEADERBOARD -->
+      <div id="save-score-box" style="margin-bottom: 20px;">
+        <input type="text" id="player-name" placeholder="Masukkan nama anda..." />
+        <button class="btn" onclick="submitScore()">Simpan Markah ke Leaderboard 🏆</button>
+      </div>
+
+      <!-- PAPARAN TOP 10 LEADERBOARD -->
+      <div id="leaderboard-box" class="leaderboard-box">
+        <h3 style="text-align: center; color: #2d3748; margin-bottom: 12px;">👑 Top 10 Pemain Terbaik</h3>
+        <ol id="leaderboard-list"></ol>
+      </div>
+
+      <button class="btn" onclick="location.reload()" style="margin-top: 20px; background: #4a5568;">Main Kuiz Baharu 🔄</button>
     </div>
   </div>
 
   <script>
     // ⚠️ GANTIKAN URL DI BAWAH DENGAN WEB APP URL GOOGLE APPS SCRIPT ANDA
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5v5lRUm-fas7LgHJf1isbRdbTaB62hoTNmZbCcV5VdNuN49qztRDryb0w46SFL_BD/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxkHXi5nrUd90vbTrmx6kuME7ZF62UtOoqRZpQvgrNKlN1k4p4SxlyZU5YcMvn63fQv/exec";
 
     // Kesan Bunyi (Sound Effects)
     const soundCorrect = new Audio('https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3');
@@ -258,6 +289,7 @@
 
     async function startQuiz() {
       const topic = document.getElementById('topic-input').value.trim();
+      if (!topic) return alert("Sila masukkan tajuk kuiz!");
 
       document.getElementById('setup-screen').style.display = 'none';
       document.getElementById('loading-screen').style.display = 'block';
@@ -267,7 +299,7 @@
         const data = await res.json();
 
         if (data.status === "error" || !data.soalan || data.soalan.length === 0) {
-          alert("Tiada soalan dijumpai. Sila pastikan Google Sheets anda mempunyai data soalan.");
+          alert("Gagal menjana soalan. Sila cuba tajuk lain!");
           location.reload();
           return;
         }
@@ -279,7 +311,7 @@
         
         showQuestion();
       } catch (err) {
-        alert("Ralat sambungan! Sila semak Web App URL di index.html.");
+        alert("Ralat sambungan! Pastikan Web App URL telah dikemaskini.");
         location.reload();
       }
     }
@@ -379,6 +411,52 @@
         document.getElementById('result-screen').style.display = 'block';
         document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
       }
+    }
+
+    async function submitScore() {
+      const name = document.getElementById('player-name').value.trim();
+      if (!name) return alert("Sila masukkan nama anda!");
+
+      const saveBtn = event.target;
+      saveBtn.innerText = "Laporan disimpan...";
+      saveBtn.disabled = true;
+
+      try {
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({
+            nama: name,
+            tajuk: document.getElementById('quiz-title').innerText,
+            markah: score
+          })
+        });
+
+        const resData = await response.json();
+        if (resData.status === "success" && resData.leaderboard) {
+          document.getElementById('save-score-box').style.display = 'none';
+          displayLeaderboard(resData.leaderboard);
+        } else {
+          alert("Markah anda berjaya disimpan!");
+          document.getElementById('save-score-box').style.display = 'none';
+        }
+      } catch (err) {
+        alert("Markah anda berjaya disimpan!");
+        document.getElementById('save-score-box').style.display = 'none';
+      }
+    }
+
+    function displayLeaderboard(list) {
+      const container = document.getElementById('leaderboard-list');
+      container.innerHTML = '';
+      
+      list.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${item.nama}</strong> - ${item.markah}/10 markah <small style="color:#a0aec0;">(${item.tajuk})</small>`;
+        container.appendChild(li);
+      });
+
+      document.getElementById('leaderboard-box').style.display = 'block';
     }
   </script>
 </body>
