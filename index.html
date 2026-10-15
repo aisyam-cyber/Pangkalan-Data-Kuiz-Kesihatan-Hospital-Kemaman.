@@ -246,8 +246,8 @@
     
     .participant-details-card { background: #FFFFFF; padding: 16px; border-radius: 14px; font-size: 0.92rem; text-align: left; margin-bottom: 1.2rem; border-left: 5px solid var(--gold-premium); }
 
-    /* Ranking Style */
-    .leaderboard-box { background: linear-gradient(180deg, #FFFDF0 0%, #FFFFFF 100%); border: 2px solid var(--gold-premium); border-radius: 18px; padding: 1.5rem; margin-top: 1.8rem; text-align: left; }
+    /* Ranking / Leaderboard Style */
+    .leaderboard-box { background: linear-gradient(180deg, #FFFDF0 0%, #FFFFFF 100%); border: 2px solid var(--gold-premium); border-radius: 18px; padding: 1.5rem; margin: 1.5rem 0; text-align: left; }
     .leaderboard-title { color: var(--primary-blue); font-weight: 800; font-size: 1.15rem; border-bottom: 2px solid var(--gold-premium); padding-bottom: 8px; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
     .ranking-list { list-style: none; padding: 0; }
     .ranking-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: white; border-radius: 12px; margin-bottom: 10px; border: 1px solid #E2E8F0; font-size: 0.92rem; }
@@ -294,6 +294,14 @@
       <div class="wow-badge"><i class="fa-solid fa-stopwatch"></i> CABARAN MASA 10 SAAT / SOALAN</div>
       <h2 class="main-title-text">KUIZ PERTANDINGAN DENGGI & HYGIENE</h2>
       <p style="color:var(--text-muted); font-style:italic; margin-top:6px; font-weight: 500;">“Satu soalan, 10 saat! Siapa paling pantas &amp; tepat?”</p>
+
+      <!-- CARTA PEMENANG DI HADAPAN / SEBELUM MULA -->
+      <div class="leaderboard-box">
+        <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING PEMENANG TERKINI</div>
+        <ul class="ranking-list" id="home-ranking-list-container">
+          <li style="font-size:0.85rem; color:gray;">Sedang memuat naik carta pemenang...</li>
+        </ul>
+      </div>
 
       <div class="form-grid">
         <div class="form-group">
@@ -364,10 +372,10 @@
         Salah/Gagal Masa: <strong id="result-wrong" style="color:var(--wrong-red);">0</strong>
       </p>
 
-      <!-- CARTA RANKING (LEADERBOARD) -->
+      <!-- CARTA RANKING SELEPAS KUIZ -->
       <div class="leaderboard-box">
         <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING LIVE GOOGLE SHEETS</div>
-        <ul class="ranking-list" id="ranking-list-container"></ul>
+        <ul class="ranking-list" id="result-ranking-list-container"></ul>
       </div>
 
       <button class="btn btn-outline" onclick="toggleReview()" style="margin-top:1.8rem;"><i class="fa-solid fa-magnifying-glass"></i> LIHAT SEMAKAN JAWAPAN</button>
@@ -387,7 +395,7 @@
     <!-- Loading Spinner -->
     <div id="loading-spinner" class="hidden" style="text-align:center;">
       <div class="spinner"></div>
-      <p id="loading-text">Mengemaskini keputusan &amp; carta ranking Google Sheets...</p>
+      <p id="loading-text">Mengemaskini pangkalan data...</p>
     </div>
   </main>
 
@@ -397,7 +405,7 @@
 
   <script>
     // ** MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI **
-    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh/gov.my/s/AKfycbyroPQJ62rcI8kTNinSz7NZR4qyW8Kl2yTyW8ygi-j0jzuOSs2O6lYw7aSF3vvzAF4B6g/exec";
+    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbyroPQJ62rcI8kTNinSz7NZR4qyW8Kl2yTyW8ygi-j0jzuOSs2O6lYw7aSF3vvzAF4B6g/exec";
 
     const quizData = [
       { nombor: 1, soalan: "Apakah vektor utama yang menyebarkan virus Demam Denggi?", pilihanA: "Nyamuk Anopheles", pilihanB: "Nyamuk Aedes", pilihanC: "Nyamuk Culex", pilihanD: "Lalat Rumah", jawapanBetul: "B", penerangan: "Nyamuk Aedes aegypti dan Aedes albopictus adalah pembawa utama virus Denggi." },
@@ -426,6 +434,10 @@
     let timerInterval = null;
     let timeRemaining = 10.0;
 
+    window.onload = function() {
+      fetchAndRenderHomeLeaderboard();
+    };
+
     function showLoading() { document.getElementById("loading-spinner").classList.remove("hidden"); }
     function hideLoading() { document.getElementById("loading-spinner").classList.add("hidden"); }
 
@@ -442,6 +454,16 @@
         return await res.json();
       } catch (err) {
         return { status: "OFFLINE" };
+      }
+    }
+
+    async function fetchAndRenderHomeLeaderboard() {
+      const res = await apiPost("GET_LEADERBOARD", {});
+      if (res.status === "SUCCESS" && res.leaderboard) {
+        renderLeaderboardToContainer("home-ranking-list-container", res.leaderboard);
+      } else {
+        let ranks = JSON.parse(localStorage.getItem("tamo_speed_ranks_v2") || "[]");
+        renderLeaderboardToContainer("home-ranking-list-container", ranks);
       }
     }
 
@@ -555,7 +577,6 @@
 
       showLoading();
 
-      // Hantar Data ke Google Sheets Backend
       const res = await apiPost("SUBMIT_RESULT", {
         name: currentPlayerName,
         position: currentPlayerPosition,
@@ -583,11 +604,9 @@
       else if (score < 80) msg = "Syabas! Keputusan pantas yang memuaskan.";
       document.getElementById("result-motivation").innerText = msg;
 
-      // Kemas Kini Carta Ranking Terkumpul
       if (res.status === "SUCCESS" && res.leaderboard) {
-        renderLeaderboardData(res.leaderboard);
+        renderLeaderboardToContainer("result-ranking-list-container", res.leaderboard);
       } else {
-        // Fail-Safe jika Offline
         saveLocalLeaderboard(currentPlayerName, currentPlayerPosition, currentPlayerPTJ, score);
       }
 
@@ -610,12 +629,12 @@
       });
     }
 
-    function renderLeaderboardData(ranks) {
-      const container = document.getElementById("ranking-list-container");
+    function renderLeaderboardToContainer(containerId, ranks) {
+      const container = document.getElementById(containerId);
       container.innerHTML = "";
 
       if (!ranks || ranks.length === 0) {
-        container.innerHTML = "<li style='font-size:0.85rem; color:gray;'>Belum ada rekod pemenang.</li>";
+        container.innerHTML = "<li style='font-size:0.85rem; color:gray;'>Belum ada rekod pemenang. Jadi yang pertama!</li>";
         return;
       }
 
@@ -642,7 +661,7 @@
       ranks.sort((a, b) => b.score - a.score);
       ranks = ranks.slice(0, 5);
       localStorage.setItem("tamo_speed_ranks_v2", JSON.stringify(ranks));
-      renderLeaderboardData(ranks);
+      renderLeaderboardToContainer("result-ranking-list-container", ranks);
     }
 
     function toggleReview() {
