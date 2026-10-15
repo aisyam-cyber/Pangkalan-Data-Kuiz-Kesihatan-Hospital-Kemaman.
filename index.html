@@ -3,171 +3,281 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuiz Interaktif Facebook</title>
+  <title>Penjana Kuiz AI Interaktif</title>
   <style>
-    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
-    body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-    
-    .quiz-card { background: rgba(255, 255, 255, 0.95); width: 100%; max-width: 550px; border-radius: 20px; padding: 30px; box-shadow: 0 15px 30px rgba(0,0,0,0.2); position: relative; overflow: hidden; }
-    .header { text-align: center; margin-bottom: 20px; }
-    .header h1 { font-size: 1.5rem; color: #333; }
-    .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; margin: 15px 0; }
-    .progress-fill { height: 100%; background: #667eea; width: 0%; transition: width 0.3s; }
+    * { 
+      box-sizing: border-box; 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+    }
 
-    .question-box { font-size: 1.2rem; font-weight: 600; color: #2d3748; margin-bottom: 20px; min-height: 60px; }
-    .options-grid { display: grid; gap: 12px; }
-    
-    .btn-opt { background: #f7fafc; border: 2px solid #e2e8f0; padding: 14px 20px; border-radius: 12px; font-size: 1rem; color: #4a5568; text-align: left; cursor: pointer; transition: all 0.2s; font-weight: 500; }
-    .btn-opt:hover { background: #edf2f7; border-color: #cbd5e0; transform: translateY(-2px); }
-    .btn-opt.correct { background: #48bb78 !important; color: white; border-color: #38a169 !important; }
-    .btn-opt.wrong { background: #f56565 !important; color: white; border-color: #e53e3e !important; }
+    body { 
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+      min-height: 100vh; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 20px; 
+    }
 
-    .footer-info { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; font-size: 0.9rem; color: #718096; }
-    .timer { font-weight: bold; color: #e53e3e; font-size: 1.1rem; }
+    .card { 
+      background: #ffffff; 
+      width: 100%; 
+      max-width: 500px; 
+      border-radius: 20px; 
+      padding: 30px; 
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2); 
+    }
 
-    .score-screen { text-align: center; display: none; }
-    .score-screen h2 { font-size: 2rem; color: #2d3748; margin-bottom: 10px; }
-    .score-badge { font-size: 3rem; font-weight: bold; color: #667eea; margin: 20px 0; }
-    .btn-restart { background: #667eea; color: white; border: none; padding: 12px 30px; border-radius: 25px; font-size: 1rem; cursor: pointer; transition: 0.2s; }
-    .btn-restart:hover { background: #5a67d8; }
+    h1 { 
+      font-size: 1.6rem; 
+      text-align: center; 
+      color: #2d3748; 
+      margin-bottom: 10px; 
+    }
 
-    .loading { text-align: center; font-size: 1.2rem; color: #4a5568; padding: 40px 0; }
+    p.subtitle { 
+      text-align: center; 
+      color: #718096; 
+      margin-bottom: 25px; 
+      font-size: 0.95rem; 
+    }
+
+    input[type="text"] { 
+      width: 100%; 
+      padding: 14px; 
+      border: 2px solid #e2e8f0; 
+      border-radius: 12px; 
+      font-size: 1rem; 
+      margin-bottom: 15px; 
+      outline: none; 
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus { 
+      border-color: #667eea; 
+    }
+
+    .btn { 
+      width: 100%; 
+      background: #667eea; 
+      color: #ffffff; 
+      border: none; 
+      padding: 14px; 
+      border-radius: 12px; 
+      font-size: 1rem; 
+      font-weight: bold; 
+      cursor: pointer; 
+      transition: background 0.2s, transform 0.1s; 
+    }
+
+    .btn:hover { 
+      background: #5a67d8; 
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .loading { 
+      text-align: center; 
+      display: none; 
+      padding: 30px 0; 
+      font-weight: 500; 
+      color: #4a5568; 
+      line-height: 1.6;
+    }
+
+    .quiz-box { 
+      display: none; 
+    }
+
+    .question { 
+      font-size: 1.15rem; 
+      font-weight: 600; 
+      color: #2d3748; 
+      margin-bottom: 20px; 
+      line-height: 1.4;
+    }
+
+    .options { 
+      display: grid; 
+      gap: 12px; 
+      margin-bottom: 20px; 
+    }
+
+    .opt-btn { 
+      background: #f7fafc; 
+      border: 2px solid #e2e8f0; 
+      padding: 14px; 
+      border-radius: 12px; 
+      text-align: left; 
+      cursor: pointer; 
+      font-size: 0.98rem; 
+      color: #4a5568;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .opt-btn:hover {
+      background: #edf2f7;
+      border-color: #cbd5e0;
+    }
+
+    .opt-btn.correct { 
+      background: #48bb78 !important; 
+      color: #ffffff !important; 
+      border-color: #38a169 !important; 
+    }
+
+    .opt-btn.wrong { 
+      background: #f56565 !important; 
+      color: #ffffff !important; 
+      border-color: #e53e3e !important; 
+    }
+
+    .footer { 
+      display: flex; 
+      justify-content: space-between; 
+      font-size: 0.9rem; 
+      color: #718096; 
+      font-weight: 600;
+      border-top: 1px solid #edf2f7;
+      padding-top: 15px;
+    }
+
+    .result-screen {
+      display: none;
+      text-align: center;
+    }
+
+    .score-badge {
+      font-size: 3.5rem;
+      font-weight: bold;
+      color: #667eea;
+      margin: 15px 0 25px 0;
+    }
   </style>
 </head>
 <body>
 
-  <div class="quiz-card">
-    <div id="loading" class="loading">⏳ Memuatkan Soalan Kuiz...</div>
+  <div class="card">
+    <!-- 1. SKRIN INPUT TAJUK -->
+    <div id="setup-screen">
+      <h1>🎮 Penjana Kuiz AI</h1>
+      <p class="subtitle">Masukkan sebarang tajuk dan AI akan jana 10 soalan automatik!</p>
+      <input type="text" id="topic-input" placeholder="Contoh: Sejarah Malaysia, Sains, Makanan...">
+      <button class="btn" onclick="generateQuiz()">Jana & Mula Kuiz 🚀</button>
+    </div>
 
-    <div id="quiz-body" style="display: none;">
-      <div class="header">
-        <h1 id="quiz-title">Tajuk Kuiz</h1>
-        <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-      </div>
+    <!-- 2. SKRIN LOADING -->
+    <div id="loading-screen" class="loading">
+      ⏳ AI sedang menjana 10 soalan...<br>
+      <small style="color: #a0aec0;">(Sila tunggu beberapa saat)</small>
+    </div>
 
-      <div class="question-box" id="question">Teks Soalan</div>
-
-      <div class="options-grid" id="options">
-        <!-- Pilihan jawapan dimasukkan secara dinamik -->
-      </div>
-
-      <div class="footer-info">
-        <span id="question-count">Soalan 1 / 10</span>
-        <span class="timer" id="timer">⏱️ 15s</span>
+    <!-- 3. SKRIN KUIZ -->
+    <div id="quiz-screen" class="quiz-box">
+      <h2 id="quiz-title" style="font-size: 1.2rem; text-align: center; margin-bottom: 20px; color: #667eea;">Tajuk Kuiz</h2>
+      <div class="question" id="q-text">Teks Soalan</div>
+      <div class="options" id="opt-container"></div>
+      <div class="footer">
+        <span id="q-count">Soalan 1 / 10</span>
+        <span id="score-text">Markah: 0</span>
       </div>
     </div>
 
-    <div id="score-body" class="score-screen">
-      <h2>Tahniah! 🎉</h2>
-      <p>Anda telah menyelesaikan kuiz ini.</p>
+    <!-- 4. SKRIN KEPUTUSAN -->
+    <div id="result-screen" class="result-screen">
+      <h1>Tahniah! 🎉</h1>
+      <p style="color: #718096; margin-top: 5px;">Skor Akhir Anda:</p>
       <div class="score-badge" id="final-score">0 / 10</div>
-      <button class="btn-restart" onclick="location.reload()">Main Lagi</button>
+      <button class="btn" onclick="location.reload()">Main Kuiz Baharu 🔄</button>
     </div>
   </div>
 
   <script>
     // ⚠️ GANTIKAN URL DI BAWAH DENGAN WEB APP URL GOOGLE APPS SCRIPT ANDA
-    const API_URL = "https://script.google.com/a/macros/moh.gov.my/s/AKfycby7Ukp-M5H3010cZwG8x5WGFGt4NpBdD_lsQZZmU99fvN711aDUCsekhPsNO_IiAcak/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwtbAY0a_FRts0bfioHnzyUY6MIVXsOc4R5QjoJnnL1ybs-iDBR75NV_pNiXAb9wsLA/exec";
 
     let questions = [];
     let currentIdx = 0;
     let score = 0;
-    let timeLeft = 15;
-    let timerInterval;
 
-    async function fetchQuiz() {
+    async function generateQuiz() {
+      const topic = document.getElementById('topic-input').value.trim();
+      if (!topic) return alert("Sila masukkan tajuk kuiz!");
+
+      document.getElementById('setup-screen').style.display = 'none';
+      document.getElementById('loading-screen').style.display = 'block';
+
       try {
-        const res = await fetch(API_URL);
+        const res = await fetch(`${SCRIPT_URL}?tajuk=${encodeURIComponent(topic)}`);
         const data = await res.json();
-        
-        if (!data.soalan || data.soalan.length === 0) {
-          document.getElementById('loading').innerHTML = "❌ Tiada soalan dijumpai. Sila jana soalan di Google Sheets.";
+
+        if (data.status === "error" || !data.soalan || data.soalan.length === 0) {
+          alert("Gagal menjana soalan. Sila cuba lagi atau gunakan tajuk lain!");
+          location.reload();
           return;
         }
 
         questions = data.soalan;
         document.getElementById('quiz-title').innerText = data.tajuk;
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('quiz-body').style.display = 'block';
+        document.getElementById('loading-screen').style.display = 'none';
+        document.getElementById('quiz-screen').style.display = 'block';
         
-        loadQuestion();
+        showQuestion();
       } catch (err) {
-        document.getElementById('loading').innerHTML = "❌ Gagal memuatkan kuiz. Semak pautan API anda.";
+        alert("Ralat sambungan! Pastikan Web App URL dalam index.html sudah dikemaskini.");
+        location.reload();
       }
     }
 
-    function loadQuestion() {
-      clearInterval(timerInterval);
-      timeLeft = 15;
-      document.getElementById('timer').innerText = `⏱️ ${timeLeft}s`;
-      
+    function showQuestion() {
       const q = questions[currentIdx];
-      document.getElementById('question').innerText = `${currentIdx + 1}. ${q.soalan}`;
-      document.getElementById('question-count').innerText = `Soalan ${currentIdx + 1} / ${questions.length}`;
-      document.getElementById('progress').style.width = `${((currentIdx) / questions.length) * 100}%`;
-
-      const optionsDiv = document.getElementById('options');
-      optionsDiv.innerHTML = '';
+      document.getElementById('q-text').innerText = `${currentIdx + 1}. ${q.soalan}`;
+      document.getElementById('q-count').innerText = `Soalan ${currentIdx + 1} / ${questions.length}`;
+      
+      const container = document.getElementById('opt-container');
+      container.innerHTML = '';
 
       Object.keys(q.pilihan).forEach(key => {
         const btn = document.createElement('button');
-        btn.className = 'btn-opt';
+        btn.className = 'opt-btn';
         btn.innerText = `${key}) ${q.pilihan[key]}`;
-        btn.onclick = () => selectAnswer(key, btn);
-        optionsDiv.appendChild(btn);
+        btn.onclick = () => checkAnswer(key, btn);
+        container.appendChild(btn);
       });
-
-      startTimer();
     }
 
-    function startTimer() {
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        document.getElementById('timer').innerText = `⏱️ ${timeLeft}s`;
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          nextQuestion();
-        }
-      }, 1000);
-    }
-
-    function selectAnswer(selectedKey, selectedBtn) {
-      clearInterval(timerInterval);
+    function checkAnswer(selectedKey, btn) {
       const q = questions[currentIdx];
-      const allBtns = document.querySelectorAll('.btn-opt');
-      
-      allBtns.forEach(btn => btn.style.pointerEvents = 'none');
+      const allBtns = document.querySelectorAll('.opt-btn');
+      allBtns.forEach(b => b.style.pointerEvents = 'none');
 
       if (selectedKey === q.jawapanBetul) {
-        selectedBtn.classList.add('correct');
+        btn.classList.add('correct');
         score++;
+        document.getElementById('score-text').innerText = `Markah: ${score}`;
       } else {
-        selectedBtn.classList.add('wrong');
-        // Tunjukkan jawapan yang betul
+        btn.classList.add('wrong');
         Object.keys(q.pilihan).forEach((key, idx) => {
           if (key === q.jawapanBetul) allBtns[idx].classList.add('correct');
         });
       }
 
-      setTimeout(nextQuestion, 1500);
+      setTimeout(() => {
+        currentIdx++;
+        if (currentIdx < questions.length) {
+          showQuestion();
+        } else {
+          document.getElementById('quiz-screen').style.display = 'none';
+          document.getElementById('result-screen').style.display = 'block';
+          document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
+        }
+      }, 1200);
     }
-
-    function nextQuestion() {
-      currentIdx++;
-      if (currentIdx < questions.length) {
-        loadQuestion();
-      } else {
-        showScore();
-      }
-    }
-
-    function showScore() {
-      document.getElementById('quiz-body').style.display = 'none';
-      document.getElementById('score-body').style.display = 'block';
-      document.getElementById('final-score').innerText = `${score} / ${questions.length}`;
-    }
-
-    fetchQuiz();
   </script>
 </body>
 </html>
