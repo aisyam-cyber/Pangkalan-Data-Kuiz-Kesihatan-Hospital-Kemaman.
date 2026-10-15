@@ -34,7 +34,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif; }
     body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; background-image: radial-gradient(#CBD5E1 1px, transparent 1px); background-size: 24px 24px; }
 
-    /* Header Premium */
     header {
       background: linear-gradient(135deg, #07192F 0%, #0D2C54 50%, #134074 100%);
       color: var(--white);
@@ -176,7 +175,6 @@
       font-size: 0.92rem;
     }
 
-    /* REKA BENTUK PEMASA 10 SAAT (TIMER BAR) */
     .timer-container {
       background: #F1F5F9;
       border: 2px solid #E2E8F0;
@@ -268,16 +266,11 @@
     .bg-fb { background-color: #1877F2; }
     .bg-wa { background-color: #25D366; }
 
+    .spinner { border: 4px solid #f3f3f3; border-top: 4px solid var(--gold-premium); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
     footer { text-align: center; padding: 1.2rem; font-size: 0.82rem; color: var(--text-muted); background: #fff; border-top: 1px solid #E2E8F0; }
     .hidden { display: none !important; }
-
-    @media (max-width: 580px) {
-      .header-logo { height: 50px; }
-      header h1 { font-size: 1rem; }
-      .header-subtitle-badge { font-size: 0.68rem; padding: 3px 10px; }
-      .card { padding: 1.5rem; border-radius: 18px; }
-      .main-title-text { font-size: 1.25rem; }
-    }
   </style>
 </head>
 <body>
@@ -328,14 +321,13 @@
       <button class="btn btn-gold" onclick="startQuiz()"><i class="fa-solid fa-bolt"></i> MULA PERTANDINGAN SEKARANG</button>
     </div>
 
-    <!-- 2. PAPARAN SOALAN INTERAKTIF BERSAMA PEMASA 10 SAAT -->
+    <!-- 2. PAPARAN SOALAN INTERAKTIF -->
     <div id="view-quiz" class="card hidden">
       <div class="question-header">
         <span id="question-number-label">SOALAN 1 DARIPADA 15</span>
         <span id="answered-count-label">Dijawab: 0/15</span>
       </div>
 
-      <!-- PEMASA 10 SAAT -->
       <div class="timer-container">
         <div class="timer-text-box">
           <i class="fa-solid fa-clock"></i> <span id="timer-seconds">10.0</span>s
@@ -374,7 +366,7 @@
 
       <!-- CARTA RANKING (LEADERBOARD) -->
       <div class="leaderboard-box">
-        <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING PEMENANG TERTINGGI</div>
+        <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING LIVE GOOGLE SHEETS</div>
         <ul class="ranking-list" id="ranking-list-container"></ul>
       </div>
 
@@ -391,6 +383,12 @@
         <div id="review-list"></div>
       </div>
     </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="hidden" style="text-align:center;">
+      <div class="spinner"></div>
+      <p id="loading-text">Mengemaskini keputusan &amp; carta ranking Google Sheets...</p>
+    </div>
   </main>
 
   <footer>
@@ -398,6 +396,9 @@
   </footer>
 
   <script>
+    // ** MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI **
+    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh/gov.my/s/AKfycbyroPQJ62rcI8kTNinSz7NZR4qyW8Kl2yTyW8ygi-j0jzuOSs2O6lYw7aSF3vvzAF4B6g/exec";
+
     const quizData = [
       { nombor: 1, soalan: "Apakah vektor utama yang menyebarkan virus Demam Denggi?", pilihanA: "Nyamuk Anopheles", pilihanB: "Nyamuk Aedes", pilihanC: "Nyamuk Culex", pilihanD: "Lalat Rumah", jawapanBetul: "B", penerangan: "Nyamuk Aedes aegypti dan Aedes albopictus adalah pembawa utama virus Denggi." },
       { nombor: 2, soalan: "Waktu manakah nyamuk Aedes paling aktif menggigit manusia?", pilihanA: "Tengah malam", pilihanB: "Awal pagi dan lewat petang", pilihanC: "Tengah hari tegak", pilihanD: "Hanya waktu hujan", jawapanBetul: "B", penerangan: "Nyamuk Aedes paling aktif menggigit pada waktu subuh/awal pagi dan lewat petang sebelum gelap." },
@@ -422,9 +423,27 @@
     let currentPlayerPosition = "-";
     let currentPlayerPTJ = "-";
 
-    // PEMASA 10 SAAT ENGINE
     let timerInterval = null;
-    let timeRemaining = 10.0; // 10 saat per soalan
+    let timeRemaining = 10.0;
+
+    function showLoading() { document.getElementById("loading-spinner").classList.remove("hidden"); }
+    function hideLoading() { document.getElementById("loading-spinner").classList.add("hidden"); }
+
+    async function apiPost(action, payload = {}) {
+      if (!GAS_ENDPOINT || GAS_ENDPOINT.includes("MASUKKAN_URL")) {
+        return { status: "OFFLINE" };
+      }
+      try {
+        const res = await fetch(GAS_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: action, payload: payload })
+        });
+        return await res.json();
+      } catch (err) {
+        return { status: "OFFLINE" };
+      }
+    }
 
     function startQuiz() {
       const nameInput = document.getElementById("player-name-input").value.trim();
@@ -457,21 +476,18 @@
       timerText.innerText = "10.0";
       timerBar.style.width = "100%";
 
-      const updateInterval = 100; // Kemas kini setiap 100ms
-      
       timerInterval = setInterval(() => {
         timeRemaining -= 0.1;
         if (timeRemaining <= 0) {
           timeRemaining = 0;
           clearInterval(timerInterval);
-          // Gagal Jawab dalam 10 saat -> Dikira SALAH / NO ANSWER -> Auto Next
           userAnswers[currentQuestionIdx] = "TIMEOUT";
           nextQuestionOrSubmit();
         }
         timerText.innerText = timeRemaining.toFixed(1);
         const percent = (timeRemaining / 10.0) * 100;
         timerBar.style.width = `${percent}%`;
-      }, updateInterval);
+      }, 100);
     }
 
     function renderQuestion() {
@@ -505,12 +521,11 @@
         optionsContainer.appendChild(optCard);
       });
 
-      // Mulakan pemasa 10 saat untuk soalan semasa
       startTimer();
     }
 
     function selectAnswer(key) {
-      clearInterval(timerInterval); // Hentikan pemasa sebaik sahaja peserta jawab
+      clearInterval(timerInterval);
       userAnswers[currentQuestionIdx] = key;
       nextQuestionOrSubmit();
     }
@@ -525,7 +540,7 @@
       }
     }
 
-    function finishQuiz() {
+    async function finishQuiz() {
       clearInterval(timerInterval);
 
       let correctCount = 0;
@@ -538,7 +553,19 @@
       const score = Math.round((correctCount / quizData.length) * 100);
       const wrongCount = quizData.length - correctCount;
 
-      saveToLeaderboard(currentPlayerName, currentPlayerPosition, currentPlayerPTJ, score);
+      showLoading();
+
+      // Hantar Data ke Google Sheets Backend
+      const res = await apiPost("SUBMIT_RESULT", {
+        name: currentPlayerName,
+        position: currentPlayerPosition,
+        ptj: currentPlayerPTJ,
+        correct: correctCount,
+        wrong: wrongCount,
+        score: score
+      });
+
+      hideLoading();
 
       document.getElementById("view-quiz").classList.add("hidden");
       document.getElementById("view-result").classList.remove("hidden");
@@ -556,7 +583,13 @@
       else if (score < 80) msg = "Syabas! Keputusan pantas yang memuaskan.";
       document.getElementById("result-motivation").innerText = msg;
 
-      renderLeaderboard();
+      // Kemas Kini Carta Ranking Terkumpul
+      if (res.status === "SUCCESS" && res.leaderboard) {
+        renderLeaderboardData(res.leaderboard);
+      } else {
+        // Fail-Safe jika Offline
+        saveLocalLeaderboard(currentPlayerName, currentPlayerPosition, currentPlayerPTJ, score);
+      }
 
       // Semakan Jawapan
       const listDiv = document.getElementById("review-list");
@@ -577,20 +610,11 @@
       });
     }
 
-    function saveToLeaderboard(name, position, ptj, score) {
-      let ranks = JSON.parse(localStorage.getItem("tamo_speed_ranks_v2") || "[]");
-      ranks.push({ name: name, position: position, ptj: ptj, score: score });
-      ranks.sort((a, b) => b.score - a.score);
-      ranks = ranks.slice(0, 5);
-      localStorage.setItem("tamo_speed_ranks_v2", JSON.stringify(ranks));
-    }
-
-    function renderLeaderboard() {
+    function renderLeaderboardData(ranks) {
       const container = document.getElementById("ranking-list-container");
       container.innerHTML = "";
-      let ranks = JSON.parse(localStorage.getItem("tamo_speed_ranks_v2") || "[]");
 
-      if (ranks.length === 0) {
+      if (!ranks || ranks.length === 0) {
         container.innerHTML = "<li style='font-size:0.85rem; color:gray;'>Belum ada rekod pemenang.</li>";
         return;
       }
@@ -612,6 +636,15 @@
       });
     }
 
+    function saveLocalLeaderboard(name, position, ptj, score) {
+      let ranks = JSON.parse(localStorage.getItem("tamo_speed_ranks_v2") || "[]");
+      ranks.push({ name: name, position: position, ptj: ptj, score: score });
+      ranks.sort((a, b) => b.score - a.score);
+      ranks = ranks.slice(0, 5);
+      localStorage.setItem("tamo_speed_ranks_v2", JSON.stringify(ranks));
+      renderLeaderboardData(ranks);
+    }
+
     function toggleReview() {
       const revContainer = document.getElementById("review-container");
       revContainer.classList.toggle("hidden");
@@ -619,13 +652,13 @@
 
     function shareFacebookResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Pertandingan TAMO SPEED QUIZ (10 saat/soalan)! Bolehkah anda tewaskan rekod saya? Cuba di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Pertandingan TAMO SPEED QUIZ (10s)! Bolehkah anda tewaskan rekod saya? Cuba di: ${window.location.href}`);
       window.open(`https://www.facebook.com/sharer/sharer.php?quote=${text}&u=${encodeURIComponent(window.location.href)}`, '_blank');
     }
 
     function shareWhatsAppResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Pertandingan TAMO SPEED QUIZ (10 saat/soalan)! Cabar rekod pemenang di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Pertandingan TAMO SPEED QUIZ (10s)! Cabar rekod pemenang di: ${window.location.href}`);
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
   </script>
