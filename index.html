@@ -59,10 +59,7 @@
       object-fit: contain;
       filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.3));
     }
-    .header-title-box {
-      text-align: center;
-      flex: 1;
-    }
+    .header-title-box { text-align: center; flex: 1; }
     header h1 { 
       font-size: 1.3rem; 
       font-weight: 800; 
@@ -114,11 +111,46 @@
       margin-bottom: 12px;
     }
 
-    .main-title-text {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--primary-blue);
+    .blinking-box {
+      background: #FFF5F5;
+      border: 2px dashed var(--wrong-red);
+      border-radius: 16px;
+      padding: 14px;
+      margin: 1.2rem 0;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.15);
     }
+    .blinking-text {
+      font-weight: 800;
+      color: var(--wrong-red);
+      font-size: 1.05rem;
+      animation: blinkGlow 1.2s infinite ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    @keyframes blinkGlow {
+      0% { opacity: 1; text-shadow: 0 0 10px rgba(239, 68, 68, 0.6); }
+      50% { opacity: 0.3; text-shadow: none; }
+      100% { opacity: 1; text-shadow: 0 0 10px rgba(239, 68, 68, 0.6); }
+    }
+
+    .status-meter-box {
+      background: #F1F5F9;
+      border: 2px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 12px 18px;
+      margin: 1rem 0;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+    .status-item { display: flex; align-items: center; gap: 8px; color: var(--primary-blue); }
+
+    .main-title-text { font-size: 1.5rem; font-weight: 800; color: var(--primary-blue); }
 
     .btn { 
       display: inline-flex; 
@@ -137,12 +169,9 @@
       width: 100%; 
       margin-top: 12px; 
     }
-    .btn-gold { 
-      background: var(--gold-gradient); 
-      color: var(--primary-blue); 
-      box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
-    }
+    .btn-gold { background: var(--gold-gradient); color: var(--primary-blue); box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3); }
     .btn-outline { background: transparent; border: 2px solid var(--secondary-blue); color: var(--secondary-blue); }
+    .btn:disabled { background: #94A3B8 !important; cursor: not-allowed !important; box-shadow: none !important; }
 
     .form-grid {
       display: grid;
@@ -155,95 +184,26 @@
     }
     .form-group { text-align: left; }
     .form-group label { display: block; font-weight: 700; color: var(--primary-blue); margin-bottom: 6px; font-size: 0.88rem; }
-    .form-control { 
-      width: 100%; 
-      padding: 12px 16px; 
-      border: 2px solid #E2E8F0; 
-      border-radius: 10px; 
-      font-size: 0.95rem; 
-      outline: none; 
-      background: #F8FAFC;
-    }
+    .form-control { width: 100%; padding: 12px 16px; border: 2px solid #E2E8F0; border-radius: 10px; font-size: 0.95rem; outline: none; background: #F8FAFC; }
 
-    .quiz-info-box { 
-      background: linear-gradient(135deg, #EEF4FF 0%, #E2E8F0 100%); 
-      border-left: 5px solid var(--accent-blue); 
-      padding: 1.2rem; 
-      border-radius: 12px; 
-      margin: 1.5rem 0; 
-      text-align: left; 
-      font-size: 0.92rem;
-    }
+    .quiz-info-box { background: linear-gradient(135deg, #EEF4FF 0%, #E2E8F0 100%); border-left: 5px solid var(--accent-blue); padding: 1.2rem; border-radius: 12px; margin: 1.5rem 0; text-align: left; font-size: 0.92rem; }
 
-    .timer-container {
-      background: #F1F5F9;
-      border: 2px solid #E2E8F0;
-      border-radius: 12px;
-      padding: 10px 16px;
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-    .timer-text-box {
-      font-weight: 800;
-      color: var(--wrong-red);
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      min-width: 100px;
-    }
-    .timer-bar-bg {
-      flex: 1;
-      height: 12px;
-      background: #CBD5E1;
-      border-radius: 6px;
-      overflow: hidden;
-    }
-    .timer-bar-fill {
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(90deg, #EF4444 0%, #F59E0B 100%);
-      transition: width 0.1s linear;
-    }
+    .timer-container { background: #F1F5F9; border: 2px solid #E2E8F0; border-radius: 12px; padding: 10px 16px; margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .timer-text-box { font-weight: 800; color: var(--wrong-red); font-size: 1.1rem; display: flex; align-items: center; gap: 6px; min-width: 100px; }
+    .timer-bar-bg { flex: 1; height: 12px; background: #CBD5E1; border-radius: 6px; overflow: hidden; }
+    .timer-bar-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #EF4444 0%, #F59E0B 100%); transition: width 0.1s linear; }
 
     .question-header { display: flex; justify-content: space-between; font-weight: 700; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.6rem; }
     .question-title { font-size: 1.2rem; font-weight: 700; color: var(--primary-blue); margin-bottom: 1.8rem; text-align: left; line-height: 1.4; }
 
     .options-grid { display: grid; gap: 14px; }
-    .option-card { 
-      border: 2px solid #E2E8F0; 
-      padding: 16px 20px; 
-      border-radius: 14px; 
-      cursor: pointer; 
-      display: flex; 
-      align-items: center; 
-      gap: 14px; 
-      transition: all 0.2s ease; 
-      font-weight: 600; 
-      text-align: left; 
-      background: #FFFFFF;
-    }
+    .option-card { border: 2px solid #E2E8F0; padding: 16px 20px; border-radius: 14px; cursor: pointer; display: flex; align-items: center; gap: 14px; transition: all 0.2s ease; font-weight: 600; text-align: left; background: #FFFFFF; }
     .option-card:hover { border-color: var(--accent-blue); background: var(--light-blue); }
     .option-card.selected { border-color: var(--gold-premium); background: #FFFBEB; font-weight: 700; color: var(--primary-blue); }
     .option-badge { background: var(--primary-blue); color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; font-weight: 800; }
 
-    .score-circle { 
-      width: 150px; 
-      height: 150px; 
-      border-radius: 50%; 
-      border: 8px solid var(--gold-premium); 
-      display: flex; 
-      flex-direction: column; 
-      justify-content: center; 
-      align-items: center; 
-      margin: 1.5rem auto; 
-      background: radial-gradient(circle, #FFFFFF 0%, #FEF3C7 100%); 
-    }
+    .score-circle { width: 150px; height: 150px; border-radius: 50%; border: 8px solid var(--gold-premium); display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 1.5rem auto; background: radial-gradient(circle, #FFFFFF 0%, #FEF3C7 100%); }
     .score-number { font-size: 2.5rem; font-weight: 800; color: var(--primary-blue); }
-    
     .participant-details-card { background: #FFFFFF; padding: 16px; border-radius: 14px; font-size: 0.92rem; text-align: left; margin-bottom: 1.2rem; border-left: 5px solid var(--gold-premium); }
 
     .leaderboard-box { background: linear-gradient(180deg, #FFFDF0 0%, #FFFFFF 100%); border: 2px solid var(--gold-premium); border-radius: 18px; padding: 1.5rem; margin: 1.5rem 0; text-align: left; }
@@ -255,6 +215,27 @@
     .ranking-item .player-name { font-weight: 700; color: var(--primary-blue); }
     .ranking-item .player-sub { font-size: 0.78rem; color: var(--text-muted); }
     .ranking-item .player-score { font-weight: 800; color: var(--correct-green); font-size: 1.1rem; margin-left: 10px; }
+
+    /* SIDEBAR DEWAN KEMASYHURAN */
+    .floating-hof-btn {
+      position: fixed;
+      bottom: 20px; right: 20px;
+      background: var(--gold-gradient);
+      color: var(--primary-blue);
+      border: none; padding: 12px 20px; border-radius: 50px;
+      font-weight: 800; font-size: 0.9rem;
+      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+      cursor: pointer; z-index: 100;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 37, 64, 0.6); backdrop-filter: blur(4px); z-index: 999; display: none; }
+    .sidebar-overlay.active { display: block; }
+    .sidebar-drawer { position: fixed; top: 0; right: -420px; width: 100%; max-width: 400px; height: 100%; background: #FFFFFF; box-shadow: -10px 0 30px rgba(0,0,0,0.2); z-index: 1000; transition: right 0.3s ease; padding: 1.8rem; overflow-y: auto; }
+    .sidebar-drawer.open { right: 0; }
+    .sidebar-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #E2E8F0; padding-bottom: 12px; margin-bottom: 1rem; }
+    .series-tabs { display: flex; gap: 8px; margin-bottom: 1rem; }
+    .series-tab-btn { flex: 1; padding: 10px; border: 1px solid #CBD5E1; background: #F8FAFC; border-radius: 10px; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); cursor: pointer; }
+    .series-tab-btn.active { background: var(--primary-blue); color: white; border-color: var(--primary-blue); }
 
     .review-item { border-bottom: 1px solid #E2E8F0; padding: 14px 0; margin-bottom: 8px; text-align: left; }
     .review-item.correct { border-left: 4px solid var(--correct-green); padding-left: 12px; }
@@ -290,13 +271,28 @@
   <main>
     <!-- 1. HALAMAN UTAMA KUIZ -->
     <div id="view-home" class="card" style="text-align:center;">
-      <div class="wow-badge"><i class="fa-solid fa-stopwatch"></i> CABARAN MASA 10 SAAT / SOALAN</div>
-      <h2 class="main-title-text">KUIZ PERTANDINGAN DENGGI & HYGIENE</h2>
-      <p style="color:var(--text-muted); font-style:italic; margin-top:6px; font-weight: 500;">“Satu soalan, 10 saat! Siapa paling pantas &amp; tepat?”</p>
+      <div class="wow-badge"><i class="fa-solid fa-heart-pulse"></i> SIRI 2: CABARAN MASA 10 SAAT</div>
+      <h2 class="main-title-text">KUIZ HIPERTENSI & KESIHATAN JANTUNG</h2>
+      <p style="color:var(--text-muted); font-style:italic; margin-top:6px; font-weight: 500;">“Cegah Tekanan Darah Tinggi, Lindungi Jantung Anda!”</p>
 
-      <!-- CARTA PEMENANG HADAPAN -->
+      <!-- BLINKING BANNER TARIKH TUTUP -->
+      <div class="blinking-box">
+        <div class="blinking-text">
+          <i class="fa-solid fa-clock-rotate-left"></i> TARIKH TUTUP: 31 OKTOBER 2026 (11:59 MALAM)
+        </div>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px; font-weight:600;">
+          Masa Terhad ATAU Had 500 Penyertaan Terawal (Mana-mana tiba dahulu)
+        </p>
+      </div>
+
+      <!-- METER PENYERTAAN REAL-TIME -->
+      <div class="status-meter-box">
+        <div class="status-item"><i class="fa-solid fa-users" style="color:var(--accent-blue);"></i> Penyertaan: <span id="meter-subs" style="color:var(--correct-green);">0/500</span></div>
+        <div class="status-item"><i class="fa-solid fa-signal" style="color:var(--gold-premium);"></i> Status: <span id="meter-status" style="color:var(--correct-green);">BUKA</span></div>
+      </div>
+
       <div class="leaderboard-box">
-        <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING PEMENANG TERKINI</div>
+        <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING SIRI 2 TERKINI</div>
         <ul class="ranking-list" id="home-ranking-list-container">
           <li style="font-size:0.85rem; color:gray;">Sedang memuat naik carta pemenang...</li>
         </ul>
@@ -325,7 +321,7 @@
         <p><strong><i class="fa-solid fa-list-check" style="color:var(--accent-blue);"></i> Jumlah Soalan:</strong> 15 Soalan</p>
       </div>
 
-      <button class="btn btn-gold" onclick="startQuiz()"><i class="fa-solid fa-bolt"></i> MULA PERTANDINGAN SEKARANG</button>
+      <button class="btn btn-gold" id="btn-start-quiz" onclick="startQuiz()"><i class="fa-solid fa-bolt"></i> MULA PERTANDINGAN SEKARANG</button>
     </div>
 
     <!-- 2. PAPARAN SOALAN INTERAKTIF -->
@@ -372,7 +368,7 @@
       </p>
 
       <div class="leaderboard-box">
-        <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING LIVE GOOGLE SHEETS</div>
+        <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING SIRI 2 LIVE</div>
         <ul class="ranking-list" id="result-ranking-list-container"></ul>
       </div>
 
@@ -397,30 +393,59 @@
     </div>
   </main>
 
+  <!-- BUTANG TERAPUNG DEWAN KEMASYHURAN -->
+  <button class="floating-hof-btn" onclick="openSidebar()">
+    <i class="fa-solid fa-trophy"></i> DEWAN KEMASYHURAN
+  </button>
+
+  <!-- PANEL SISI / SIDEBAR DEWAN KEMASYHURAN -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+  <div class="sidebar-drawer" id="sidebar-drawer">
+    <div class="sidebar-header">
+      <div style="font-size: 1.2rem; font-weight: 800; color: var(--primary-blue); display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-award" style="color:var(--gold-premium);"></i> HALL OF FAME</div>
+      <button style="background: none; border: none; font-size: 1.5rem; color: var(--text-muted); cursor: pointer;" onclick="closeSidebar()">&times;</button>
+    </div>
+
+    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Pilih siri pertandingan untuk melihat rekod pemenang tertinggi:</p>
+
+    <div class="series-tabs">
+      <button class="series-tab-btn" id="tab-siri1" onclick="switchSeriesTab('SIRI_1')">SIRI 1: Denggi</button>
+      <button class="series-tab-btn active" id="tab-siri2" onclick="switchSeriesTab('SIRI_2')">SIRI 2: Hipertensi</button>
+    </div>
+
+    <div class="leaderboard-box" style="margin-top:0;">
+      <div class="leaderboard-title" id="sidebar-series-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> TOP 5 PEMENANG</div>
+      <ul class="ranking-list" id="sidebar-ranking-list-container">
+        <li style="font-size:0.85rem; color:gray;">Memuat turun data...</li>
+      </ul>
+    </div>
+  </div>
+
   <footer>
     Hak Cipta Terpelihara &copy; 2026 Terengganu Assistant Medical Officer @ TAMO.
   </footer>
 
   <script>
-    // ** TAMBAHKAN URL WEB APP ANDA SELEPAS DEPLOY APPS SCRIPT DI BUKTIKAN **
-    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbx2yiOcS0t3g9-DlzWB-OpyMMjD_OUD-cy3fKxg-rY0NF6VMreWokAHCrSsspPR-rMc9w/exec";
+    // ** TAMPAL URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI **
+    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbw_CCI4-OpQD2iWdGy96WBvo-wVv8b2Vv8wfcnyAcnYyB9g8c-NOFOFRtHxL-5xqmSpqg/exec";
+    const CURRENT_SERIES_KEY = "SIRI_2";
 
     const quizData = [
-      { nombor: 1, soalan: "Apakah vektor utama yang menyebarkan virus Demam Denggi?", pilihanA: "Nyamuk Anopheles", pilihanB: "Nyamuk Aedes", pilihanC: "Nyamuk Culex", pilihanD: "Lalat Rumah", jawapanBetul: "B", penerangan: "Nyamuk Aedes aegypti dan Aedes albopictus adalah pembawa utama virus Denggi." },
-      { nombor: 2, soalan: "Waktu manakah nyamuk Aedes paling aktif menggigit manusia?", pilihanA: "Tengah malam", pilihanB: "Awal pagi dan lewat petang", pilihanC: "Tengah hari tegak", pilihanD: "Hanya waktu hujan", jawapanBetul: "B", penerangan: "Nyamuk Aedes paling aktif menggigit pada waktu subuh/awal pagi dan lewat petang sebelum gelap." },
-      { nombor: 3, soalan: "Berapa lamakah masa yang diperlukan oleh jentik-jentik Aedes untuk menjadi nyamuk dewasa?", pilihanA: "1 hingga 2 hari", pilihanB: "7 hingga 10 hari", pilihanC: "1 bulan", pilihanD: "3 bulan", jawapanBetul: "B", penerangan: "Kitaran hidup Aedes dari telur ke nyamuk dewasa mengambil masa kira-kira 7 hingga 10 hari sahaja." },
-      { nombor: 4, soalan: "Apakah langkah terbaik untuk memusnahkan tempat pembiakan nyamuk Aedes di rumah?", pilihanA: "Menutup lampu bilik", pilihanB: "Membuang air bertakung dan membersihkan bekas seminggu sekali", pilihanC: "Menyembur racun serangga setiap jam", pilihanD: "Membiarkan pasu bunga kering tanpa dijaga", jawapanBetul: "B", penerangan: "Pemeriksaan dan pembersihan bekas takungan air sekurang-kurangnya seminggu sekali dapat menyekat kitaran hidup Aedes." },
-      { nombor: 5, soalan: "Berapakah tempoh masa minimum yang disyorkan KKM untuk mencuci tangan dengan sabun?", pilihanA: "5 saat", pilihanB: "20 saat", pilihanC: "2 minit", pilihanD: "5 minit", jawapanBetul: "B", penerangan: "Mencuci tangan dengan air dan sabun sekurang-kurangnya 20 saat efektif membunuh kuman." },
-      { nombor: 6, soalan: "Manakah antara berikut BUKAN gejala utama Demam Denggi?", pilihanA: "Demam tinggi mendadak", pilihanB: "Sakit belakang mata dan sendi", pilihanC: "Gusi berdarah atau ruam kulit", pilihanD: "Kuku menjadi hijau", jawapanBetul: "D", penerangan: "Gejala Denggi meliputi demam tinggi, sakit sendi/otot, sakit belakang mata, dan ruam." },
-      { nombor: 7, soalan: "Apakah bahan yang boleh dimasukkan ke dalam bekas takungan air untuk membunuh jentik-jentik?", pilihanA: "Garam dapur", pilihanB: "Ubat jentik-jentik (Abate)", pilihanC: "Sabun pencuci pinggan", pilihanD: "Minyak masak", jawapanBetul: "B", penerangan: "Abate (temephos) ialah bahan larvicide selamat yang diluluskan untuk membunuh jentik-jentik." },
-      { nombor: 8, soalan: "Apakah tindakan awal jika anda atau ahli keluarga mengalami demam berterusan lebih dari 2 hari?", pilihanA: "Makan ubat tahan sakit dan duduk di rumah", pilihanB: "Segera mendapatkan pemeriksaan di klinik atau hospital terdekat", pilihanC: "Minum air ais dengan banyak", pilihanD: "Melakukan senaman berat", jawapanBetul: "B", penerangan: "Pemeriksaan darah awal di fasiliti kesihatan penting untuk mengesan Denggi lebih awal." },
-      { nombor: 9, soalan: "Berapakah jumlah langkah basuh tangan berkesan yang disyorkan oleh Kementerian Kesihatan Malaysia?", pilihanA: "3 Langkah", pilihanB: "5 Langkah", pilihanC: "7 Langkah", pilihanD: "10 Langkah", jawapanBetul: "C", penerangan: "KKM mempromosikan 7 langkah cuci tangan yang betul untuk kebersihan optima." },
-      { nombor: 10, soalan: "Mengapakah pesakit Denggi dilarang mengambil ubat jenis NSAID seperti Aspirin atau Ibuprofen tanpa nasihat doktor?", pilihanA: "Menerutkan kulit", pilihanB: "Boleh meningkatkan risiko pendarahan dalaman", pilihanC: "Mengenakan rasa mengantuk", pilihanD: "Menyebabkan demam makin tinggi", jawapanBetul: "B", penerangan: "Aspirin dan Ibuprofen menipiskan darah dan boleh mencetuskan pendarahan serius bagi pesakit Denggi." },
-      { nombor: 11, soalan: "Apakah jenis air yang menjadi pilihan nyamuk Aedes untuk bertelur?", pilihanA: "Air parit yang kotor dan berbau", pilihanB: "Air jernih dan tenang yang bertakung", pilihanC: "Air laut yang masin", pilihanD: "Air yang mengalir deras", jawapanBetul: "B", penerangan: "Aedes sangat gemar bertelur dalam air jernih yang bertakung seperti di dalam alas pasu, tayar, dan alas dispenser air." },
-      { nombor: 12, soalan: "Apakah nama kempen kesihatan kebersihan persekitaran yang dijalankan komuniti untuk membanteras Denggi?", pilihanA: "Gotong-Royong Mega Cari dan Musnah Aedes", pilihanB: "Kempen Bebas Plastik", pilihanC: "Program Tanaman Pokok", pilihanD: "Hari Sukan Komuniti", jawapanBetul: "A", penerangan: "Gotong-royong 'Cari dan Musnah' tempat pembiakan Aedes ialah aktiviti pencegahan utama KKM." },
-      { nombor: 13, soalan: "Berapakah sukatan minum air masak yang disyorkan sehari untuk orang dewasa bagi menjaga kesihatan?", pilihanA: "1 hingga 2 gelas", pilihanB: "6 hingga 8 gelas (kira-kira 2 Liter)", pilihanC: "5 Liter", pilihanD: "Hanya minum bila haus", jawapanBetul: "B", penerangan: "Minum 6-8 gelas air sehari memastikan badan kekal terhidrasi dengan baik." },
-      { nombor: 14, soalan: "Antara bekas berikut, yang manakah paling kerap menjadi tempat pembiakan Aedes di kawasan luar rumah?", pilihanA: "Tayar terbuang, botol kosong, dan alas pasu bunga", pilihanB: "Peti ais yang berfungsi", pilihanC: "Kipas angin", pilihanD: "Papan pemotong kayu", jawapanBetul: "A", penerangan: "Tayar, plastik, botol terbuang, dan pasu bunga mudah bertakung air hujan dan menjadi sarang Aedes." },
-      { nombor: 15, soalan: "Apakah peranan komuniti di bawah pergerakan COMBI KKM?", pilihanA: "Menjual ubat ubatan", pilihanB: "Mendorong perubahan tingkah laku komuniti untuk pencegahan Denggi", pilihanC: "Membina hospital baharu", pilihanD: "Mengutip cukai pintu", jawapanBetul: "B", penerangan: "COMBI (Communication for Behavioral Change) melatih masyarakat menjadi ejen perubahan memerangi Aedes." }
+      { nombor: 1, soalan: "Apakah julat bacaan tekanan darah normal bagi seorang dewasa yang sihat?", pilihanA: "Bawah 120/80 mmHg", pilihanB: "140/90 mmHg", pilihanC: "160/100 mmHg", pilihanD: "180/110 mmHg", jawapanBetul: "A", penerangan: "Tekanan darah normal dewasa ialah kurang daripada 120/80 mmHg." },
+      { nombor: 2, soalan: "Pengambilan bahan makanan manakah yang paling berisiko meningkatkan tekanan darah?", pilihanA: "Gula berlebihan", pilihanB: "Garam (Natrium) berlebihan", pilihanC: "Protein tinggi", pilihanD: "Vitamin C", jawapanBetul: "B", penerangan: "Natrium berlebihan dalam garam menyebabkan penahanan air dan meningkatkan tekanan darah." },
+      { nombor: 3, soalan: "Mengapakah Hipertensi sering dipanggil sebagai 'Pembunuh Senyap' (Silent Killer)?", pilihanA: "Kerana tiada penawar", pilihanB: "Kerana kerap berlaku tanpa gejala jelas sehingga komplikasi berlaku", pilihanC: "Kerana hanya berlaku waktu malam", pilihanD: "Kerana pesakit tidak boleh bercakap", jawapanBetul: "B", penerangan: "Hipertensi sering tidak menunjukkan sebarang gejala awal sehingga berlaku strok atau serangan jantung." },
+      { nombor: 4, soalan: "Berapakah had pengambilan garam harian yang disyorkan oleh Pertubuhan Kesihatan Sedunia (WHO)?", pilihanA: "1 sudu teh (kurang 5 gram)", pilihanB: "3 sudu teh", pilihanC: "1 sudu makan", pilihanD: "Tiada had", jawapanBetul: "A", penerangan: "WHO mengesyorkan pengambilan garam kurang daripada 5 gram (kira-kira 1 sudu teh) sehari." },
+      { nombor: 5, soalan: "Apakah organ utama yang paling berisiko mengalami kerosakan akibat tekanan darah tinggi yang tidak dikawal?", pilihanA: "Jantung, Otak, dan Buah Pinggang", pilihanB: "Rambut dan Kuku", pilihanC: "Tulang belakang", pilihanD: "Gigi dan Gusi", jawapanBetul: "A", penerangan: "Hipertensi berterusan merosakkan salur darah di otak (strok), jantung, dan buah pinggang." },
+      { nombor: 6, soalan: "Manakah antara berikut merupakan senaman aerobik yang baik untuk kesihatan jantung?", pilihanA: "Berjalan laju atau berbasikal 30 minit sehari", pilihanB: "Tidur sepanjang hari", pilihanC: "Bermain video game", pilihanD: "Mengangkat berat tanpa henti", jawapanBetul: "A", penerangan: "Aktiviti fizikal sederhana 150 minit seminggu (30 minit x 5 hari) menguatkan otot jantung." },
+      { nombor: 7, soalan: "Apakah gejala amaran awal bagi serangan jantung yang memerlukan bantuan kecemasan segera?", pilihanA: "Sakit/ketat dada menjalar ke lengan atau rahang", pilihanB: "Gatal di tapak kaki", pilihanC: "Bersin berterusan", pilihanD: "Mata berair", jawapanBetul: "A", penerangan: "Sakit dada yang mencengkam dan menjalar ke lengan kiri/rahang ialah tanda amaran serangan jantung." },
+      { nombor: 8, soalan: "Apakah alat yang digunakan untuk mengukur tekanan darah di fasiliti kesihatan?", pilihanA: "Stetoskop sahaja", pilihanB: "Sphygmomanometer", pilihanC: "Thermometer", pilihanD: "Glucometer", jawapanBetul: "B", penerangan: "Sphygmomanometer digunakan untuk mengukur tekanan darah arteri." },
+      { nombor: 9, soalan: "Apakah jenis lemak yang perlu dielakkan untuk mencegah salur darah tersumbat?", pilihanA: "Lemak Tepu dan Lemak Trans", pilihanB: "Omega-3", pilihanC: "Minyak Zaitun", pilihanD: "Lemak tidak tepu", jawapanBetul: "A", penerangan: "Lemak trans dan lemak tepu meningkatkan kolesterol jahat (LDL) yang menyumbat salur darah." },
+      { nombor: 10, soalan: "Apakah nombor talian kecemasan rasmi di Malaysia jika berlaku kes serangan jantung di rumah?", pilihanA: "999", pilihanB: "991", pilihanC: "112", pilihanD: "100", jawapanBetul: "A", penerangan: "Talian kecemasan 999 menyambungkan bantuan ambulans dengan pantas." },
+      { nombor: 11, soalan: "Berapakah frekuensi saringan tekanan darah yang disyorkan bagi dewasa berusia 30 tahun ke atas?", pilihanA: "Sekurang-kurangnya sekali seminggu/sebulan mengikut risiko", pilihanB: "5 tahun sekali", pilihanC: "Hanya bila sakit kepala", pilihanD: "Tidak perlu periksa", jawapanBetul: "A", penerangan: "Saringan berkala membolehkan pengesanan awal hipertensi sebelum komplikasi." },
+      { nombor: 12, soalan: "Apakah kesan merokok terhadap salur darah dan jantung?", pilihanA: "Memenatkan jantung dan merosakkan lapisan salur darah", pilihanB: "Membersihkan paru-paru", pilihanC: "Menurunkan tekanan darah", pilihanD: "Meningkatkan tahap oksigen", jawapanBetul: "A", penerangan: "Nikotin dan toksin rokok menyempitkan salur darah serta meningkatkan kadar denyutan jantung." },
+      { nombor: 13, soalan: "Apakah ubat asas yang sering dipreskripsikan untuk membuang lebihan cecair dan natrium dalam badan?", pilihanA: "Diuretik (Ubat buang air kecil)", pilihanB: "Antibiotik", pilihanC: "Ubat batuk", pilihanD: "Paracetamol", jawapanBetul: "A", penerangan: "Diuretik membantu buah pinggang menyingkirkan cecair lebihan untuk menurunkan tekanan darah." },
+      { nombor: 14, soalan: "Mengapakah pesakit hipertensi tidak boleh menghentikan ubat darah tinggi secara tiba-tiba tanpa nasihat doktor?", pilihanA: "Boleh menyebabkan tekanan darah melambung tinggi secara mendadak (Rebound Hypertension)", pilihanB: "Boleh menyebabkan rambut gugur", pilihanC: "Ubat akan tamat luput", pilihanD: "Tiada sebarang kesan", jawapanBetul: "A", penerangan: "Menghentikan ubat secara mendadak berisiko mencetuskan krisis hipertensi dan strok." },
+      { nombor: 15, soalan: "Apakah indeks jisim tubuh (BMI) ideal untuk mengurangkan risiko penyakit kardiovaskular?", pilihanA: "18.5 hingga 24.9 kg/m²", pilihanB: "30.0 hingga 35.0 kg/m²", pilihanC: "Atas 40 kg/m²", pilihanD: "Bawah 15 kg/m²", jawapanBetul: "A", penerangan: "BMI ideal 18.5 - 24.9 menunjukkan berat badan sihat yang mengurangkan beban kerja jantung." }
     ];
 
     let currentQuestionIdx = 0;
@@ -433,6 +458,7 @@
     let timeRemaining = 10.0;
 
     window.onload = function() {
+      checkSeriesTimeAndCapStatus();
       fetchAndRenderHomeLeaderboard();
     };
 
@@ -455,13 +481,63 @@
       }
     }
 
+    async function checkSeriesTimeAndCapStatus() {
+      const res = await apiPost("GET_SERIES_STATUS", { seriesKey: CURRENT_SERIES_KEY });
+      const meterSubs = document.getElementById("meter-subs");
+      const meterStatus = document.getElementById("meter-status");
+      const btnStart = document.getElementById("btn-start-quiz");
+
+      if (res.status === "SUCCESS") {
+        meterSubs.innerText = `${res.totalSubmissions}/${res.maxParticipants}`;
+        
+        if (res.isAllowed) {
+          meterStatus.innerText = "BUKA";
+          meterStatus.style.color = "var(--correct-green)";
+          btnStart.disabled = false;
+        } else {
+          btnStart.disabled = true;
+          meterStatus.style.color = "var(--wrong-red)";
+          if (res.reason === "NOT_STARTED") meterStatus.innerText = "BELUM MULA";
+          else if (res.reason === "ENDED") meterStatus.innerText = "TAMAT";
+          else if (res.reason === "CAP_REACHED") meterStatus.innerText = "KUOTA PENUH";
+          else meterStatus.innerText = "DITUTUP";
+        }
+      }
+    }
+
     async function fetchAndRenderHomeLeaderboard() {
-      const res = await apiPost("GET_LEADERBOARD", {});
+      const res = await apiPost("GET_LEADERBOARD", { seriesKey: CURRENT_SERIES_KEY });
       if (res.status === "SUCCESS" && res.leaderboard) {
         renderLeaderboardToContainer("home-ranking-list-container", res.leaderboard);
       } else {
-        let ranks = JSON.parse(localStorage.getItem("tamo_speed_ranks_v2") || "[]");
+        let ranks = JSON.parse(localStorage.getItem("tamo_speed_ranks_" + CURRENT_SERIES_KEY) || "[]");
         renderLeaderboardToContainer("home-ranking-list-container", ranks);
+      }
+    }
+
+    function openSidebar() {
+      document.getElementById("sidebar-overlay").classList.add("active");
+      document.getElementById("sidebar-drawer").classList.add("open");
+      switchSeriesTab('SIRI_2');
+    }
+
+    function closeSidebar() {
+      document.getElementById("sidebar-overlay").classList.remove("active");
+      document.getElementById("sidebar-drawer").classList.remove("open");
+    }
+
+    async function switchSeriesTab(seriesKey) {
+      document.getElementById("tab-siri1").classList.toggle("active", seriesKey === 'SIRI_1');
+      document.getElementById("tab-siri2").classList.toggle("active", seriesKey === 'SIRI_2');
+
+      document.getElementById("sidebar-series-title").innerHTML = `<i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> TOP 5 (${seriesKey === 'SIRI_1' ? 'SIRI 1: DENGGI' : 'SIRI 2: HIPERTENSI'})`;
+
+      const res = await apiPost("GET_LEADERBOARD", { seriesKey: seriesKey });
+      if (res.status === "SUCCESS" && res.leaderboard) {
+        renderLeaderboardToContainer("sidebar-ranking-list-container", res.leaderboard);
+      } else {
+        let ranks = JSON.parse(localStorage.getItem("tamo_speed_ranks_" + seriesKey) || "[]");
+        renderLeaderboardToContainer("sidebar-ranking-list-container", ranks);
       }
     }
 
@@ -576,6 +652,7 @@
       showLoading();
 
       const res = await apiPost("SUBMIT_RESULT", {
+        seriesKey: CURRENT_SERIES_KEY,
         name: currentPlayerName,
         position: currentPlayerPosition,
         ptj: currentPlayerPTJ,
@@ -585,6 +662,12 @@
       });
 
       hideLoading();
+
+      if (res.status === "BLOCKED") {
+        alert(res.message);
+        location.reload();
+        return;
+      }
 
       document.getElementById("view-quiz").classList.add("hidden");
       document.getElementById("view-result").classList.remove("hidden");
@@ -654,11 +737,11 @@
     }
 
     function saveLocalLeaderboard(name, position, ptj, score) {
-      let ranks = JSON.parse(localStorage.getItem("tamo_speed_ranks_v2") || "[]");
+      let ranks = JSON.parse(localStorage.getItem("tamo_speed_ranks_" + CURRENT_SERIES_KEY) || "[]");
       ranks.push({ name: name, position: position, ptj: ptj, score: score });
       ranks.sort((a, b) => b.score - a.score);
       ranks = ranks.slice(0, 5);
-      localStorage.setItem("tamo_speed_ranks_v2", JSON.stringify(ranks));
+      localStorage.setItem("tamo_speed_ranks_" + CURRENT_SERIES_KEY, JSON.stringify(ranks));
       renderLeaderboardToContainer("result-ranking-list-container", ranks);
     }
 
@@ -669,13 +752,13 @@
 
     function shareFacebookResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Pertandingan TAMO SPEED QUIZ (10s)! Bolehkah anda tewaskan rekod saya? Cuba di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Pertandingan TAMO SPEED QUIZ (Hipertensi & Kesihatan Jantung)! Bolehkah anda tewaskan rekod saya? Cuba di: ${window.location.href}`);
       window.open(`https://www.facebook.com/sharer/sharer.php?quote=${text}&u=${encodeURIComponent(window.location.href)}`, '_blank');
     }
 
     function shareWhatsAppResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Pertandingan TAMO SPEED QUIZ (10s)! Cabar rekod pemenang di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Pertandingan TAMO SPEED QUIZ (Hipertensi & Kesihatan Jantung)! Cabar rekod pemenang di: ${window.location.href}`);
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
   </script>
