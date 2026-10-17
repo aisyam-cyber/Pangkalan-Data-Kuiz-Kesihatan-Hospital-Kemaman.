@@ -7,7 +7,7 @@
 
   <!-- Open Graph Meta Facebook -->
   <meta property="og:title" content="Kuiz Kesihatan Interaktif - Terengganu Assistant Medical Officer @ TAMO" />
-  <meta property="og:description" content="Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat. Jom jawab kuiz pantas 10 saat setiap soalan!" />
+  <meta property="og:description" content="Uji Minda, Tambah Ilmu, Amalkan Hidup Sihat. Jom jawab kuiz pantas 15 saat setiap soalan!" />
   <meta property="og:type" content="website" />
 
   <!-- Fonts & Icons -->
@@ -214,7 +214,7 @@
     .ranking-item .player-info { flex: 1; line-height: 1.35; }
     .ranking-item .player-name { font-weight: 700; color: var(--primary-blue); }
     .ranking-item .player-sub { font-size: 0.78rem; color: var(--text-muted); }
-    .ranking-item .player-score { font-weight: 800; color: var(--correct-green); font-size: 1.1rem; margin-left: 10px; }
+    .ranking-item .player-score { font-weight: 800; color: var(--correct-green); font-size: 1.1rem; margin-left: 10px; text-align: right; }
 
     /* SIDEBAR DEWAN KEMASYHURAN */
     .floating-hof-btn {
@@ -233,8 +233,8 @@
     .sidebar-drawer { position: fixed; top: 0; right: -420px; width: 100%; max-width: 400px; height: 100%; background: #FFFFFF; box-shadow: -10px 0 30px rgba(0,0,0,0.2); z-index: 1000; transition: right 0.3s ease; padding: 1.8rem; overflow-y: auto; }
     .sidebar-drawer.open { right: 0; }
     .sidebar-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #E2E8F0; padding-bottom: 12px; margin-bottom: 1rem; }
-    .series-tabs { display: flex; gap: 8px; margin-bottom: 1rem; }
-    .series-tab-btn { flex: 1; padding: 10px; border: 1px solid #CBD5E1; background: #F8FAFC; border-radius: 10px; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); cursor: pointer; }
+    .series-tabs { display: flex; gap: 8px; margin-bottom: 1rem; flex-wrap: wrap; }
+    .series-tab-btn { flex: 1; min-width: 90px; padding: 10px; border: 1px solid #CBD5E1; background: #F8FAFC; border-radius: 10px; font-weight: 700; font-size: 0.8rem; color: var(--text-muted); cursor: pointer; }
     .series-tab-btn.active { background: var(--primary-blue); color: white; border-color: var(--primary-blue); }
 
     .review-item { border-bottom: 1px solid #E2E8F0; padding: 14px 0; margin-bottom: 8px; text-align: left; }
@@ -271,7 +271,7 @@
   <main>
     <!-- 1. HALAMAN UTAMA KUIZ -->
     <div id="view-home" class="card" style="text-align:center;">
-      <div class="wow-badge"><i class="fa-solid fa-heart-pulse"></i> SIRI 2: CABARAN MASA 10 SAAT</div>
+      <div class="wow-badge"><i class="fa-solid fa-heart-pulse"></i> SIRI 1 RASMI: CABARAN MASA 15 SAAT</div>
       <h2 class="main-title-text">KUIZ HIPERTENSI & KESIHATAN JANTUNG</h2>
       <p style="color:var(--text-muted); font-style:italic; margin-top:6px; font-weight: 500;">“Cegah Tekanan Darah Tinggi, Lindungi Jantung Anda!”</p>
 
@@ -292,7 +292,7 @@
       </div>
 
       <div class="leaderboard-box">
-        <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING SIRI 2 TERKINI</div>
+        <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING SIRI 1 TERKINI</div>
         <ul class="ranking-list" id="home-ranking-list-container">
           <li style="font-size:0.85rem; color:gray;">Sedang memuat naik carta pemenang...</li>
         </ul>
@@ -316,8 +316,8 @@
       </div>
 
       <div class="quiz-info-box">
-        <p><strong><i class="fa-solid fa-clock" style="color:var(--accent-blue);"></i> Masa Menjawab:</strong> <strong>10 SAAT SAHAJA</strong> bagi setiap soalan.</p>
-        <p><strong><i class="fa-solid fa-rotate-right" style="color:var(--wrong-red);"></i> Auto-Skip:</strong> Gagal menjawab dalam 10 saat akan dikira <strong>TOLAK MARKAH (SALAH)</strong> dan automatik beralih ke soalan seterusnya.</p>
+        <p><strong><i class="fa-solid fa-clock" style="color:var(--accent-blue);"></i> Masa Menjawab:</strong> <strong>15 SAAT SAHAJA</strong> bagi setiap soalan.</p>
+        <p><strong><i class="fa-solid fa-rotate-right" style="color:var(--wrong-red);"></i> Auto-Skip:</strong> Gagal menjawab dalam 15 saat akan dikira <strong>TOLAK MARKAH (SALAH)</strong> dan automatik beralih ke soalan seterusnya.</p>
         <p><strong><i class="fa-solid fa-list-check" style="color:var(--accent-blue);"></i> Jumlah Soalan:</strong> 15 Soalan</p>
       </div>
 
@@ -333,7 +333,7 @@
 
       <div class="timer-container">
         <div class="timer-text-box">
-          <i class="fa-solid fa-clock"></i> <span id="timer-seconds">10.0</span>s
+          <i class="fa-solid fa-clock"></i> <span id="timer-seconds">15.0</span>s
         </div>
         <div class="timer-bar-bg">
           <div id="timer-bar-fill" class="timer-bar-fill"></div>
@@ -354,6 +354,7 @@
         <p><strong>Nama:</strong> <span id="display-player-name">-</span></p>
         <p><strong>Jawatan:</strong> <span id="display-player-position">-</span></p>
         <p><strong>Tempat Bertugas / PTJ:</strong> <span id="display-player-ptj">-</span></p>
+        <p><strong>Jumlah Masa Menjawab:</strong> <span id="display-player-time" style="color:var(--accent-blue); font-weight:800;">-</span></p>
       </div>
 
       <div class="score-circle">
@@ -368,7 +369,7 @@
       </p>
 
       <div class="leaderboard-box">
-        <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING SIRI 2 LIVE</div>
+        <div class="leaderboard-title"><i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> CARTA RANKING SIRI 1 LIVE</div>
         <ul class="ranking-list" id="result-ranking-list-container"></ul>
       </div>
 
@@ -409,8 +410,8 @@
     <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Pilih siri pertandingan untuk melihat rekod pemenang tertinggi:</p>
 
     <div class="series-tabs">
-      <button class="series-tab-btn" id="tab-siri1" onclick="switchSeriesTab('SIRI_1')">SIRI 1: Denggi</button>
-      <button class="series-tab-btn active" id="tab-siri2" onclick="switchSeriesTab('SIRI_2')">SIRI 2: Hipertensi</button>
+      <button class="series-tab-btn active" id="tab-siri1" onclick="switchSeriesTab('SIRI_1')">Siri 1 (Hipertensi)</button>
+      <button class="series-tab-btn" id="tab-siri2" onclick="switchSeriesTab('SIRI_2')">Siri 2 (CPR)</button>
     </div>
 
     <div class="leaderboard-box" style="margin-top:0;">
@@ -427,8 +428,9 @@
 
   <script>
     // ** TAMPAL URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI **
-    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbw_CCI4-OpQD2iWdGy96WBvo-wVv8b2Vv8wfcnyAcnYyB9g8c-NOFOFRtHxL-5xqmSpqg/exec";
-    const CURRENT_SERIES_KEY = "SIRI_2";
+    const GAS_ENDPOINT = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbxA9bVVGX8MZRu9tmY69QHidHpM1DvlZy8j14ZLX5nw9q-ckeVHUR7NYXOTfnCbwLObhA/exec";
+    const CURRENT_SERIES_KEY = "SIRI_1";
+    const QUESTION_TIME_LIMIT = 15.0; // 15 SAAT MENJAWAB
 
     const quizData = [
       { nombor: 1, soalan: "Apakah julat bacaan tekanan darah normal bagi seorang dewasa yang sihat?", pilihanA: "Bawah 120/80 mmHg", pilihanB: "140/90 mmHg", pilihanC: "160/100 mmHg", pilihanD: "180/110 mmHg", jawapanBetul: "A", penerangan: "Tekanan darah normal dewasa ialah kurang daripada 120/80 mmHg." },
@@ -455,7 +457,8 @@
     let currentPlayerPTJ = "-";
 
     let timerInterval = null;
-    let timeRemaining = 10.0;
+    let timeRemaining = QUESTION_TIME_LIMIT;
+    let totalTimeTaken = 0;
 
     window.onload = function() {
       checkSeriesTimeAndCapStatus();
@@ -518,7 +521,7 @@
     function openSidebar() {
       document.getElementById("sidebar-overlay").classList.add("active");
       document.getElementById("sidebar-drawer").classList.add("open");
-      switchSeriesTab('SIRI_2');
+      switchSeriesTab('SIRI_1');
     }
 
     function closeSidebar() {
@@ -530,7 +533,7 @@
       document.getElementById("tab-siri1").classList.toggle("active", seriesKey === 'SIRI_1');
       document.getElementById("tab-siri2").classList.toggle("active", seriesKey === 'SIRI_2');
 
-      document.getElementById("sidebar-series-title").innerHTML = `<i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> TOP 5 (${seriesKey === 'SIRI_1' ? 'SIRI 1: DENGGI' : 'SIRI 2: HIPERTENSI'})`;
+      document.getElementById("sidebar-series-title").innerHTML = `<i class="fa-solid fa-crown" style="color:var(--gold-premium);"></i> TOP 5 (${seriesKey === 'SIRI_1' ? 'SIRI 1: HIPERTENSI' : 'SIRI 2: CPR'})`;
 
       const res = await apiPost("GET_LEADERBOARD", { seriesKey: seriesKey });
       if (res.status === "SUCCESS" && res.leaderboard) {
@@ -557,6 +560,8 @@
 
       currentQuestionIdx = 0;
       userAnswers = {};
+      totalTimeTaken = 0;
+
       document.getElementById("view-home").classList.add("hidden");
       document.getElementById("view-quiz").classList.remove("hidden");
       renderQuestion();
@@ -564,16 +569,18 @@
 
     function startTimer() {
       clearInterval(timerInterval);
-      timeRemaining = 10.0;
+      timeRemaining = QUESTION_TIME_LIMIT;
       
       const timerText = document.getElementById("timer-seconds");
       const timerBar = document.getElementById("timer-bar-fill");
       
-      timerText.innerText = "10.0";
+      timerText.innerText = QUESTION_TIME_LIMIT.toFixed(1);
       timerBar.style.width = "100%";
 
       timerInterval = setInterval(() => {
         timeRemaining -= 0.1;
+        totalTimeTaken += 0.1;
+
         if (timeRemaining <= 0) {
           timeRemaining = 0;
           clearInterval(timerInterval);
@@ -581,7 +588,7 @@
           nextQuestionOrSubmit();
         }
         timerText.innerText = timeRemaining.toFixed(1);
-        const percent = (timeRemaining / 10.0) * 100;
+        const percent = (timeRemaining / QUESTION_TIME_LIMIT) * 100;
         timerBar.style.width = `${percent}%`;
       }, 100);
     }
@@ -658,7 +665,8 @@
         ptj: currentPlayerPTJ,
         correct: correctCount,
         wrong: wrongCount,
-        score: score
+        score: score,
+        timeTaken: totalTimeTaken.toFixed(1)
       });
 
       hideLoading();
@@ -675,6 +683,7 @@
       document.getElementById("display-player-name").innerText = currentPlayerName;
       document.getElementById("display-player-position").innerText = currentPlayerPosition;
       document.getElementById("display-player-ptj").innerText = currentPlayerPTJ;
+      document.getElementById("display-player-time").innerText = totalTimeTaken.toFixed(1) + " Saat";
 
       document.getElementById("result-score").innerText = score + "%";
       document.getElementById("result-correct").innerText = correctCount;
@@ -688,7 +697,7 @@
       if (res.status === "SUCCESS" && res.leaderboard) {
         renderLeaderboardToContainer("result-ranking-list-container", res.leaderboard);
       } else {
-        saveLocalLeaderboard(currentPlayerName, currentPlayerPosition, currentPlayerPTJ, score);
+        saveLocalLeaderboard(currentPlayerName, currentPlayerPosition, currentPlayerPTJ, score, totalTimeTaken.toFixed(1));
       }
 
       // Semakan Jawapan
@@ -696,7 +705,7 @@
       listDiv.innerHTML = "";
       quizData.forEach((q, idx) => {
         let userChoice = userAnswers[idx] || "TIADA JAWAPAN";
-        if (userChoice === "TIMEOUT") userChoice = "GAGAL JAWAB (MASA TAMAT 10s)";
+        if (userChoice === "TIMEOUT") userChoice = "GAGAL JAWAB (MASA TAMAT 15s)";
 
         const isBetul = (userChoice === q.jawapanBetul);
         const item = document.createElement("div");
@@ -724,22 +733,26 @@
       ranks.forEach((r, idx) => {
         const li = document.createElement("li");
         li.className = "ranking-item";
+        const timeDisplay = r.timeTaken ? ` (${r.timeTaken}s)` : "";
         li.innerHTML = `
           <span class="rank-badge">${medals[idx] || (idx+1)+'.'}</span>
           <div class="player-info">
             <div class="player-name">${r.name}</div>
             <div class="player-sub">${r.position} | ${r.ptj}</div>
           </div>
-          <span class="player-score">${r.score}%</span>
+          <div class="player-score">${r.score}%<br><span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">${timeDisplay}</span></div>
         `;
         container.appendChild(li);
       });
     }
 
-    function saveLocalLeaderboard(name, position, ptj, score) {
+    function saveLocalLeaderboard(name, position, ptj, score, timeTaken) {
       let ranks = JSON.parse(localStorage.getItem("tamo_speed_ranks_" + CURRENT_SERIES_KEY) || "[]");
-      ranks.push({ name: name, position: position, ptj: ptj, score: score });
-      ranks.sort((a, b) => b.score - a.score);
+      ranks.push({ name: name, position: position, ptj: ptj, score: score, timeTaken: timeTaken });
+      ranks.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return parseFloat(a.timeTaken) - parseFloat(b.timeTaken);
+      });
       ranks = ranks.slice(0, 5);
       localStorage.setItem("tamo_speed_ranks_" + CURRENT_SERIES_KEY, JSON.stringify(ranks));
       renderLeaderboardToContainer("result-ranking-list-container", ranks);
@@ -752,13 +765,13 @@
 
     function shareFacebookResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Pertandingan TAMO SPEED QUIZ (Hipertensi & Kesihatan Jantung)! Bolehkah anda tewaskan rekod saya? Cuba di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} (${totalTimeTaken.toFixed(1)}s) dalam Pertandingan TAMO SPEED QUIZ (Siri 1)! Bolehkah anda tewaskan rekod saya? Cuba di: ${window.location.href}`);
       window.open(`https://www.facebook.com/sharer/sharer.php?quote=${text}&u=${encodeURIComponent(window.location.href)}`, '_blank');
     }
 
     function shareWhatsAppResult() {
       const score = document.getElementById("result-score").innerText;
-      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} dalam Pertandingan TAMO SPEED QUIZ (Hipertensi & Kesihatan Jantung)! Cabar rekod pemenang di: ${window.location.href}`);
+      const text = encodeURIComponent(`Saya (${currentPlayerName}) mendapat markah ${score} (${totalTimeTaken.toFixed(1)}s) dalam Pertandingan TAMO SPEED QUIZ (Siri 1)! Cabar rekod pemenang di: ${window.location.href}`);
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
   </script>
