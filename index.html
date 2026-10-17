@@ -317,8 +317,8 @@
 
       <div class="quiz-info-box">
         <p><strong><i class="fa-solid fa-clock" style="color:var(--accent-blue);"></i> Masa Menjawab:</strong> <strong>12 SAAT SAHAJA</strong> bagi setiap soalan.</p>
-        <p><strong><i class="fa-solid fa-rotate-right" style="color:var(--wrong-red);"></i> Auto-Skip:</strong> Gagal menjawab dalam 12 saat akan dikira <strong>TOLAK MARKAH (SALAH)</strong> dan automatik beralih ke soalan seterusnya.</p>
-        <p><strong><i class="fa-solid fa-list-check" style="color:var(--accent-blue);"></i> Jumlah Soalan:</strong> 15 Soalan</p>
+        <p><strong><i class="fa-solid fa-shuffle" style="color:var(--gold-premium);"></i> Kedudukan Rawak:</strong> Susunan jawapan berbeza bagi setiap percubaan.</p>
+        <p><strong><i class="fa-solid fa-rotate-right" style="color:var(--wrong-red);"></i> Auto-Skip:</strong> Gagal menjawab dalam 12 saat akan dikira <strong>TOLAK MARKAH (SALAH)</strong>.</p>
       </div>
 
       <button class="btn btn-gold" id="btn-start-quiz" onclick="startQuiz()"><i class="fa-solid fa-bolt"></i> MULA PERTANDINGAN SEKARANG</button>
@@ -430,26 +430,27 @@
     // ** TAMPAL URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI **
     const GAS_ENDPOINT = "https://script.google.com/a/macros/moh.gov.my/s/AKfycbxA9bVVGX8MZRu9tmY69QHidHpM1DvlZy8j14ZLX5nw9q-ckeVHUR7NYXOTfnCbwLObhA/exec";
     const CURRENT_SERIES_KEY = "SIRI_1";
-    const QUESTION_TIME_LIMIT = 12.0; // DIUBAH KEPADA 12 SAAT
+    const QUESTION_TIME_LIMIT = 12.0; // 12 SAAT MENJAWAB
 
-    const quizData = [
-      { nombor: 1, soalan: "Apakah julat bacaan tekanan darah normal bagi seorang dewasa yang sihat?", pilihanA: "Bawah 120/80 mmHg", pilihanB: "140/90 mmHg", pilihanC: "160/100 mmHg", pilihanD: "180/110 mmHg", jawapanBetul: "A", penerangan: "Tekanan darah normal dewasa ialah kurang daripada 120/80 mmHg." },
-      { nombor: 2, soalan: "Pengambilan bahan makanan manakah yang paling berisiko meningkatkan tekanan darah?", pilihanA: "Gula berlebihan", pilihanB: "Garam (Natrium) berlebihan", pilihanC: "Protein tinggi", pilihanD: "Vitamin C", jawapanBetul: "B", penerangan: "Natrium berlebihan dalam garam menyebabkan penahanan air dan meningkatkan tekanan darah." },
-      { nombor: 3, soalan: "Mengapakah Hipertensi sering dipanggil sebagai 'Pembunuh Senyap' (Silent Killer)?", pilihanA: "Kerana tiada penawar", pilihanB: "Kerana kerap berlaku tanpa gejala jelas sehingga komplikasi berlaku", pilihanC: "Kerana hanya berlaku waktu malam", pilihanD: "Kerana pesakit tidak boleh bercakap", jawapanBetul: "B", penerangan: "Hipertensi sering tidak menunjukkan sebarang gejala awal sehingga berlaku strok atau serangan jantung." },
-      { nombor: 4, soalan: "Berapakah had pengambilan garam harian yang disyorkan oleh Pertubuhan Kesihatan Sedunia (WHO)?", pilihanA: "1 sudu teh (kurang 5 gram)", pilihanB: "3 sudu teh", pilihanC: "1 sudu makan", pilihanD: "Tiada had", jawapanBetul: "A", penerangan: "WHO mengesyorkan pengambilan garam kurang daripada 5 gram (kira-kira 1 sudu teh) sehari." },
-      { nombor: 5, soalan: "Apakah organ utama yang paling berisiko mengalami kerosakan akibat tekanan darah tinggi yang tidak dikawal?", pilihanA: "Jantung, Otak, dan Buah Pinggang", pilihanB: "Rambut dan Kuku", pilihanC: "Tulang belakang", pilihanD: "Gigi dan Gusi", jawapanBetul: "A", penerangan: "Hipertensi berterusan merosakkan salur darah di otak (strok), jantung, dan buah pinggang." },
-      { nombor: 6, soalan: "Manakah antara berikut merupakan senaman aerobik yang baik untuk kesihatan jantung?", pilihanA: "Berjalan laju atau berbasikal 30 minit sehari", pilihanB: "Tidur sepanjang hari", pilihanC: "Bermain video game", pilihanD: "Mengangkat berat tanpa henti", jawapanBetul: "A", penerangan: "Aktiviti fizikal sederhana 150 minit seminggu (30 minit x 5 hari) menguatkan otot jantung." },
-      { nombor: 7, soalan: "Apakah gejala amaran awal bagi serangan jantung yang memerlukan bantuan kecemasan segera?", pilihanA: "Sakit/ketat dada menjalar ke lengan atau rahang", pilihanB: "Gatal di tapak kaki", pilihanC: "Bersin berterusan", pilihanD: "Mata berair", jawapanBetul: "A", penerangan: "Sakit dada yang mencengkam dan menjalar ke lengan kiri/rahang ialah tanda amaran serangan jantung." },
-      { nombor: 8, soalan: "Apakah alat yang digunakan untuk mengukur tekanan darah di fasiliti kesihatan?", pilihanA: "Stetoskop sahaja", pilihanB: "Sphygmomanometer", pilihanC: "Thermometer", pilihanD: "Glucometer", jawapanBetul: "B", penerangan: "Sphygmomanometer digunakan untuk mengukur tekanan darah arteri." },
-      { nombor: 9, soalan: "Apakah jenis lemak yang perlu dielakkan untuk mencegah salur darah tersumbat?", pilihanA: "Lemak Tepu dan Lemak Trans", pilihanB: "Omega-3", pilihanC: "Minyak Zaitun", pilihanD: "Lemak tidak tepu", jawapanBetul: "A", penerangan: "Lemak trans dan lemak tepu meningkatkan kolesterol jahat (LDL) yang menyumbat salur darah." },
-      { nombor: 10, soalan: "Apakah nombor talian kecemasan rasmi di Malaysia jika berlaku kes serangan jantung di rumah?", pilihanA: "999", pilihanB: "991", pilihanC: "112", pilihanD: "100", jawapanBetul: "A", penerangan: "Talian kecemasan 999 menyambungkan bantuan ambulans dengan pantas." },
-      { nombor: 11, soalan: "Berapakah frekuensi saringan tekanan darah yang disyorkan bagi dewasa berusia 30 tahun ke atas?", pilihanA: "Sekurang-kurangnya sekali seminggu/sebulan mengikut risiko", pilihanB: "5 tahun sekali", pilihanC: "Hanya bila sakit kepala", pilihanD: "Tidak perlu periksa", jawapanBetul: "A", penerangan: "Saringan berkala membolehkan pengesanan awal hipertensi sebelum komplikasi." },
-      { nombor: 12, soalan: "Apakah kesan merokok terhadap salur darah dan jantung?", pilihanA: "Memenatkan jantung dan merosakkan lapisan salur darah", pilihanB: "Membersihkan paru-paru", pilihanC: "Menurunkan tekanan darah", pilihanD: "Meningkatkan tahap oksigen", jawapanBetul: "A", penerangan: "Nikotin dan toksin rokok menyempitkan salur darah serta meningkatkan kadar denyutan jantung." },
-      { nombor: 13, soalan: "Apakah ubat asas yang sering dipreskripsikan untuk membuang lebihan cecair dan natrium dalam badan?", pilihanA: "Diuretik (Ubat buang air kecil)", pilihanB: "Antibiotik", pilihanC: "Ubat batuk", pilihanD: "Paracetamol", jawapanBetul: "A", penerangan: "Diuretik membantu buah pinggang menyingkirkan cecair lebihan untuk menurunkan tekanan darah." },
-      { nombor: 14, soalan: "Mengapakah pesakit hipertensi tidak boleh menghentikan ubat darah tinggi secara tiba-tiba tanpa nasihat doktor?", pilihanA: "Boleh menyebabkan tekanan darah melambung tinggi secara mendadak (Rebound Hypertension)", pilihanB: "Boleh menyebabkan rambut gugur", pilihanC: "Ubat akan tamat luput", pilihanD: "Tiada sebarang kesan", jawapanBetul: "A", penerangan: "Menghentikan ubat secara mendadak berisiko mencetuskan krisis hipertensi dan strok." },
-      { nombor: 15, soalan: "Apakah indeks jisim tubuh (BMI) ideal untuk mengurangkan risiko penyakit kardiovaskular?", pilihanA: "18.5 hingga 24.9 kg/m²", pilihanB: "30.0 hingga 35.0 kg/m²", pilihanC: "Atas 40 kg/m²", pilihanD: "Bawah 15 kg/m²", jawapanBetul: "A", penerangan: "BMI ideal 18.5 - 24.9 menunjukkan berat badan sihat yang mengurangkan beban kerja jantung." }
+    const rawQuizData = [
+      { nombor: 1, soalan: "Apakah julat bacaan tekanan darah normal bagi seorang dewasa yang sihat?", pilihanA: "Bawah 120/80 mmHg", pilihanB: "140/90 mmHg", pilihanC: "160/100 mmHg", pilihanD: "180/110 mmHg", jawapanBetul: "Bawah 120/80 mmHg", penerangan: "Tekanan darah normal dewasa ialah kurang daripada 120/80 mmHg." },
+      { nombor: 2, soalan: "Pengambilan bahan makanan manakah yang paling berisiko meningkatkan tekanan darah?", pilihanA: "Garam (Natrium) berlebihan", pilihanB: "Gula berlebihan", pilihanC: "Protein tinggi", pilihanD: "Vitamin C", jawapanBetul: "Garam (Natrium) berlebihan", penerangan: "Natrium berlebihan dalam garam menyebabkan penahanan air dan meningkatkan tekanan darah." },
+      { nombor: 3, soalan: "Mengapakah Hipertensi sering dipanggil sebagai 'Pembunuh Senyap' (Silent Killer)?", pilihanA: "Kerana kerap berlaku tanpa gejala jelas sehingga komplikasi berlaku", pilihanB: "Kerana tiada penawar", pilihanC: "Kerana hanya berlaku waktu malam", pilihanD: "Kerana pesakit tidak boleh bercakap", jawapanBetul: "Kerana kerap berlaku tanpa gejala jelas sehingga komplikasi berlaku", penerangan: "Hipertensi sering tidak menunjukkan sebarang gejala awal sehingga berlaku strok atau serangan jantung." },
+      { nombor: 4, soalan: "Berapakah had pengambilan garam harian yang disyorkan oleh Pertubuhan Kesihatan Sedunia (WHO)?", pilihanA: "1 sudu teh (kurang 5 gram)", pilihanB: "3 sudu teh", pilihanC: "1 sudu makan", pilihanD: "Tiada had", jawapanBetul: "1 sudu teh (kurang 5 gram)", penerangan: "WHO mengesyorkan pengambilan garam kurang daripada 5 gram (kira-kira 1 sudu teh) sehari." },
+      { nombor: 5, soalan: "Apakah organ utama yang paling berisiko mengalami kerosakan akibat tekanan darah tinggi yang tidak dikawal?", pilihanA: "Jantung, Otak, dan Buah Pinggang", pilihanB: "Rambut dan Kuku", pilihanC: "Tulang belakang", pilihanD: "Gigi dan Gusi", jawapanBetul: "Jantung, Otak, dan Buah Pinggang", penerangan: "Hipertensi berterusan merosakkan salur darah di otak (strok), jantung, dan buah pinggang." },
+      { nombor: 6, soalan: "Manakah antara berikut merupakan senaman aerobik yang baik untuk kesihatan jantung?", pilihanA: "Berjalan laju atau berbasikal 30 minit sehari", pilihanB: "Tidur sepanjang hari", pilihanC: "Bermain video game", pilihanD: "Mengangkat berat tanpa henti", jawapanBetul: "Berjalan laju atau berbasikal 30 minit sehari", penerangan: "Aktiviti fizikal sederhana 150 minit seminggu (30 minit x 5 hari) menguatkan otot jantung." },
+      { nombor: 7, soalan: "Apakah gejala amaran awal bagi serangan jantung yang memerlukan bantuan kecemasan segera?", pilihanA: "Sakit/ketat dada menjalar ke lengan atau rahang", pilihanB: "Gatal di tapak kaki", pilihanC: "Bersin berterusan", pilihanD: "Mata berair", jawapanBetul: "Sakit/ketat dada menjalar ke lengan atau rahang", penerangan: "Sakit dada yang mencengkam dan menjalar ke lengan kiri/rahang ialah tanda amaran serangan jantung." },
+      { nombor: 8, soalan: "Apakah alat yang digunakan untuk mengukur tekanan darah di fasiliti kesihatan?", pilihanA: "Sphygmomanometer", pilihanB: "Stetoskop sahaja", pilihanC: "Thermometer", pilihanD: "Glucometer", jawapanBetul: "Sphygmomanometer", penerangan: "Sphygmomanometer digunakan untuk mengukur tekanan darah arteri." },
+      { nombor: 9, soalan: "Apakah jenis lemak yang perlu dielakkan untuk mencegah salur darah tersumbat?", pilihanA: "Lemak Tepu dan Lemak Trans", pilihanB: "Omega-3", pilihanC: "Minyak Zaitun", pilihanD: "Lemak tidak tepu", jawapanBetul: "Lemak Tepu dan Lemak Trans", penerangan: "Lemak trans dan lemak tepu meningkatkan kolesterol jahat (LDL) yang menyumbat salur darah." },
+      { nombor: 10, soalan: "Apakah nombor talian kecemasan rasmi di Malaysia jika berlaku kes serangan jantung di rumah?", pilihanA: "999", pilihanB: "991", pilihanC: "112", pilihanD: "100", jawapanBetul: "999", penerangan: "Talian kecemasan 999 menyambungkan bantuan ambulans dengan pantas." },
+      { nombor: 11, soalan: "Berapakah frekuensi saringan tekanan darah yang disyorkan bagi dewasa berusia 30 tahun ke atas?", pilihanA: "Sekurang-kurangnya sekali seminggu/sebulan mengikut risiko", pilihanB: "5 tahun sekali", pilihanC: "Hanya bila sakit kepala", pilihanD: "Tidak perlu periksa", jawapanBetul: "Sekurang-kurangnya sekali seminggu/sebulan mengikut risiko", penerangan: "Saringan berkala membolehkan pengesanan awal hipertensi sebelum komplikasi." },
+      { nombor: 12, soalan: "Apakah kesan merokok terhadap salur darah dan jantung?", pilihanA: "Memenatkan jantung dan merosakkan lapisan salur darah", pilihanB: "Membersihkan paru-paru", pilihanC: "Menurunkan tekanan darah", pilihanD: "Meningkatkan tahap oksigen", jawapanBetul: "Memenatkan jantung dan merosakkan lapisan salur darah", penerangan: "Nikotin dan toksin rokok menyempitkan salur darah serta meningkatkan kadar denyutan jantung." },
+      { nombor: 13, soalan: "Apakah ubat asas yang sering dipreskripsikan untuk membuang lebihan cecair dan natrium dalam badan?", pilihanA: "Diuretik (Ubat buang air kecil)", pilihanB: "Antibiotik", pilihanC: "Ubat batuk", pilihanD: "Paracetamol", jawapanBetul: "Diuretik (Ubat buang air kecil)", penerangan: "Diuretik membantu buah pinggang menyingkirkan cecair lebihan untuk menurunkan tekanan darah." },
+      { nombor: 14, soalan: "Mengapakah pesakit hipertensi tidak boleh menghentikan ubat darah tinggi secara tiba-tiba tanpa nasihat doktor?", pilihanA: "Boleh menyebabkan tekanan darah melambung tinggi secara mendadak (Rebound Hypertension)", pilihanB: "Boleh menyebabkan rambut gugur", pilihanC: "Ubat akan tamat luput", pilihanD: "Tiada sebarang kesan", jawapanBetul: "Boleh menyebabkan tekanan darah melambung tinggi secara mendadak (Rebound Hypertension)", penerangan: "Menghentikan ubat secara mendadak berisiko mencetuskan krisis hipertensi dan strok." },
+      { nombor: 15, soalan: "Apakah indeks jisim tubuh (BMI) ideal untuk mengurangkan risiko penyakit kardiovaskular?", pilihanA: "18.5 hingga 24.9 kg/m²", pilihanB: "30.0 hingga 35.0 kg/m²", pilihanC: "Atas 40 kg/m²", pilihanD: "Bawah 15 kg/m²", jawapanBetul: "18.5 hingga 24.9 kg/m²", penerangan: "BMI ideal 18.5 - 24.9 menunjukkan berat badan sihat yang mengurangkan beban kerja jantung." }
     ];
 
+    let quizData = [];
     let currentQuestionIdx = 0;
     let userAnswers = {};
     let currentPlayerName = "Peserta Awam";
@@ -464,6 +465,31 @@
       checkSeriesTimeAndCapStatus();
       fetchAndRenderHomeLeaderboard();
     };
+
+    function shuffleArray(array) {
+      let arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    // MEMSEDIAKAN SOALAN & MENGOCOK PILIHAN JAWAPAN (OPTION SHUFFLER)
+    function prepareShuffledQuizData() {
+      quizData = rawQuizData.map(q => {
+        let optsText = [q.pilihanA, q.pilihanB, q.pilihanC, q.pilihanD];
+        let shuffledOpts = shuffleArray(optsText);
+        
+        return {
+          nombor: q.nombor,
+          soalan: q.soalan,
+          options: shuffledOpts,
+          jawapanBetulText: q.jawapanBetul,
+          penerangan: q.penerangan
+        };
+      });
+    }
 
     function showLoading() { document.getElementById("loading-spinner").classList.remove("hidden"); }
     function hideLoading() { document.getElementById("loading-spinner").classList.add("hidden"); }
@@ -558,6 +584,8 @@
       currentPlayerPosition = posInput;
       currentPlayerPTJ = ptjInput;
 
+      prepareShuffledQuizData(); // KOCOK JAWAPAN SECARA RAWAK UNTUK PERCUBAAN INI
+
       currentQuestionIdx = 0;
       userAnswers = {};
       totalTimeTaken = 0;
@@ -605,21 +633,17 @@
       const optionsContainer = document.getElementById("options-container");
       optionsContainer.innerHTML = "";
 
-      const options = [
-        { key: "A", text: q.pilihanA },
-        { key: "B", text: q.pilihanB },
-        { key: "C", text: q.pilihanC },
-        { key: "D", text: q.pilihanD }
-      ];
+      const labels = ["A", "B", "C", "D"];
 
-      options.forEach(opt => {
-        const isSelected = (userAnswers[currentQuestionIdx] === opt.key);
+      q.options.forEach((optText, idx) => {
+        const badgeLabel = labels[idx];
+        const isSelected = (userAnswers[currentQuestionIdx] === optText);
         const optCard = document.createElement("div");
         optCard.className = `option-card ${isSelected ? 'selected' : ''}`;
-        optCard.onclick = () => selectAnswer(opt.key);
+        optCard.onclick = () => selectAnswer(optText);
         optCard.innerHTML = `
-          <div class="option-badge">${opt.key}</div>
-          <div>${opt.text}</div>
+          <div class="option-badge">${badgeLabel}</div>
+          <div>${optText}</div>
         `;
         optionsContainer.appendChild(optCard);
       });
@@ -627,9 +651,9 @@
       startTimer();
     }
 
-    function selectAnswer(key) {
+    function selectAnswer(chosenText) {
       clearInterval(timerInterval);
-      userAnswers[currentQuestionIdx] = key;
+      userAnswers[currentQuestionIdx] = chosenText;
       nextQuestionOrSubmit();
     }
 
@@ -648,7 +672,7 @@
 
       let correctCount = 0;
       quizData.forEach((q, idx) => {
-        if (userAnswers[idx] === q.jawapanBetul) {
+        if (userAnswers[idx] === q.jawapanBetulText) {
           correctCount++;
         }
       });
@@ -707,12 +731,12 @@
         let userChoice = userAnswers[idx] || "TIADA JAWAPAN";
         if (userChoice === "TIMEOUT") userChoice = "GAGAL JAWAB (MASA TAMAT 12s)";
 
-        const isBetul = (userChoice === q.jawapanBetul);
+        const isBetul = (userChoice === q.jawapanBetulText);
         const item = document.createElement("div");
         item.className = `review-item ${isBetul ? 'correct' : 'wrong'}`;
         item.innerHTML = `
           <p><strong>${q.nombor}. ${q.soalan}</strong></p>
-          <p style="font-size:0.85rem; margin-top:4px;">Jawapan Anda: <strong>${userChoice}</strong> | Jawapan Betul: <strong style="color:var(--correct-green);">${q.jawapanBetul}</strong></p>
+          <p style="font-size:0.85rem; margin-top:4px;">Jawapan Anda: <strong>${userChoice}</strong> | Jawapan Betul: <strong style="color:var(--correct-green);">${q.jawapanBetulText}</strong></p>
           <p style="font-size:0.85rem; color:var(--text-muted); margin-top:2px;"><em>Penerangan: ${q.penerangan}</em></p>
         `;
         listDiv.appendChild(item);
